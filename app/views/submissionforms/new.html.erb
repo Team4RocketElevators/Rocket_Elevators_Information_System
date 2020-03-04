@@ -189,8 +189,8 @@
             var formselect = document.getElementById("buildingSelect");
             var buildingType = formselect.options[formselect.selectedIndex].value;
             var buildingLetter = buildingType.toUpperCase().slice(0, 3);
-            for (i in document.getElementsByName("quality")) {
-                if (document.getElementsByName("quality")[i].checked) values.push(document.getElementsByName("quality")[i].value);
+            for (i in document.getElementsByName("form[quality]")) {
+                if (document.getElementsByName("form[quality]")[i].checked) values.push(document.getElementsByName("form[quality]")[i].value);
             }
             var value = values[0];
             if (value === "standard") {
@@ -220,11 +220,11 @@
                 case "corporate":
                 case "hybrid":
                     var buildingLetter = buildingType.toUpperCase().slice(0, 3);
-                    var maxOccupants = parseInt(document.getElementsByName("occupantsPerFloorNbr" + buildingLetter)[0].value);
-                    var floorsNbr = parseInt(document.getElementsByName("floorsNbr" + buildingLetter)[0].value);
+                    var maxOccupants = parseInt(document.getElementById("occupantsPerFloor" + buildingLetter).value);
+                    var floorsNbr = parseInt(document.getElementById("floorsNbr" + buildingLetter).value);
                     var totalOccupantsPerFloor = maxOccupants * floorsNbr;
                     var totalShafts = Math.floor(totalOccupantsPerFloor / 1000);
-                    var basementsNbr = parseInt(document.getElementsByName("basementsNbr" + buildingLetter)[0].value);
+                    var basementsNbr = parseInt(document.getElementById("basementsNbr" + buildingLetter).value);
                     var totalStories = floorsNbr + basementsNbr;
                     var elevatorCollumns = Math.floor(totalStories / 20);
                     if (elevatorCollumns < 1) elevatorCollumns = 1;
@@ -277,11 +277,11 @@
                 case "corporate":
                 case "hybrid":
                     var buildingLetter = buildingType.toUpperCase().slice(0, 3);
-                    var maxOccupants = parseInt(document.getElementsByName("occupantsPerFloorNbr" + buildingLetter)[0].value);
-                    var floorsNbr = parseInt(document.getElementsByName("floorsNbr" + buildingLetter)[0].value);
+                    var maxOccupants = parseInt(document.getElementById("occupantsPerFloor" + buildingLetter).value);
+                    var floorsNbr = parseInt(document.getElementById("floorsNbr" + buildingLetter).value);
                     var totalOccupantsPerFloor = maxOccupants * floorsNbr;
                     var totalShafts = Math.floor(totalOccupantsPerFloor / 1000);
-                    var basementsNbr = parseInt(document.getElementsByName("basementsNbr" + buildingLetter)[0].value);
+                    var basementsNbr = parseInt(document.getElementById("basementsNbr" + buildingLetter).value);
                     var totalStories = floorsNbr + basementsNbr;
                     var elevatorCollumns = Math.floor(totalStories / 20);
                     if (elevatorCollumns < 1) elevatorCollumns = 1;
@@ -303,6 +303,9 @@
                     }
                     break;
             }
+        }
+        function to24H(formField) {
+            if (formField.value > 24) document.getElementById("busyHoursNbrHYB").value = 24
         }
     </script>
         <script>
@@ -403,7 +406,7 @@
     <!-- wrapper -->
     <div id="wrapper">
 
-    <%= form_for :post, url: submissionforms_path, :html => {:id => "form"} do |f| %>
+    <%= form_for :form, url: submissionforms_path, :html => {:id => "form"} do |f| %>
         <p style="font-size: 35px; font-style: bold;">Price Estimation Form</p>
         <p style="font-size: 20px;">Please select your desired options</p>
         <br>Select a building type<br>
@@ -456,27 +459,24 @@
                 name="occupantsPerFloorNbrCOR" min="0" oninput="this.value = Math.abs(this.value)"><br>
         </div>
         <div id="hybridDiv">
-            Number of floors: <input placeholder="0" id="number" type="number" onchange="setRecommendedShafts(), setPrices()" name="floorsNbrHYB" min="0"
-                oninput="this.value = Math.abs(this.value)"><br>
-            Number of basements: <input placeholder="0" id="number" type="number" onchange="setRecommendedShafts(), setPrices()" name="basementsNbrHYB"><br>
-            Number of available parking spaces: <input placeholder="0" id="number" onchange="setRecommendedShafts(), setPrices()" type="number" name="parkingsNbrHYB"
-                min="0" oninput="this.value = Math.abs(this.value)"><br>
-            Number of separate businesses: <%= f.number_field(:seperateBusinessesNbrHYB, min: 0, step: 1, placeholder: "0", :id => "number", :oninput => "this.value = Math.abs(this.value)", :onchange => 'setRecommendedShafts(), setPrices()') %><br>
-            Maximum amount of occupants per floor: <%= f.number_field(:occupantsPerFloorHYB, min: 0, step: 1, placeholder: "0", :id => "number", :oninput => "this.value = Math.abs(this.value)", :onchange => 'setRecommendedShafts(), setPrices()') %><br>
-            Active/busy hours: <%= f.number_field(:busyHoursNbrHYB, in: 1..24, step: 1, placeholder: "0", :id => "number24", :onchange => 'if (this.value > 24) document.getElementById("number24").value = 24;') %><br>
+            Number of floors: <%= f.number_field(:nbrFloors, {min: 0, step: 1, placeholder: "0", :id => "floorsNbrHYB", :oninput => "this.value = Math.abs(this.value)", :onchange => 'setRecommendedShafts(), setPrices()'}) %><br>
+            Number of basements:<%= f.number_field(:nbrBasements, {min: 0, step: 1, placeholder: "0", :id => "basementsNbrHYB", :oninput => "this.value = Math.abs(this.value)", :onchange => 'setRecommendedShafts(), setPrices()'}) %><br>
+            Number of available parking spaces: <%= f.number_field(:availableParkingSpaces, {min: 0, step: 1, placeholder: "0", :id => "parkingsNbrHYB", :oninput => "this.value = Math.abs(this.value)", :onchange => 'setRecommendedShafts(), setPrices()'}) %><br>
+            Number of separate businesses: <%= f.number_field(:seperateBusinesses, {min: 0, step: 1, placeholder: "0", :id => "seperateBusinessesNbrHYB", :oninput => "this.value = Math.abs(this.value)", :onchange => 'setRecommendedShafts(), setPrices()'}) %><br>
+            Maximum amount of occupants per floor: <%= f.number_field(:occupantsPerFloor, {min: 0, step: 1, placeholder: "0", :id => "occupantsPerFloorHYB", :oninput => "this.value = Math.abs(this.value)", :onchange => 'setRecommendedShafts(), setPrices()'}) %><br>
         </div>
         <br>
         Recommended amount of elevators: <input placeholder="0" id="recommendedShafts" value="0" type="number"
             disabled><br>
         Select an elevator range<br>
-        <%= radio_button_tag(:quality, "standard", false, :onchange => 'setRecommendedShafts(), setPrices()') %>Standard<br>
-        <%= radio_button_tag(:quality, "premium", false, :onchange => 'setRecommendedShafts(), setPrices()') %>Premium<br>
-        <%= radio_button_tag(:quality, "excelium", false, :onchange => 'setRecommendedShafts(), setPrices()') %>Excelium<br><br>
+        <%= f.radio_button("quality", "standard", {:onchange => 'setRecommendedShafts(), setPrices()'}) %>Standard<br>
+        <%= f.radio_button(:quality, "premium", :onchange => 'setRecommendedShafts(), setPrices()') %>Premium<br>
+        <%= f.radio_button(:quality, "excelium", :onchange => 'setRecommendedShafts(), setPrices()') %>Excelium<br><br>
 
     <div style="text-align: center;">
-        Price for 1 elevator unit: <%= text_field_tag "priceUnit", "", placeholder: "0", disabled: true %><br>
-        Installation costs: <%= text_field_tag "costInstallations", "", placeholder: "0", disabled: true %><br>
-        Total cost: <%= text_field_tag "costTotal", "", placeholder: "0", disabled: true %><br>
+        Price for 1 elevator unit: <%= text_field_tag("priceUnit", "", placeholder: "0", disabled: true) %><br>
+        Installation costs: <%= text_field_tag("costInstallations", "", placeholder: "0", disabled: true) %><br>
+        Total cost: <%= text_field_tag("costTotal", "", placeholder: "0", disabled: true) %><br>
     </div>
 
     <br>
@@ -542,6 +542,6 @@
     </script>
 		<!-- JAVASCRIPT FILES -->
 		<script>var plugin_path = '../assets/plugins/';</script>
-		<script src="../assets/plugins/jquery/jquery-3.3.1.min.js"></script>
-		<script src="../assets/js/scripts.js"></script>
+        <script src="../assets/plugins/jquery/jquery-3.3.1.min.js"></script>
+        <script src="../assets/js/scripts.js"></script>
 </body>

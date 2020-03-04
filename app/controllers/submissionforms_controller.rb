@@ -8,7 +8,7 @@ class SubmissionformsController < ApplicationController
         @page_title = "Rocket Elevators - New Price Estimation Form"
     end
     def create
-        render plain: params[:post].inspect
+        render plain: params[:form].inspect
     end
     def show
 
