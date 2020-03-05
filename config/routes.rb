@@ -1,11 +1,8 @@
 Rails.application.routes.draw do
-<<<<<<< HEAD
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   
   get '/login', to: 'pages#login'
   devise_for :employees
-=======
->>>>>>> master
   root to: 'en#en'
   get 'en' => 'en#en'
   get 'en/residential-buildings' => 'en#residential-buildings'

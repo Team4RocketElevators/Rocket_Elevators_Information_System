@@ -6,7 +6,7 @@ RailsAdmin.config do |config|
   config.authenticate_with do
     warden.authenticate! scope: :employee
   end
-  # config.current_employee_method(&:current_employee)
+  config.current_employee_method(&:current_employee)
 
   ## == CancanCan ==
   # config.authorize_with :cancancan
