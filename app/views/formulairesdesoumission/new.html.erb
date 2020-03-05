@@ -38,17 +38,17 @@
             text-align: center;
         }
 
-        #residentiel,
+        #residential,
         #commercial,
-        #corporatif,
-        #hybride {
+        #corporate,
+        #hybrid {
             display: none;
         }
 
-        #residentielDiv,
+        #residentialDiv,
         #commercialDiv,
-        #corporatifDiv,
-        #hybrideDiv {
+        #corporateDiv,
+        #hybridDiv {
             display: none;
         }
 
@@ -160,10 +160,10 @@
         }
         function inputs(value) {
             var values = [
-                "residentiel",
+                "residential",
                 "commercial",
-                "corporatif",
-                "hybride"
+                "corporate",
+                "hybrid"
             ];
             if (value === "empty") {
                 for (i in values) {
@@ -186,7 +186,7 @@
         }
         function setPrices() {
             var values = [];
-            var formselect = document.getElementById("buildingSelect");
+            var formselect = document.getElementById("building");
             var buildingType = formselect.options[formselect.selectedIndex].value;
             var buildingLetter = buildingType.toUpperCase().slice(0, 3);
             for (i in document.getElementsByName("form[quality]")) {
@@ -211,14 +211,14 @@
                     var priceTotal = numberWithCommas((((result * parseInt(document.getElementsByName("elevatorsNbr" + buildingLetter)[0].value))) + fee).toFixed(2)).replace(/NaN/g, "0");
                     document.getElementById("costTotal").value = "$" + priceTotal;
                     break;
-                case "residentiel":
+                case "residential":
                     var recommendedShafts = parseInt(document.getElementById("recommendedShafts").value);
                     var priceTotal = numberWithCommas((recommendedShafts * result) + fee);
                     if (recommendedShafts === 0) priceTotal = 0;
                     document.getElementById("costTotal").value = "$" + priceTotal;
                     break;
-                case "corporatif":
-                case "hybride":
+                case "corporate":
+                case "hybrid":
                     var buildingLetter = buildingType.toUpperCase().slice(0, 3);
                     var maxOccupants = parseInt(document.getElementById("occupantsPerFloor" + buildingLetter).value);
                     var floorsNbr = parseInt(document.getElementById("floorsNbr" + buildingLetter).value);
@@ -238,7 +238,7 @@
                 default:
                     if (window.location.href.includes("prefill=")) {
                         var prefill = window.location.href.split("prefill=")[1];
-                        var formselect = document.getElementById("buildingSelect");
+                        var formselect = document.getElementById("building");
                         formselect.options[formselect.selectedIndex].value = prefill.toLowerCase();
                         setPrices();
                     }
@@ -247,17 +247,17 @@
         }
         function setRecommendedShafts() {
             var values = [];
-            var formselect = document.getElementById("buildingSelect");
+            var formselect = document.getElementById("building");
             var buildingType = formselect.options[formselect.selectedIndex].value;
             switch (buildingType) {
                 case "commercial":
-                    var formselect = document.getElementById("buildingSelect");
+                    var formselect = document.getElementById("building");
                     var buildingType = formselect.options[formselect.selectedIndex].value;
                     var buildingLetter = buildingType.toUpperCase().slice(0, 3);
                     var elevatorNbr = document.getElementsByName("elevatorsNbr" + buildingLetter)[0].value;
                     document.getElementById("recommendedShafts").value = elevatorNbr;
                     break;
-                case "residentiel":
+                case "residential":
                     var appartmentsNbr = parseInt(document.getElementsByName("appartmentsNbrRES")[0].value);
                     var floorsNbr = parseInt(document.getElementsByName("floorsNbrRES")[0].value) || 1;
                     var basementsNbr = parseInt(document.getElementsByName("basementsNbrRES")[0].value) || 0;
@@ -274,8 +274,8 @@
                     if (floorsNbr < 2 && basementsNbr < 1) document.getElementById("recommendedShafts").value = 0;
                     else document.getElementById("recommendedShafts").value = Math.ceil(shafts);
                     break;
-                case "corporatif":
-                case "hybride":
+                case "corporate":
+                case "hybrid":
                     var buildingLetter = buildingType.toUpperCase().slice(0, 3);
                     var maxOccupants = parseInt(document.getElementById("occupantsPerFloor" + buildingLetter).value);
                     var floorsNbr = parseInt(document.getElementById("floorsNbr" + buildingLetter).value);
@@ -297,7 +297,7 @@
                 default:
                     if (window.location.href.includes("prefill=")) {
                         var prefill = window.location.href.split("prefill=")[1];
-                        var formselect = document.getElementById("buildingSelect")
+                        var formselect = document.getElementById("building")
                         formselect.options[formselect.selectedIndex].value = prefill.toLowerCase();
                         setRecommendedShafts();
                     }
@@ -411,14 +411,14 @@
         <p style="font-size: 35px; font-style: bold;">Formulaire d'Estimation de Prix</p>
         <p style="font-size: 20px;">Veuillez selectionner les options désirées</p>
         <br>Choisir un bâtiment<br>
-        <%= f.select("building-type-select", options_for_select([["-", "empty", {class: 'hidden'}], ["Residentiel", "residentiel"], ["Commercial", "commercial"], ["Corporatif", "corporatif"], ["Hybride", "hybride"]], selected: "-", disabled: "-"), {}, {class: "form-select", :id => "buildingSelect", :onchange => "inputs(this.value);"}) %><br><br>
-        <img class="center" id="residentiel" src="../assets/images/residentialBuilding.jpeg"
+        <%= f.select(:building, options_for_select([["-", "empty", {class: 'hidden'}], ["Residentiel", "residential"], ["Commercial", "commercial"], ["Corporatif", "corporate"], ["Hybride", "hybrid"]], selected: "-", disabled: "-"), {}, {class: "form-select", :id => "building", :onchange => "inputs(this.value);"}) %><br><br>
+        <img class="center" id="residential" src="../assets/images/residentialBuilding.jpeg"
             alt="Bâtiment Résidentiel" width="400">
         <img class="center" id="commercial" src="../assets/images/commercialBuilding.jpeg"
             alt="Bâtiment Commercial" width="400">
-        <img class="center" id="corporatif" src="../assets/images/corporateBuilding.jpeg"
+        <img class="center" id="corporate" src="../assets/images/corporateBuilding.jpeg"
             alt="Bâtiment Corporatif" width="400">
-        <img class="center" id="hybride" src="../assets/images/hybridBuilding.jpeg" alt="Bâtiment Hybride" width="400">
+        <img class="center" id="hybrid" src="../assets/images/hybridBuilding.jpeg" alt="Bâtiment Hybride" width="400">
         <div id="residentielDiv">
             Nombre d'appartments: <input placeholder="0" id="number" onchange="setRecommendedShafts(), setPrices()" type="number" name="appartmentsNbrRES" min="0"
                 oninput="this.value = Math.abs(this.value)"><br>

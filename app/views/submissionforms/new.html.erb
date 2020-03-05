@@ -190,7 +190,7 @@
         }
         function setPrices() {
             var values = [];
-            var formselect = document.getElementById("buildingSelect");
+            var formselect = document.getElementById("building");
             var buildingType = formselect.options[formselect.selectedIndex].value;
             var buildingLetter = buildingType.toUpperCase().slice(0, 3);
             for (i in document.getElementsByName("form[quality]")) {
@@ -242,7 +242,7 @@
                 default:
                     if (window.location.href.includes("prefill=")) {
                         var prefill = window.location.href.split("prefill=")[1];
-                        var formselect = document.getElementById("buildingSelect");
+                        var formselect = document.getElementById("building");
                         formselect.options[formselect.selectedIndex].value = prefill.toLowerCase();
                         setPrices();
                     }
@@ -251,11 +251,11 @@
         }
         function setRecommendedShafts() {
             var values = [];
-            var formselect = document.getElementById("buildingSelect");
+            var formselect = document.getElementById("building");
             var buildingType = formselect.options[formselect.selectedIndex].value;
             switch (buildingType) {
                 case "commercial":
-                    var formselect = document.getElementById("buildingSelect");
+                    var formselect = document.getElementById("building");
                     var buildingType = formselect.options[formselect.selectedIndex].value;
                     var buildingLetter = buildingType.toUpperCase().slice(0, 3);
                     var elevatorNbr = document.getElementById("elevatorsNbr" + buildingLetter).value;
@@ -301,7 +301,7 @@
                 default:
                     if (window.location.href.includes("prefill=")) {
                         var prefill = window.location.href.split("prefill=")[1];
-                        var formselect = document.getElementById("buildingSelect")
+                        var formselect = document.getElementById("building")
                         formselect.options[formselect.selectedIndex].value = prefill.toLowerCase();
                         setRecommendedShafts();
                     }
@@ -414,7 +414,7 @@
         <p style="font-size: 35px; font-style: bold;">Price Estimation Form</p>
         <p style="font-size: 20px;">Please select your desired options</p>
         <br>Select a building type<br>
-        <%= f.select("buildingSelect", options_for_select([["-", "empty", {class: 'hidden'}], ["Residential", "residential"], ["Commercial", "commercial"], ["Corporate", "corporate"], ["Hybrid", "hybrid"]], selected: "-", disabled: "-"), {}, {class: "form-select", :id => "buildingSelect", :onchange => "inputs(this.value);"}) %><br><br>
+        <%= f.select(:building, options_for_select([["-", "empty", {class: 'hidden'}], ["Residential", "residential"], ["Commercial", "commercial"], ["Corporate", "corporate"], ["Hybrid", "hybrid"]], selected: "-", disabled: "-"), {}, {class: "form-select", :id => "building", :onchange => "inputs(this.value);"}) %><br><br>
         <img class="center" id="residential" src="../assets/images/residentialBuilding.jpeg"
             alt="Residential Building" width="400">
         <img class="center" id="commercial" src="../assets/images/commercialBuilding.jpeg"
@@ -424,23 +424,23 @@
         <img class="center" id="hybrid" src="../assets/images/hybridBuilding.jpeg" alt="Hybrid Building"
             width="400">
         <div id="residentialDiv">
-            Number of appartments: <%= f.number_field(:appartmentsNbrRES, {min: 0, step: 1, placeholder: "0", :id => "appartmentsNbrRES", :oninput => "this.value = Math.abs(this.value)", :onchange => 'setRecommendedShafts(), setPrices()'}) %><br>
-            Number of floors: <%= f.number_field(:floorsNbrRES, {min: 0, step: 1, placeholder: "0", :id => "floorsNbrRES", :oninput => "this.value = Math.abs(this.value)", :onchange => 'setRecommendedShafts(), setPrices()'}) %><br>
-            Number of basements:<%= f.number_field(:basementsNbrRES, {min: 0, step: 1, placeholder: "0", :id => "basementsNbrRES", :oninput => "this.value = Math.abs(this.value)", :onchange => 'setRecommendedShafts(), setPrices()'}) %><br>
+            Number of appartments: <%= f.number_field(:appartmentsNbr, {min: 0, step: 1, placeholder: "0", :id => "appartmentsNbrRES", :oninput => "this.value = Math.abs(this.value)", :onchange => 'setRecommendedShafts(), setPrices()'}) %><br>
+            Number of floors: <%= f.number_field(:floorsNbr, {min: 0, step: 1, placeholder: "0", :id => "floorsNbrRES", :oninput => "this.value = Math.abs(this.value)", :onchange => 'setRecommendedShafts(), setPrices()'}) %><br>
+            Number of basements:<%= f.number_field(:basementsNbr, {min: 0, step: 1, placeholder: "0", :id => "basementsNbrRES", :oninput => "this.value = Math.abs(this.value)", :onchange => 'setRecommendedShafts(), setPrices()'}) %><br>
         </div>
         <div id="commercialDiv">
-            Number of floors: <%= f.number_field(:floorsNbrCOM, {min: 0, step: 1, placeholder: "0", :id => "floorsNbrCOM", :oninput => "this.value = Math.abs(this.value)", :onchange => 'setRecommendedShafts(), setPrices()'}) %><br>
-            Number of basements: <%= f.number_field(:basementsNbrCOM, {min: 0, step: 1, placeholder: "0", :id => "basementsNbrCOM", :oninput => "this.value = Math.abs(this.value)", :onchange => 'setRecommendedShafts(), setPrices()'}) %><br>
-            Number of separate businesses: <%= f.number_field(:seperateBusinessesNbrCOM, {min: 0, step: 1, placeholder: "0", :id => "seperateBusinessesNbrCOM", :oninput => "this.value = Math.abs(this.value)", :onchange => 'setRecommendedShafts(), setPrices()'}) %><br>
-            Number of available parking spaces: <%= f.number_field(:parkingsNbrCOM, {min: 0, step: 1, placeholder: "0", :id => "parkingsNbrCOM", :oninput => "this.value = Math.abs(this.value)", :onchange => 'setRecommendedShafts(), setPrices()'}) %><br>
-            Number of elevator shafts: <%= f.number_field(:elevatorsNbrCOM, {min: 0, step: 1, placeholder: "0", :id => "elevatorsNbrCOM", :oninput => "this.value = Math.abs(this.value)", :onchange => 'setRecommendedShafts(), setPrices()'}) %><br>
+            Number of floors: <%= f.number_field(:floorsNbr, {min: 0, step: 1, placeholder: "0", :id => "floorsNbrCOM", :oninput => "this.value = Math.abs(this.value)", :onchange => 'setRecommendedShafts(), setPrices()'}) %><br>
+            Number of basements: <%= f.number_field(:basementsNbr, {min: 0, step: 1, placeholder: "0", :id => "basementsNbrCOM", :oninput => "this.value = Math.abs(this.value)", :onchange => 'setRecommendedShafts(), setPrices()'}) %><br>
+            Number of separate businesses: <%= f.number_field(:seperateBusinessesNbr, {min: 0, step: 1, placeholder: "0", :id => "seperateBusinessesNbrCOM", :oninput => "this.value = Math.abs(this.value)", :onchange => 'setRecommendedShafts(), setPrices()'}) %><br>
+            Number of available parking spaces: <%= f.number_field(:parkingsNbr, {min: 0, step: 1, placeholder: "0", :id => "parkingsNbrCOM", :oninput => "this.value = Math.abs(this.value)", :onchange => 'setRecommendedShafts(), setPrices()'}) %><br>
+            Number of elevator shafts: <%= f.number_field(:elevatorsNbr, {min: 0, step: 1, placeholder: "0", :id => "elevatorsNbrCOM", :oninput => "this.value = Math.abs(this.value)", :onchange => 'setRecommendedShafts(), setPrices()'}) %><br>
         </div>
         <div id="corporateDiv">
-            Number of floors: <%= f.number_field(:floorsNbrCOR, {min: 0, step: 1, placeholder: "0", :id => "floorsNbrCOR", :oninput => "this.value = Math.abs(this.value)", :onchange => 'setRecommendedShafts(), setPrices()'}) %><br>
-            Number of basements: <%= f.number_field(:basementsNbrCOR, {min: 0, step: 1, placeholder: "0", :id => "basementsNbrCOR", :oninput => "this.value = Math.abs(this.value)", :onchange => 'setRecommendedShafts(), setPrices()'}) %><br>
-            Number of available parking spaces: <%= f.number_field(:parkingsNbrCOR, {min: 0, step: 1, placeholder: "0", :id => "parkingsNbrCOR", :oninput => "this.value = Math.abs(this.value)", :onchange => 'setRecommendedShafts(), setPrices()'}) %><br>
-            Number of separate rental companies: <%= f.number_field(:seperateRentalCompaniesNbrCOR, {min: 0, step: 1, placeholder: "0", :id => "seperateRentalCompaniesNbrCOR", :oninput => "this.value = Math.abs(this.value)", :onchange => 'setRecommendedShafts(), setPrices()'}) %><br>
-            Maximum amount of occupants per floor: <%= f.number_field(:occupantsPerFloorCOR, {min: 0, step: 1, placeholder: "0", :id => "occupantsPerFloorCOR", :oninput => "this.value = Math.abs(this.value)", :onchange => 'setRecommendedShafts(), setPrices()'}) %><br>
+            Number of floors: <%= f.number_field(:floorsNbr, {min: 0, step: 1, placeholder: "0", :id => "floorsNbrCOR", :oninput => "this.value = Math.abs(this.value)", :onchange => 'setRecommendedShafts(), setPrices()'}) %><br>
+            Number of basements: <%= f.number_field(:basementsNbr, {min: 0, step: 1, placeholder: "0", :id => "basementsNbrCOR", :oninput => "this.value = Math.abs(this.value)", :onchange => 'setRecommendedShafts(), setPrices()'}) %><br>
+            Number of available parking spaces: <%= f.number_field(:parkingsNbr, {min: 0, step: 1, placeholder: "0", :id => "parkingsNbrCOR", :oninput => "this.value = Math.abs(this.value)", :onchange => 'setRecommendedShafts(), setPrices()'}) %><br>
+            Number of separate rental companies: <%= f.number_field(:seperateRentalCompaniesNbr, {min: 0, step: 1, placeholder: "0", :id => "seperateRentalCompaniesNbrCOR", :oninput => "this.value = Math.abs(this.value)", :onchange => 'setRecommendedShafts(), setPrices()'}) %><br>
+            Maximum amount of occupants per floor: <%= f.number_field(:occupantsPerFloor, {min: 0, step: 1, placeholder: "0", :id => "occupantsPerFloorCOR", :oninput => "this.value = Math.abs(this.value)", :onchange => 'setRecommendedShafts(), setPrices()'}) %><br>
         </div>
         <div id="hybridDiv">
             Number of floors: <%= f.number_field(:nbrFloors, {min: 0, step: 1, placeholder: "0", :id => "floorsNbrHYB", :oninput => "this.value = Math.abs(this.value)", :onchange => 'setRecommendedShafts(), setPrices()'}) %><br>
@@ -453,19 +453,19 @@
         <br>
         Recommended amount of elevators: <%= f.number_field(:recommendedShafts, {min: 0, step: 1, placeholder: "0", disabled: true, :id => "recommendedShafts", :oninput => "this.value = Math.abs(this.value)", :onchange => 'setRecommendedShafts(), setPrices()'}) %><br>
         Select an elevator range<br>
-        <%= f.radio_button("quality", "standard", {:onchange => 'setRecommendedShafts(), setPrices()'}) %>Standard<br>
+        <%= f.radio_button(:quality, "standard", {:onchange => 'setRecommendedShafts(), setPrices()'}) %>Standard<br>
         <%= f.radio_button(:quality, "premium", {:onchange => 'setRecommendedShafts(), setPrices()'}) %>Premium<br>
         <%= f.radio_button(:quality, "excelium", {:onchange => 'setRecommendedShafts(), setPrices()'}) %>Excelium<br><br>
 
     <div style="text-align: center;">
-        Price for 1 elevator unit: <%= text_field_tag("priceUnit", "", placeholder: "0", disabled: true) %><br>
-        Installation costs: <%= text_field_tag("costInstallations", "", placeholder: "0", disabled: true) %><br>
-        Total cost: <%= text_field_tag("costTotal", "", placeholder: "0", disabled: true) %><br>
+        Price for 1 elevator unit: <%= f.text_field("priceUnit", {placeholder: "0", disabled: true, :id => "priceUnit"}) %><br>
+        Installation costs: <%= f.text_field("costInstallations", {placeholder: "0", disabled: true, :id => "costInstallations"}) %><br>
+        Total cost: <%= f.text_field("costTotal", {placeholder: "0", disabled: true, :id => "costTotal"}) %><br>
     </div>
 
     <br>
 
-    <%= f.submit "Save Form" %>
+    <%= f.submit "Save Form", class: "btn btn-default" %>
 
     <% end %>
 
