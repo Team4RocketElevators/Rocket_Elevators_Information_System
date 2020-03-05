@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 
 <head>
-    <link rel="icon" type="image/png" href="../assets/images/favicon.png">
     <meta charset="utf-8" />
     <title><%= @page_title %></title>
+    <link rel="icon" type="image/png" href="../assets/images/favicon.png">
     <meta name="description" content="Rocket Elevators - Price Estimate Form" />
     <meta name="Author" content="Isaac Laquerre [www.codeboxx.biz]" />
 	<!-- mobile settings -->
@@ -32,6 +32,10 @@
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 
     <style>
+        .hidden {
+            display: none;
+        }
+
         #form {
             font-size: 18px;
             font-family: system-ui;
@@ -309,19 +313,19 @@
         }
     </script>
         <script>
-			/*if (document.cookie === "EN" && document.location.href != "https://rocketelevatorsil.com/submission-form.html" && !window.location.href.includes("?prefill=")) {
-                var link = './submission-form.html';
+			if (document.cookie === "EN" && document.location.href != "../submissionforms/new" && !window.location.href.includes("?prefill=")) {
+                var link = '../submissionforms/new';
                 if (window.location.href.indexOf("prefill") > -1) link += "?prefill=" + window.location.href.split("?prefill=")[1];
 				document.location.href = link;
 			}
-			else if (document.cookie === "FR" && document.location.href != "https://rocketelevatorsil.com/formulaire-de-soumission.html" && !window.location.href.includes("?prefill=")) {
-                var link = './formulaire-de-soumission.html';
+			else if (document.cookie === "FR" && document.location.href != "../formulairesdesoumission" && !window.location.href.includes("?prefill=")) {
+                var link = '../formulairesdesoumission/new';
                 if (window.location.href.indexOf("prefill") > -1) link += "?prefill=" + window.location.href.split("?prefill=")[1];
 				document.location.href = link;
-			}*/
+			}
 			function switchLanguage(value) {
                 document.cookie = value;
-                var link = './formulaire-de-soumission.html';
+                var link = '../formulairesdesoumission/new';
                 if (window.location.href.indexOf("prefill") > -1) {
                     var prefill = window.location.href.split("prefill=")[1];
                     if (prefill === "Residential") link += "?prefill=Residentiel";
@@ -410,7 +414,7 @@
         <p style="font-size: 35px; font-style: bold;">Price Estimation Form</p>
         <p style="font-size: 20px;">Please select your desired options</p>
         <br>Select a building type<br>
-        <%= f.select("building-type-select", options_for_select([["-", "empty", {:id => "optionID"}], ["Residential", "residential"], ["Commercial", "commercial"], ["Corporate", "corporate"], ["Hybrid", "hybrid"]], selected: "-", disabled; "-", hidden: "-"), :id => "buildingSelect") %>
+        <%= f.select("building-type-select", options_for_select([["-", "empty", {class: 'hidden'}], ["Residential", "residential"], ["Commercial", "commercial"], ["Corporate", "corporate"], ["Hybrid", "hybrid"]], selected: "-", disabled: "-"), {}, {class: "form-select", :id => "buildingSelect", :onchange => "inputs(this.value);"}) %>
         <!-- <select class="form-select" onchange="inputs(this.value);" name="building-type-select" id="buildingSelect"> -->
             <!-- <option name="empty" id="optionID" value="empty" selected disabled hidden>-</option>
             <option name="residential" value="residential">Residential</option>
@@ -472,8 +476,8 @@
             disabled><br>
         Select an elevator range<br>
         <%= f.radio_button("quality", "standard", {:onchange => 'setRecommendedShafts(), setPrices()'}) %>Standard<br>
-        <%= f.radio_button(:quality, "premium", :onchange => 'setRecommendedShafts(), setPrices()') %>Premium<br>
-        <%= f.radio_button(:quality, "excelium", :onchange => 'setRecommendedShafts(), setPrices()') %>Excelium<br><br>
+        <%= f.radio_button(:quality, "premium", {:onchange => 'setRecommendedShafts(), setPrices()'}) %>Premium<br>
+        <%= f.radio_button(:quality, "excelium", {:onchange => 'setRecommendedShafts(), setPrices()'}) %>Excelium<br><br>
 
     <div style="text-align: center;">
         Price for 1 elevator unit: <%= text_field_tag("priceUnit", "", placeholder: "0", disabled: true) %><br>

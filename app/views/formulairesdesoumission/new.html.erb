@@ -309,7 +309,7 @@
         }
     </script>
         <script>
-			/*if (document.cookie === "EN" && document.location.href != "../submissionsform/new" && !window.location.href.includes("?prefill=")) {
+			if (document.cookie === "EN" && document.location.href != "../submissionsform/new" && !window.location.href.includes("?prefill=")) {
                 var link = '../submissionsform/new';
                 if (window.location.href.indexOf("prefill") > -1) link += "?prefill=" + window.location.href.split("?prefill=")[1];
 				document.location.href = link;
@@ -318,7 +318,7 @@
                 var link = '../formulairesdesoumission/new';
                 if (window.location.href.indexOf("prefill") > -1) link += "?prefill=" + window.location.href.split("?prefill=")[1];
 				document.location.href = link;
-			}*/
+			}
 			function switchLanguage(value) {
                 document.cookie = value;
                 var link = '../submissionforms/new';
