@@ -146,7 +146,7 @@
     <script>
         function switchLanguage(value) {
             document.cookie = value;
-            var link = '../formulairesdesoumission';
+            var link = '../formulairesdesoumission/new';
             if (window.location.href.indexOf("prefill") > -1) {
                 var prefill = window.location.href.split("prefill=")[1];
                 if (prefill === "Residential") link += "?prefill=Residentiel";
@@ -154,7 +154,7 @@
                 else if (prefill === "Corporate") link += "?prefill=Corporatif";
                 else if (prefill === "Hybrid") link += "?prefill=Hybride";
             }
-            if (value === "FR") document.location.href = link;
+            if (value === "EN") document.location.href = link;
             else return;
         }
     </script>
@@ -229,9 +229,7 @@
 </div>
 <h1 align="center"><%= @title %></h1>
 <title><%= @page_title %></title>
-
-<div class="h-150"></div>
-
+<br><br>
 <a href="./submissionforms/new">
         <button align="center" class="btn btn-default center">New Form</button>
 </a>

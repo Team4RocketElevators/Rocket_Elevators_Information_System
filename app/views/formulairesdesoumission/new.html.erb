@@ -146,7 +146,7 @@
         function getUrlVars() {
             var prefill = window.location.href.split("prefill=")[1];
             if (!prefill) return;
-            if (prefill != "Residentiel" && prefill != "Commercial" && prefill != "Corporatif" && prefill != "Hybride") return;
+            if (prefill != "Residential" && prefill != "Commercial" && prefill != "Corporate" && prefill != "Hybrid") return;
             document.getElementById(prefill.toLowerCase()).setAttribute("selected", "true");
             document.getElementById("optionID").textContent = prefill;
             document.getElementById(prefill.toLowerCase()).style.display = "block";
@@ -309,7 +309,7 @@
         }
     </script>
         <script>
-			if (document.cookie === "EN" && document.location.href != "../submissionsform/new" && !window.location.href.includes("?prefill=")) {
+			/*if (document.cookie === "EN" && document.location.href != "../submissionsform/new" && !window.location.href.includes("?prefill=")) {
                 var link = '../submissionsform/new';
                 if (window.location.href.indexOf("prefill") > -1) link += "?prefill=" + window.location.href.split("?prefill=")[1];
 				document.location.href = link;
@@ -318,7 +318,7 @@
                 var link = '../formulairesdesoumission/new';
                 if (window.location.href.indexOf("prefill") > -1) link += "?prefill=" + window.location.href.split("?prefill=")[1];
 				document.location.href = link;
-			}
+			}*/
 			function switchLanguage(value) {
                 document.cookie = value;
                 var link = '../submissionforms/new';
@@ -411,7 +411,13 @@
         <p style="font-size: 35px; font-style: bold;">Formulaire d'Estimation de Prix</p>
         <p style="font-size: 20px;">Veuillez selectionner les options désirées</p>
         <br>Choisir un bâtiment<br>
-        <%= f.select("building-type-select", options_for_select([["-", "empty", {class: 'hidden'}], ["Residentiel", "residentiel"], ["Commercial", "commercial"], ["Corporatif", "corporatif"], ["Hybride", "hybride"]], selected: "-", disabled: "-"), {}, {class: "form-select", :id => "buildingSelect", :onchange => "inputs(this.value);"}) %><br><br>
+        <select class="form-select" onchange="inputs(this.value);" name="building-type-select" id="buildingSelect">
+            <option name="empty" id="optionID" value="empty" selected disabled hidden>-</option>
+            <option name="residentiel" value="residentiel">Residentiel</option>
+            <option name="commercial" value="commercial">Commercial</option>
+            <option name="corporatif" value="corporatif">Corporatif</option>
+            <option name="hybride" value="hybride">Hybride</option>
+        </select><br><br>
         <img class="center" id="residentiel" src="../assets/images/residentialBuilding.jpeg"
             alt="Bâtiment Résidentiel" width="400">
         <img class="center" id="commercial" src="../assets/images/commercialBuilding.jpeg"

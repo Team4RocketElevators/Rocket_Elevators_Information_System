@@ -152,7 +152,7 @@
             if (!prefill) return;
             if (prefill != "Residential" && prefill != "Commercial" && prefill != "Corporate" && prefill != "Hybrid") return;
             document.getElementById(prefill.toLowerCase()).setAttribute("selected", "true");
-            document.getElementsByClass("hidden")[0].textContent = prefill;
+            document.getElementById("optionID").textContent = prefill;
             document.getElementById(prefill.toLowerCase()).style.display = "block";
             document.getElementById(prefill.toLowerCase() + "Div").style.display = "inline";
         }
@@ -211,8 +211,8 @@
             document.getElementById("costInstallations").value = "$" + numberWithCommas(fee.toFixed(2));
             switch (buildingType) {
                 case "commercial":
-                    if (parseInt(document.getElementById("elevatorsNbr" + buildingLetter).value) === 0) fee = 0;
-                    var priceTotal = numberWithCommas((((result * parseInt(document.getElementById("elevatorsNbr" + buildingLetter).value))) + fee).toFixed(2)).replace(/NaN/g, "0");
+                    if (parseInt(document.getElementsByName("elevatorsNbr" + buildingLetter)[0].value) === 0) fee = 0;
+                    var priceTotal = numberWithCommas((((result * parseInt(document.getElementsByName("elevatorsNbr" + buildingLetter)[0].value))) + fee).toFixed(2)).replace(/NaN/g, "0");
                     document.getElementById("costTotal").value = "$" + priceTotal;
                     break;
                 case "residential":
@@ -258,13 +258,13 @@
                     var formselect = document.getElementById("buildingSelect");
                     var buildingType = formselect.options[formselect.selectedIndex].value;
                     var buildingLetter = buildingType.toUpperCase().slice(0, 3);
-                    var elevatorNbr = document.getElementById("elevatorsNbr" + buildingLetter).value;
+                    var elevatorNbr = document.getElementsByName("elevatorsNbr" + buildingLetter)[0].value;
                     document.getElementById("recommendedShafts").value = elevatorNbr;
                     break;
                 case "residential":
-                    var appartmentsNbr = parseInt(document.getElementById("appartmentsNbrRES").value);
-                    var floorsNbr = parseInt(document.getElementById("floorsNbrRES").value) || 1;
-                    var basementsNbr = parseInt(document.getElementById("basementsNbrRES").value) || 0;
+                    var appartmentsNbr = parseInt(document.getElementsByName("appartmentsNbrRES")[0].value);
+                    var floorsNbr = parseInt(document.getElementsByName("floorsNbrRES")[0].value) || 1;
+                    var basementsNbr = parseInt(document.getElementsByName("basementsNbrRES")[0].value) || 0;
                     var shafts = Math.ceil(Math.ceil(appartmentsNbr / floorsNbr) / 6);
                     if (floorsNbr > 20) {
                         shafts = shafts * 2;
@@ -313,7 +313,7 @@
         }
     </script>
         <script>
-			if (document.cookie === "EN" && document.location.href != "../submissionforms/new" && !window.location.href.includes("?prefill=")) {
+			/*if (document.cookie === "EN" && document.location.href != "../submissionforms/new" && !window.location.href.includes("?prefill=")) {
                 var link = '../submissionforms/new';
                 if (window.location.href.indexOf("prefill") > -1) link += "?prefill=" + window.location.href.split("?prefill=")[1];
 				document.location.href = link;
@@ -322,7 +322,7 @@
                 var link = '../formulairesdesoumission/new';
                 if (window.location.href.indexOf("prefill") > -1) link += "?prefill=" + window.location.href.split("?prefill=")[1];
 				document.location.href = link;
-			}
+			}*/
 			function switchLanguage(value) {
                 document.cookie = value;
                 var link = '../formulairesdesoumission/new';
@@ -414,7 +414,14 @@
         <p style="font-size: 35px; font-style: bold;">Price Estimation Form</p>
         <p style="font-size: 20px;">Please select your desired options</p>
         <br>Select a building type<br>
-        <%= f.select("building-type-select", options_for_select([["-", "empty", {class: 'hidden'}], ["Residential", "residential"], ["Commercial", "commercial"], ["Corporate", "corporate"], ["Hybrid", "hybrid"]], selected: "-", disabled: "-"), {}, {class: "form-select", :id => "buildingSelect", :onchange => "inputs(this.value);"}) %><br><br>
+        <%= f.select("building-type-select", options_for_select([["-", "empty", {class: 'hidden'}], ["Residential", "residential"], ["Commercial", "commercial"], ["Corporate", "corporate"], ["Hybrid", "hybrid"]], selected: "-", disabled: "-"), {}, {class: "form-select", :id => "buildingSelect", :onchange => "inputs(this.value);"}) %>
+        <!-- <select class="form-select" onchange="inputs(this.value);" name="building-type-select" id="buildingSelect"> -->
+            <!-- <option name="empty" id="optionID" value="empty" selected disabled hidden>-</option>
+            <option name="residential" value="residential">Residential</option>
+            <option name="commercial" value="commercial">Commercial</option>
+            <option name="corporate" value="corporate">Corporate</option>
+            <option name="hybrid" value="hybrid">Hybrid</option> -->
+        </select><br><br>
         <img class="center" id="residential" src="../assets/images/residentialBuilding.jpeg"
             alt="Residential Building" width="400">
         <img class="center" id="commercial" src="../assets/images/commercialBuilding.jpeg"
@@ -424,23 +431,37 @@
         <img class="center" id="hybrid" src="../assets/images/hybridBuilding.jpeg" alt="Hybrid Building"
             width="400">
         <div id="residentialDiv">
-            Number of appartments: <%= f.number_field(:appartmentsNbrRES, {min: 0, step: 1, placeholder: "0", :id => "appartmentsNbrRES", :oninput => "this.value = Math.abs(this.value)", :onchange => 'setRecommendedShafts(), setPrices()'}) %><br>
-            Number of floors: <%= f.number_field(:floorsNbrRES, {min: 0, step: 1, placeholder: "0", :id => "floorsNbrRES", :oninput => "this.value = Math.abs(this.value)", :onchange => 'setRecommendedShafts(), setPrices()'}) %><br>
-            Number of basements:<%= f.number_field(:basementsNbrRES, {min: 0, step: 1, placeholder: "0", :id => "basementsNbrRES", :oninput => "this.value = Math.abs(this.value)", :onchange => 'setRecommendedShafts(), setPrices()'}) %><br>
+            Number of appartments: <input placeholder="0" id="number" onchange="setRecommendedShafts(), setPrices()" type="number" name="appartmentsNbrRES" min="0"
+                oninput="this.value = Math.abs(this.value)"><br>
+            Number of floors: <input placeholder="0" id="number" onchange="setRecommendedShafts(), setPrices()" type="number" name="floorsNbrRES" min="0"
+                oninput="this.value = Math.abs(this.value)"><br>
+            Number of basements: <input placeholder="0" id="number" onchange="setRecommendedShafts(), setPrices()" type="number" name="basementsNbrRES" min="0"
+                oninput="this.value = Math.abs(this.value)"><br>
         </div>
         <div id="commercialDiv">
-            Number of floors: <%= f.number_field(:floorsNbrCOM, {min: 0, step: 1, placeholder: "0", :id => "floorsNbrCOM", :oninput => "this.value = Math.abs(this.value)", :onchange => 'setRecommendedShafts(), setPrices()'}) %><br>
-            Number of basements: <%= f.number_field(:basementsNbrCOM, {min: 0, step: 1, placeholder: "0", :id => "basementsNbrCOM", :oninput => "this.value = Math.abs(this.value)", :onchange => 'setRecommendedShafts(), setPrices()'}) %><br>
-            Number of separate businesses: <%= f.number_field(:seperateBusinessesNbrCOM, {min: 0, step: 1, placeholder: "0", :id => "seperateBusinessesNbrCOM", :oninput => "this.value = Math.abs(this.value)", :onchange => 'setRecommendedShafts(), setPrices()'}) %><br>
-            Number of available parking spaces: <%= f.number_field(:parkingsNbrCOM, {min: 0, step: 1, placeholder: "0", :id => "parkingsNbrCOM", :oninput => "this.value = Math.abs(this.value)", :onchange => 'setRecommendedShafts(), setPrices()'}) %><br>
-            Number of elevator shafts: <%= f.number_field(:elevatorsNbrCOM, {min: 0, step: 1, placeholder: "0", :id => "elevatorsNbrCOM", :oninput => "this.value = Math.abs(this.value)", :onchange => 'setRecommendedShafts(), setPrices()'}) %><br>
+            Number of floors: <input placeholder="0" id="number" onchange="setRecommendedShafts(), setPrices()" type="number" name="floorsNbrCOM" min="0"
+                oninput="this.value = Math.abs(this.value)"><br>
+            Number of basements: <input placeholder="0" id="number" onchange="setRecommendedShafts(), setPrices()" type="number" name="basementsNbrCOM" min="0"
+                oninput="this.value = Math.abs(this.value)"><br>
+            Number of separate businesses: <input placeholder="0" id="number" onchange="setRecommendedShafts(), setPrices()" type="number"
+                name="seperateBusinessesNbrCOM" min="0" oninput="this.value = Math.abs(this.value)"><br>
+            Number of available parking spaces: <input placeholder="0" id="number" onchange="setRecommendedShafts(), setPrices()" type="number" name="parkingsNbrCOM"
+                min="0" oninput="this.value = Math.abs(this.value)"><br>
+            Number of elevator shafts: <input placeholder="0" id="number" onchange="setRecommendedShafts(), setPrices()" type="number"
+                onchange="document.getElementById('recommendedShafts').value = this.value" name="elevatorsNbrCOM"
+                min="0" oninput="this.value = Math.abs(this.value)"><br>
         </div>
         <div id="corporateDiv">
-            Number of floors: <%= f.number_field(:floorsNbrCOR, {min: 0, step: 1, placeholder: "0", :id => "floorsNbrCOR", :oninput => "this.value = Math.abs(this.value)", :onchange => 'setRecommendedShafts(), setPrices()'}) %><br>
-            Number of basements: <%= f.number_field(:basementsNbrCOR, {min: 0, step: 1, placeholder: "0", :id => "basementsNbrCOR", :oninput => "this.value = Math.abs(this.value)", :onchange => 'setRecommendedShafts(), setPrices()'}) %><br>
-            Number of available parking spaces: <%= f.number_field(:parkingsNbrCOR, {min: 0, step: 1, placeholder: "0", :id => "parkingsNbrCOR", :oninput => "this.value = Math.abs(this.value)", :onchange => 'setRecommendedShafts(), setPrices()'}) %><br>
-            Number of separate rental companies: <%= f.number_field(:seperateRentalCompaniesNbrCOR, {min: 0, step: 1, placeholder: "0", :id => "seperateRentalCompaniesNbrCOR", :oninput => "this.value = Math.abs(this.value)", :onchange => 'setRecommendedShafts(), setPrices()'}) %><br>
-            Maximum amount of occupants per floor: <%= f.number_field(:occupantsPerFloorCOR, {min: 0, step: 1, placeholder: "0", :id => "occupantsPerFloorCOR", :oninput => "this.value = Math.abs(this.value)", :onchange => 'setRecommendedShafts(), setPrices()'}) %><br>
+            Number of floors: <input placeholder="0" id="number" onchange="setRecommendedShafts(), setPrices()" type="number" name="floorsNbrCOR" min="0"
+                oninput="this.value = Math.abs(this.value)"><br>
+            Number of basements: <input placeholder="0" id="number" type="number" onchange="setRecommendedShafts(), setPrices()" name="basementsNbrCOR" min="0"
+                oninput="this.value = Math.abs(this.value)"><br>
+            Number of available parking spaces: <input placeholder="0" id="number" onchange="setRecommendedShafts(), setPrices()" type="number" name="parkingsNbrCOR"
+                min="0" oninput="this.value = Math.abs(this.value)"><br>
+            Number of separate rental companies: <input placeholder="0" id="number" onchange="setRecommendedShafts(), setPrices()" type="number"
+                name="seperateRentalCompaniesNbrCOR" min="0" oninput="this.value = Math.abs(this.value)"><br>
+            Maximum amount of occupants per floor: <input placeholder="0" id="number" onchange="setRecommendedShafts(), setPrices()" type="number"
+                name="occupantsPerFloorNbrCOR" min="0" oninput="this.value = Math.abs(this.value)"><br>
         </div>
         <div id="hybridDiv">
             Number of floors: <%= f.number_field(:nbrFloors, {min: 0, step: 1, placeholder: "0", :id => "floorsNbrHYB", :oninput => "this.value = Math.abs(this.value)", :onchange => 'setRecommendedShafts(), setPrices()'}) %><br>
@@ -451,7 +472,8 @@
             Active/busy hours: <%= f.number_field(:busyHours, {min: 0, max: 24, step: 1, placeholder: "0", :id => "busyHoursNbrHYB", :oninput => "this.value = Math.abs(this.value)", :onchange => 'to24H(this);'}) %><br>
         </div>
         <br>
-        Recommended amount of elevators: <%= f.number_field(:recommendedShafts, {min: 0, step: 1, placeholder: "0", disabled: true, :id => "recommendedShafts", :oninput => "this.value = Math.abs(this.value)", :onchange => 'setRecommendedShafts(), setPrices()'}) %><br>
+        Recommended amount of elevators: <input placeholder="0" id="recommendedShafts" value="0" type="number"
+            disabled><br>
         Select an elevator range<br>
         <%= f.radio_button("quality", "standard", {:onchange => 'setRecommendedShafts(), setPrices()'}) %>Standard<br>
         <%= f.radio_button(:quality, "premium", {:onchange => 'setRecommendedShafts(), setPrices()'}) %>Premium<br>
