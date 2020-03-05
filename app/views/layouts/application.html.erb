@@ -2,12 +2,10 @@
 <html>
   <head>
     <title>Rocket Elevators</title>
-    <link rel="icon" type="image/png" href="../assets/images/favicon.png">
+    <%= favicon_link_tag("https://i.imgur.com/WjtYVAr.png", rel: "icon", type: "image/png") %>
   </head>
 
   <body>
-         <p class="notice"><%= notice %></p>
-       <p class="alert"><%= alert %></p>
     <%= yield %>
   </body>
 </html>
