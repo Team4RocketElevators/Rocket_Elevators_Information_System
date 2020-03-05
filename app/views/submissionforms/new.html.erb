@@ -410,12 +410,13 @@
         <p style="font-size: 35px; font-style: bold;">Price Estimation Form</p>
         <p style="font-size: 20px;">Please select your desired options</p>
         <br>Select a building type<br>
-        <select class="form-select" onchange="inputs(this.value);" name="building-type-select" id="buildingSelect">
-            <option name="empty" id="optionID" value="empty" selected disabled hidden>-</option>
+        <%= f.select(:building-type-select, options_for_select([["-", "empty", {:id => "optionID"}], ["Residential", "residential"], ["Commercial", "commercial"], ["Corporate", "corporate"], ["Hybrid", "hybrid"]], selected: "-"), :id => "buildingSelect") %>
+        <!-- <select class="form-select" onchange="inputs(this.value);" name="building-type-select" id="buildingSelect"> -->
+            <!-- <option name="empty" id="optionID" value="empty" selected disabled hidden>-</option>
             <option name="residential" value="residential">Residential</option>
             <option name="commercial" value="commercial">Commercial</option>
             <option name="corporate" value="corporate">Corporate</option>
-            <option name="hybrid" value="hybrid">Hybrid</option>
+            <option name="hybrid" value="hybrid">Hybrid</option> -->
         </select><br><br>
         <img class="center" id="residential" src="../assets/images/residentialBuilding.jpeg"
             alt="Residential Building" width="400">
@@ -464,6 +465,7 @@
             Number of available parking spaces: <%= f.number_field(:availableParkingSpaces, {min: 0, step: 1, placeholder: "0", :id => "parkingsNbrHYB", :oninput => "this.value = Math.abs(this.value)", :onchange => 'setRecommendedShafts(), setPrices()'}) %><br>
             Number of separate businesses: <%= f.number_field(:seperateBusinesses, {min: 0, step: 1, placeholder: "0", :id => "seperateBusinessesNbrHYB", :oninput => "this.value = Math.abs(this.value)", :onchange => 'setRecommendedShafts(), setPrices()'}) %><br>
             Maximum amount of occupants per floor: <%= f.number_field(:occupantsPerFloor, {min: 0, step: 1, placeholder: "0", :id => "occupantsPerFloorHYB", :oninput => "this.value = Math.abs(this.value)", :onchange => 'setRecommendedShafts(), setPrices()'}) %><br>
+            Active/busy hours: <%= f.number_field(:busyHours, {min: 0, max: 24, step: 1, placeholder: "0", :id => "busyHoursNbrHYB", :oninput => "this.value = Math.abs(this.value)", :onchange => 'to24H(this);'}) %><br>
         </div>
         <br>
         Recommended amount of elevators: <input placeholder="0" id="recommendedShafts" value="0" type="number"
