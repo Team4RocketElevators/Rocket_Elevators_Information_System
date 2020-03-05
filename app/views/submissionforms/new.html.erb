@@ -410,7 +410,7 @@
         <p style="font-size: 35px; font-style: bold;">Price Estimation Form</p>
         <p style="font-size: 20px;">Please select your desired options</p>
         <br>Select a building type<br>
-        <%= f.select(:building-type-select, options_for_select([["-", "empty", {:id => "optionID"}], ["Residential", "residential"], ["Commercial", "commercial"], ["Corporate", "corporate"], ["Hybrid", "hybrid"]], selected: "-"), :id => "buildingSelect") %>
+        <%= f.select("building-type-select", options_for_select([["-", "empty", {:id => "optionID"}], ["Residential", "residential"], ["Commercial", "commercial"], ["Corporate", "corporate"], ["Hybrid", "hybrid"]], selected: "-", disabled; "-", hidden: "-"), :id => "buildingSelect") %>
         <!-- <select class="form-select" onchange="inputs(this.value);" name="building-type-select" id="buildingSelect"> -->
             <!-- <option name="empty" id="optionID" value="empty" selected disabled hidden>-</option>
             <option name="residential" value="residential">Residential</option>
