@@ -64,3 +64,19 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
+
+gem 'capistrano', '~> 3.10', require: false
+gem 'capistrano-rails', '~> 1.4', require: false
+gem 'capistrano-bundler', '>= 1.1.0'
+gem 'rvm1-capistrano3', require: false
+gem 'capistrano3-puma'
+
+# gem 'rbnacl', '< 5.0', :require => false                                                                                                                                                                
+# gem 'rbnacl-libsodium', :require => false                                                                                                                                                               
+# gem 'bcrypt_pbkdf', '< 2.0', :require => false
+
+# gem 'ed25519' (>= 1.2, < 2.0)
+# gem 'bcrypt_pbkdf' (>= 1.0, < 2.0)
+gem 'ed25519', '>= 1.2'
+gem 'bcrypt_pbkdf', '>= 1.0'
