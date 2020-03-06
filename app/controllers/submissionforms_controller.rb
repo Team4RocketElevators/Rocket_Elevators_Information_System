@@ -13,12 +13,9 @@ class SubmissionformsController < ApplicationController
         @page_title = "Rocket Elevators - New Price Estimation Form"
     end
     def create
-        #render plain: params[:form].inspect
         @form = Test.new(form_params)
 
         @form.save
-
-        puts @authenticity_token
 
         redirect_to "/submissionforms/" + @form.id.to_s
     end

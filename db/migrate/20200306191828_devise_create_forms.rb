@@ -1,6 +1,8 @@
-class CreateTests < ActiveRecord::Migration[5.2]
+# frozen_string_literal: true
+
+class DeviseCreateForms < ActiveRecord::Migration[5.2]
   def change
-    create_table :tests do |t|
+    create_table :forms do |t|
       t.string :building
       t.integer :appartmentsNbrRES
       t.integer :floorsNbrRES
