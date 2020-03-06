@@ -1,3 +1,257 @@
 // Place all the styles related to the fr controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+html {
+    scroll-behavior: smooth;
+}
+
+.btn-default {
+    color:white;
+}
+
+.btn-default:hover {
+    background-color:white !important;
+    color:#0b64a0 !important;
+}
+
+#contactbar {
+    background-color: #0b64a0;
+    color: lightgray;
+}
+
+#contactbar:hover {
+    background-color: #1980b6 !important;
+    color: white !important;
+}
+.dropbtn {
+    border: none;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: rgba(0,0,0,25);
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(255,255,255,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: rgb(255, 255, 255);
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {background-color: #bbbbbb44;}
+
+.dropdown:hover .dropdown-content {display: block;}
+
+.hovered:hover {
+    background-color: rgba(255, 255, 255, 0.192);
+}
+.rotate:hover i {
+    -webkit-transform: rotate(90deg);
+            transform: rotate(90deg);
+}
+.mapouter {
+    position: relative;
+    text-align: right;
+    height: 500px;
+    width: 400px;
+}
+.gmap_canvas {
+    overflow: hidden;
+    background: none !important;
+    height: 500px;
+    width: 400px;
+}
+
+.center {
+     margin-left: auto;
+     margin-right: auto;
+     border: 1px solid black;
+}
+body {
+    background-color: #f8f8f8;
+}
+
+    .btn-default:hover {
+        background-color:white !important;
+        color:#0b64a0 !important;
+    }
+
+    #contactbar {
+        background-color: #0b64a0;
+        color: lightgray;
+    }
+
+    #contactbar:hover {
+        background-color: #1980b6 !important;
+        color: white !important;
+    }
+    .dropbtn {
+        border: none;
+    }
+
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: rgba(0,0,0,25);
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(255,255,255,0.2);
+        z-index: 1;
+    }
+
+    .dropdown-content a {
+        color: rgb(255, 255, 255);
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+    }
+
+    .dropdown-content a:hover {background-color: #bbbbbb44;}
+
+    .dropdown:hover .dropdown-content {display: block;}
+
+    .hovered:hover {
+        background-color: rgba(255, 255, 255, 0.192);
+    }
+    .rotate:hover i {
+        -webkit-transform: rotate(90deg);
+                transform: rotate(90deg);
+    }
+
+// Residentiel
+    .center {
+            margin-left: auto;
+            margin-right: auto;
+            border: 1px solid black;
+    }
+
+
+        .btn-default {
+            color:white;
+        }
+
+        .btn-default:hover {
+            background-color:white !important;
+            color:#0b64a0 !important;
+        }
+
+        #contactbar {
+            background-color: #0b64a0;
+            color: lightgray;
+        }
+        .dropbtn {
+            border: none;
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: rgba(0,0,0,25);
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(255,255,255,0.2);
+            z-index: 1;
+        }
+
+        .dropdown-content a {
+            color: rgb(255, 255, 255);
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {background-color: #bbbbbb44;}
+
+        .dropdown:hover .dropdown-content {display: block;}
+
+        .hovered:hover {
+            background-color: rgba(255, 255, 255, 0.192);
+        }
+        .rotate:hover i {
+            -webkit-transform: rotate(90deg);
+                    transform: rotate(90deg);
+        }
+    // Corpotatif
+
+    .center {
+         margin-left: auto;
+         margin-right: auto;
+         border: 1px solid black;
+    }
+    body {
+        background-color: #f8f8f8;
+    }
+
+        .btn-default {
+            color:white;
+        }
+
+        .btn-default:hover {
+            background-color:white !important;
+            color:#0b64a0 !important;
+        }
+
+        #contactbar {
+            background-color: #0b64a0;
+            color: lightgray;
+        }
+
+        #contactbar:hover {
+            background-color: #1980b6 !important;
+            color: white !important;
+        }
+        .dropbtn {
+            border: none;
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: rgba(0,0,0,25);
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(255,255,255,0.2);
+            z-index: 1;
+        }
+
+        .dropdown-content a {
+            color: rgb(255, 255, 255);
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {background-color: #bbbbbb44;}
+
+        .dropdown:hover .dropdown-content {display: block;}
+
+        .hovered:hover {
+            background-color: rgba(255, 255, 255, 0.192);
+        }
+        .rotate:hover i {
+            -webkit-transform: rotate(90deg);
+                    transform: rotate(90deg);
+        }
