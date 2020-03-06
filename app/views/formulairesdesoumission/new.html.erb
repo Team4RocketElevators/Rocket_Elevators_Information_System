@@ -411,7 +411,7 @@
         <p style="font-size: 35px; font-style: bold;">Formulaire d'Estimation de Prix</p>
         <p style="font-size: 20px;">Veuillez selectionner les options désirées</p>
         <br>Choisir un bâtiment<br>
-        <%= f.select("building-type-select", options_for_select([["-", "empty", {class: 'hidden'}], ["Residentiel", "residentiel"], ["Commercial", "commercial"], ["Corporatif", "corporatif"], ["Hybride", "hybride"]], selected: "-", disabled: "-"), {}, {class: "form-select", :id => "buildingSelect", :onchange => "inputs(this.value);"}) %><br><br>
+         <%= f.select("building-type-select", options_for_select([["-", "empty", {class: 'hidden'}], ["Residentiel", "residentiel"], ["Commercial", "commercial"], ["Corporatif", "corporatif"], ["Hybride", "hybride"]], selected: "-", disabled: "-"), {}, {class: "form-select", :id => "buildingSelect", :onchange => "inputs(this.value);"}) %><br><br>
         <img class="center" id="residentiel" src="../assets/images/residentialBuilding.jpeg"
             alt="Bâtiment Résidentiel" width="400">
         <img class="center" id="commercial" src="../assets/images/commercialBuilding.jpeg"
