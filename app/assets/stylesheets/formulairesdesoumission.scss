@@ -1,3 +1,226 @@
 // Place all the styles related to the formulairesdesoumission controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+// formulairedesoumission
+    .center {
+        text-align: center;
+        margin:auto;
+        display:block;
+    }
+
+    #form {
+        font-size: 18px;
+        font-family: system-ui;
+        text-align: center;
+    }
+
+    #residential,
+    #commercial,
+    #corporate,
+    #hybrid {
+        display: none;
+    }
+
+    #residentialDiv,
+    #commercialDiv,
+    #corporateDiv,
+    #hybridDiv {
+        display: none;
+    }
+
+    #submitButton {
+        background: #0066A2;
+        color: white;
+        border-style: outset;
+        border-color: #0066A2;
+        border-radius: 5px;
+        height: 25px;
+        width: 100px;
+        font: bold 15px arial, sans-serif;
+        text-shadow: none;
+    }
+
+    #submitButton:hover {
+        background: rgb(0, 86, 136);
+        color: rgb(228, 228, 228);
+        cursor: pointer;
+    }
+
+    .form-select {
+        font-size: 14px;
+    }
+
+    .center {
+        margin-left: auto;
+        margin-right: auto;
+        border: 1px solid black;
+    }
+
+    body {
+        background-color: #f8f8f8;
+    }
+
+    .btn-default {
+        color: white;
+    }
+
+    .btn-default:hover {
+        background-color: white !important;
+        color: #0b64a0 !important;
+    }
+
+    .dropbtn {
+        border: none;
+    }
+
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: rgba(0, 0, 0, 25);
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(255, 255, 255, 0.2);
+        z-index: 1;
+    }
+
+    .dropdown-content a {
+        color: rgb(255, 255, 255);
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+    }
+
+    .dropdown-content a:hover {
+        background-color: #bbbbbb44;
+    }
+
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+
+    .hovered:hover {
+        background-color: rgba(255, 255, 255, 0.192);
+    }
+
+    .rotate:hover i {
+        -webkit-transform: rotate(90deg);
+        transform: rotate(90deg);
+    }
+
+    .sticky {
+        position: fixed;
+    }
+
+// new page
+
+    #form {
+        font-size: 18px;
+        font-family: system-ui;
+        text-align: center;
+    }
+
+    #residentiel,
+    #commercial,
+    #corporatif,
+    #hybride {
+        display: none;
+    }
+
+    #residentielDiv,
+    #commercialDiv,
+    #corporatifDiv,
+    #hybrideDiv {
+        display: none;
+    }
+
+    #submitButton {
+        background: #0066A2;
+        color: white;
+        border-style: outset;
+        border-color: #0066A2;
+        border-radius: 5px;
+        height: 25px;
+        width: 100px;
+        font: bold 15px arial, sans-serif;
+        text-shadow: none;
+    }
+
+    #submitButton:hover {
+        background: rgb(0, 86, 136);
+        color: rgb(228, 228, 228);
+        cursor: pointer;
+    }
+
+    .form-select {
+        font-size: 14px;
+    }
+
+    .center {
+        margin-left: auto;
+        margin-right: auto;
+        border: 1px solid black;
+    }
+
+    body {
+        background-color: #f8f8f8;
+    }
+
+    .btn-default {
+        color: white;
+    }
+
+    .btn-default:hover {
+        background-color: white !important;
+        color: #0b64a0 !important;
+    }
+
+    .dropbtn {
+        border: none;
+    }
+
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: rgba(0, 0, 0, 25);
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(255, 255, 255, 0.2);
+        z-index: 1;
+    }
+
+    .dropdown-content a {
+        color: rgb(255, 255, 255);
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+    }
+
+    .dropdown-content a:hover {
+        background-color: #bbbbbb44;
+    }
+
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+
+    .hovered:hover {
+        background-color: rgba(255, 255, 255, 0.192);
+    }
+
+    .rotate:hover i {
+        -webkit-transform: rotate(90deg);
+        transform: rotate(90deg);
+    }
+
+    .sticky {
+        position: fixed;
+    }
