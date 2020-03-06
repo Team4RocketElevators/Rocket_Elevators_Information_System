@@ -15,10 +15,18 @@
 //= link darkblue.css
 
 
-//= link scripts.js
-//= link owl.carousel.min.js
-//= link contact.js
-//= link demo.revolution_slider.js
-//= link jquery.themepunch.revolution.min.js
-//= link jquery.themepunch.tools.min.js
 //= link jquery-3.3.1.min.js
+//= link scripts.js
+//= link jquery.themepunch.tools.min.js
+//= link jquery.themepunch.revolution.min.js
+//= link demo.revolution_slider.js
+//= link bootstrap.min.js
+//= link owl.carousel.min.js
+//= link jquery.magnific-popup.min.js
+//= link jquery.mixitup.min.js
+//= link custom.fle_upload.js
+//= link contact.js
+
+
+
+
