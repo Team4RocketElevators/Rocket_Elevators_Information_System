@@ -146,7 +146,7 @@
     <script>
         function switchLanguage(value) {
             document.cookie = value;
-            var link = '../formulairesdesoumission';
+             var link = '../formulairesdesoumission';
             if (window.location.href.indexOf("prefill") > -1) {
                 var prefill = window.location.href.split("prefill=")[1];
                 if (prefill === "Residential") link += "?prefill=Residentiel";
@@ -232,6 +232,5 @@
 
 <div class="h-150"></div>
 
-<a href="./submissionforms/new">
         <button align="center" class="btn btn-default center">New Form</button>
 </a>

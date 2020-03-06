@@ -211,7 +211,7 @@
             document.getElementById("costInstallations").value = "$" + numberWithCommas(fee.toFixed(2));
             switch (buildingType) {
                 case "commercial":
-                    if (parseInt(document.getElementById("elevatorsNbr" + buildingLetter).value) === 0) fee = 0;
+                    if (parseInt(document.getElementById("elevatorsNbr" + buildingLetter).value) === 0) fee = 0;	                    if (parseInt(document.getElementsByName("elevatorsNbr" + buildingLetter)[0].value) === 0) fee = 0;
                     var priceTotal = numberWithCommas((((result * parseInt(document.getElementById("elevatorsNbr" + buildingLetter).value))) + fee).toFixed(2)).replace(/NaN/g, "0");
                     document.getElementById("costTotal").value = "$" + priceTotal;
                     break;
@@ -258,13 +258,13 @@
                     var formselect = document.getElementById("buildingSelect");
                     var buildingType = formselect.options[formselect.selectedIndex].value;
                     var buildingLetter = buildingType.toUpperCase().slice(0, 3);
-                    var elevatorNbr = document.getElementById("elevatorsNbr" + buildingLetter).value;
+                   var elevatorNbr = document.getElementById("elevatorsNbr" + buildingLetter).value;
                     document.getElementById("recommendedShafts").value = elevatorNbr;
                     break;
                 case "residential":
-                    var appartmentsNbr = parseInt(document.getElementById("appartmentsNbrRES").value);
+                      var appartmentsNbr = parseInt(document.getElementById("appartmentsNbrRES").value);
                     var floorsNbr = parseInt(document.getElementById("floorsNbrRES").value) || 1;
-                    var basementsNbr = parseInt(document.getElementById("basementsNbrRES").value) || 0;
+                     var basementsNbr = parseInt(document.getElementById("basementsNbrRES").value) || 0;
                     var shafts = Math.ceil(Math.ceil(appartmentsNbr / floorsNbr) / 6);
                     if (floorsNbr > 20) {
                         shafts = shafts * 2;
@@ -414,7 +414,7 @@
         <p style="font-size: 35px; font-style: bold;">Price Estimation Form</p>
         <p style="font-size: 20px;">Please select your desired options</p>
         <br>Select a building type<br>
-        <%= f.select("building-type-select", options_for_select([["-", "empty", {class: 'hidden'}], ["Residential", "residential"], ["Commercial", "commercial"], ["Corporate", "corporate"], ["Hybrid", "hybrid"]], selected: "-", disabled: "-"), {}, {class: "form-select", :id => "buildingSelect", :onchange => "inputs(this.value);"}) %><br><br>
+         <%= f.select("building-type-select", options_for_select([["-", "empty", {class: 'hidden'}], ["Residential", "residential"], ["Commercial", "commercial"], ["Corporate", "corporate"], ["Hybrid", "hybrid"]], selected: "-", disabled: "-"), {}, {class: "form-select", :id => "buildingSelect", :onchange => "inputs(this.value);"}) %><br><br>
         <img class="center" id="residential" src="../assets/images/residentialBuilding.jpeg"
             alt="Residential Building" width="400">
         <img class="center" id="commercial" src="../assets/images/commercialBuilding.jpeg"
@@ -432,7 +432,7 @@
             Number of floors: <%= f.number_field(:floorsNbrCOM, {min: 0, step: 1, placeholder: "0", :id => "floorsNbrCOM", :oninput => "this.value = Math.abs(this.value)", :onchange => 'setRecommendedShafts(), setPrices()'}) %><br>
             Number of basements: <%= f.number_field(:basementsNbrCOM, {min: 0, step: 1, placeholder: "0", :id => "basementsNbrCOM", :oninput => "this.value = Math.abs(this.value)", :onchange => 'setRecommendedShafts(), setPrices()'}) %><br>
             Number of separate businesses: <%= f.number_field(:seperateBusinessesNbrCOM, {min: 0, step: 1, placeholder: "0", :id => "seperateBusinessesNbrCOM", :oninput => "this.value = Math.abs(this.value)", :onchange => 'setRecommendedShafts(), setPrices()'}) %><br>
-            Number of available parking spaces: <%= f.number_field(:parkingsNbrCOM, {min: 0, step: 1, placeholder: "0", :id => "parkingsNbrCOM", :oninput => "this.value = Math.abs(this.value)", :onchange => 'setRecommendedShafts(), setPrices()'}) %><br>
+             Number of available parking spaces: <%= f.number_field(:parkingsNbrCOM, {min: 0, step: 1, placeholder: "0", :id => "parkingsNbrCOM", :oninput => "this.value = Math.abs(this.value)", :onchange => 'setRecommendedShafts(), setPrices()'}) %><br>
             Number of elevator shafts: <%= f.number_field(:elevatorsNbrCOM, {min: 0, step: 1, placeholder: "0", :id => "elevatorsNbrCOM", :oninput => "this.value = Math.abs(this.value)", :onchange => 'setRecommendedShafts(), setPrices()'}) %><br>
         </div>
         <div id="corporateDiv">

@@ -41,9 +41,12 @@
     <!-- FontAwsome -->
     <%= javascript_include_tag 'https://kit.fontawesome.com/ad7a8331b8.js', 'data-turbolinks-track': 'reload' %>
     
+     <%= favicon_link_tag("https://i.imgur.com/WjtYVAr.png", rel: "icon", type: "image/png") %>
   </head>
 
   <body>
+         <p class="notice"><%= notice %></p>
+       <p class="alert"><%= alert %></p>
     <%= yield %>
   </body>
 </html>
