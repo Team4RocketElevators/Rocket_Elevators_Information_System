@@ -2,13 +2,19 @@ class CreateTests < ActiveRecord::Migration[5.2]
   def change
     create_table :tests do |t|
       t.string :building
-      t.integer :appartmentsNbr
-      t.integer :floorsNbr
-      t.integer :basementsNbr
-      t.integer :seperateBusinessesNbr
-      t.integer :parkingsNbr
-      t.integer :elevatorsNbr
-      t.integer :seperateRentalCompaniesNbr
+      t.integer :appartmentsNbrRES
+      t.integer :floorsNbrRES
+      t.integer :floorsNbrCOM
+      t.integer :floorsNbrCOR
+      t.integer :basementsNbrRES
+      t.integer :basementsNbrCOM
+      t.integer :basementsNbrCOR
+      t.integer :seperateBusinessesNbrCOM
+      t.integer :parkingsNbrCOM
+      t.integer :parkingsNbrCOR
+      t.integer :elevatorsNbrCOM
+      t.integer :seperateRentalCompaniesNbrCOR
+      t.integer :occupantsPerFloorCOR
       t.integer :occupantsPerFloor
       t.integer :nbrFloors
       t.integer :nbrBasements
@@ -21,8 +27,7 @@ class CreateTests < ActiveRecord::Migration[5.2]
       t.text :costInstallations
       t.text :costTotal
 
-      t.timestamps null: false
-    end
+      t.timestamps
     end
   end
 end

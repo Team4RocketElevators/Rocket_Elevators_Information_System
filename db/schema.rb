@@ -12,20 +12,32 @@
 
 ActiveRecord::Schema.define(version: 2020_03_05_192610) do
 
-  create_table "form", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.string "buildingSelect"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "forms", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.string "buildingType"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "tests", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "building"
+    t.integer "appartmentsNbrRES"
+    t.integer "floorsNbrRES"
+    t.integer "floorsNbrCOM"
+    t.integer "floorsNbrCOR"
+    t.integer "basementsNbrRES"
+    t.integer "basementsNbrCOM"
+    t.integer "basementsNbrCOR"
+    t.integer "seperateBusinessesNbrCOM"
+    t.integer "parkingsNbrCOM"
+    t.integer "parkingsNbrCOR"
+    t.integer "elevatorsNbrCOM"
+    t.integer "seperateRentalCompaniesNbrCOR"
+    t.integer "occupantsPerFloorCOR"
+    t.integer "occupantsPerFloor"
+    t.integer "nbrFloors"
+    t.integer "nbrBasements"
+    t.integer "availableParkingSpaces"
+    t.integer "seperateBusinesses"
+    t.time "busyHours"
+    t.integer "recommendedShafts"
+    t.string "quality"
+    t.text "priceUnit"
+    t.text "costInstallations"
+    t.text "costTotal"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
