@@ -104,47 +104,6 @@
 			}
 		</style>
 		<script>
-		    if (window.location.href.startsWith("https://www.rocketelevatorsil.com")) document.location.href = window.location.href.replace("www.", "");
-			/*if (document.cookie === "EN" && window.location.href != "./" && window.location.href != "./en" && !window.location.href.includes("#")) {
-    			var link = "./en";
-    			if (document.location.href.includes("#")) {
-    				var frsublink = document.location.href.split("#")[1];
-    				var ensublink;
-    				switch(frsublink) {
-    					case "attributions":
-    						ensublink = "awards";
-    					break;
-    					case "actualites":
-    						ensublink = "news";
-    					break;
-    					default:
-    						ensublink = frsublink;
-    					break;
-    				}
-    				if (ensublink != "#") link += "#" + ensublink;
-    			}
-    			document.location.href = link;
-			}
-			else if (document.cookie === "FR" && window.location.href != "./fr" && !window.location.href.includes("#")) {
-    			var link = "./fr";
-    			if (document.location.href.includes("#")) {
-    				var ensublink = document.location.href.split("#")[1];
-    				var frsublink;
-    				switch(ensublink) {
-    					case "awards":
-    						frsublink = "attributions";
-    					break;
-    					case "news":
-    						frsublink = "actualites";
-    					break;
-    					default:
-    						frsublink = ensublink;
-    					break;
-    				}
-    				if (frsublink != "#") link += "#" + frsublink;
-    			}
-    			document.location.href = link;
-			}*/
 			function triggeredKey(e) {
 				var pattern=/^[0-9-]+$/g;
 				if(pattern.test(e)){
@@ -280,11 +239,10 @@
 										CONTACT
 									</a>
 								</li>
-								<li><!-- LANGUAGE SWITHCER -->
-									<select onchange="switchLanguage(this.value);" style="color: black;">
-										<option id="EN" selected>EN</option>
-										<option id="FR">FR</option>
-									</select>
+								<li class="hovered"><!-- ADMIN -->
+									<a style="color: rgb(255,255,255);" href="./admin">
+										ADMIN
+									</a>
 								</li>
 							</ul>
 		

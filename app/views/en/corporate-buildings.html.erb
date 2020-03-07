@@ -96,12 +96,6 @@
 			}
         </style>
         <script>
-			if (document.referrer.cookie === "EN" && document.location.href != "../en/corporate-buildings") {
-				document.location.href = "../en/corporate-buildings";
-			}
-			else if (document.referrer.cookie === "FR" && document.location.href != "../fr/batiments-corporatifs") {
-				document.location.href = "../fr/batiments-corporatifs";
-			}
 			function switchLanguage(value) {
 				document.cookie = value;
 				if (value === "FR") document.location.href = '../fr/batiments-corporatifs';
@@ -165,12 +159,6 @@
                                     <a style="color: rgb(255,255,255);" href="../en#contact">
                                         CONTACT
                                     </a>
-                                </li>
-                                <li><!-- LANGUAGE SWITHCER -->
-                                    <select onchange="switchLanguage(this.value);" style="color: black;">
-                                        <option id="EN" selected>EN</option>
-                                        <option id="FR">FR</option>
-                                    </select>
                                 </li>
                             </ul>
 

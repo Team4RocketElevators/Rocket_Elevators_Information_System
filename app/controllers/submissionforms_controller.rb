@@ -6,14 +6,14 @@ class SubmissionformsController < ApplicationController
         @page_title = "Rocket Elevators - Price Estimation Form"
     end
     def show
-        @form = Test.find(params[:id])
+        @form = Form.find(params[:id])
     end
     def new
         @title = "New Price Estimation Form"
         @page_title = "Rocket Elevators - New Price Estimation Form"
     end
     def create
-        @form = Test.new(form_params)
+        @form = Form.new(form_params)
 
         @form.save
 

@@ -89,19 +89,6 @@
 						transform: rotate(90deg);
 			}
         </style>
-        <script>
-			if (document.referrer.cookie === "EN" && document.location.href != "../en/residential-buildings") {
-				document.location.href = "../en/residential-buildings";
-			}
-			else if (document.referrer.cookie === "FR" && document.location.href != "../fr/batiments-residentiels") {
-				document.location.href = "../fr/batiments-residentiels";
-			}
-			function switchLanguage(value) {
-				document.cookie = value;
-				if (value === "FR") document.location.href = '../fr/batiments-residentiels';
-				else return;
-			}
-        </script>
 </head>
 <div class="enable-animation">
     <!-- wrapper -->
@@ -159,12 +146,6 @@
                                     <a style="color: rgb(255,255,255);" href="../en#contact">
                                         CONTACT
                                     </a>
-                                </li>
-                                <li><!-- LANGUAGE SWITHCER -->
-                                    <select onchange="switchLanguage(this.value);" style="color: black;">
-                                        <option id="EN" selected>EN</option>
-                                        <option id="FR">FR</option>
-                                    </select>
                                 </li>
                             </ul>
 

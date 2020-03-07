@@ -296,16 +296,6 @@
         }
     </script>
         <script>
-			/*if (document.cookie === "EN" && document.location.href != "../submissionforms/new" && !window.location.href.includes("?prefill=")) {
-                var link = '../submissionforms/new';
-                if (window.location.href.indexOf("prefill") > -1) link += "?prefill=" + window.location.href.split("?prefill=")[1];
-				document.location.href = link;
-			}
-			else if (document.cookie === "FR" && document.location.href != "../formulairesdesoumission" && !window.location.href.includes("?prefill=")) {
-                var link = '../formulairesdesoumission/new';
-                if (window.location.href.indexOf("prefill") > -1) link += "?prefill=" + window.location.href.split("?prefill=")[1];
-				document.location.href = link;
-			}*/
 			function switchLanguage(value) {
                 document.cookie = value;
                 var link = '../formulairesdesoumission/new';
@@ -374,11 +364,10 @@
                               CONTACT
                           </a>
                       </li>
-                      <li><!-- LANGUAGE SWITHCER -->
-                          <select onchange="switchLanguage(this.value);" style="color: black;">
-                              <option id="EN" selected>EN</option>
-                              <option id="FR">FR</option>
-                          </select>
+                      <li class="hovered"><!-- ADMIN -->
+                          <a style="color: rgb(255,255,255);" href="../admin">
+                              ADMIN
+                          </a>
                       </li>
                   </ul>
 
