@@ -1,5 +1,3 @@
-<!DOCTYPE html>
-
 <head>
     
     <title><%= @page_title %></title>
@@ -11,21 +9,6 @@
     <script lang="javascript">
         function numberWithCommas(x) {
             return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
-        }
-        function getUrlVars() {
-            var prefill = window.location.href.split("prefill=")[1];
-            if (!prefill) return;
-            if (prefill != "Residential" && prefill != "Commercial" && prefill != "Corporate" && prefill != "Hybrid") return;
-            document.getElementById(prefill.toLowerCase()).setAttribute("selected", "true");
-            document.getElementsByClass("hidden")[0].textContent = prefill;
-            document.getElementById(prefill.toLowerCase()).style.display = "block";
-            document.getElementById(prefill.toLowerCase() + "Div").style.display = "inline";
-        }
-        function getUrlParam(parameter, defaultvalue) {
-            var urlparameter = defaultvalue;
-            if (window.location.href.indexOf(parameter) > -1) {
-                getUrlVars();
-            }
         }
         function inputs(value) {
             var values = [
@@ -46,7 +29,9 @@
                     document.getElementById(values[i] + "Div").style.display = "none";
                 }
                 document.getElementById(value).style.display = "block";
-                document.getElementById(values[values.indexOf(value)] + "Div").style.display = "inline";
+                document.getElementById(value + "Div").style.display = "inline";
+                document.getElementById(value + "Div").setAttribute("required", "");
+                console.log(document.getElementById(value + "Div"));
             }
             document.getElementById("recommendedShafts").value = "";
             document.getElementById("priceUnit").value = "$0";
@@ -55,7 +40,7 @@
         }
         function setPrices() {
             var values = [];
-            var formselect = document.getElementById("buildingSelect");
+            var formselect = document.getElementById("building");
             var buildingType = formselect.options[formselect.selectedIndex].value;
             var buildingLetter = buildingType.toUpperCase().slice(0, 3);
             for (i in document.getElementsByName("form[quality]")) {
@@ -107,7 +92,7 @@
                 default:
                     if (window.location.href.includes("prefill=")) {
                         var prefill = window.location.href.split("prefill=")[1];
-                        var formselect = document.getElementById("buildingSelect");
+                        var formselect = document.getElementById("building");
                         formselect.options[formselect.selectedIndex].value = prefill.toLowerCase();
                         setPrices();
                     }
@@ -116,11 +101,11 @@
         }
         function setRecommendedShafts() {
             var values = [];
-            var formselect = document.getElementById("buildingSelect");
+            var formselect = document.getElementById("building");
             var buildingType = formselect.options[formselect.selectedIndex].value;
             switch (buildingType) {
                 case "commercial":
-                    var formselect = document.getElementById("buildingSelect");
+                    var formselect = document.getElementById("building");
                     var buildingType = formselect.options[formselect.selectedIndex].value;
                     var buildingLetter = buildingType.toUpperCase().slice(0, 3);
                    var elevatorNbr = document.getElementById("elevatorsNbr" + buildingLetter).value;
@@ -166,7 +151,7 @@
                 default:
                     if (window.location.href.includes("prefill=")) {
                         var prefill = window.location.href.split("prefill=")[1];
-                        var formselect = document.getElementById("buildingSelect")
+                        var formselect = document.getElementById("building")
                         formselect.options[formselect.selectedIndex].value = prefill.toLowerCase();
                         setRecommendedShafts();
                     }
@@ -178,16 +163,6 @@
         }
     </script>
         <script>
-			// if (document.cookie === "EN" && document.location.href != "../submissionforms/new" && !window.location.href.includes("?prefill=")) {
-            //     var link = '../submissionforms/new';
-            //     if (window.location.href.indexOf("prefill") > -1) link += "?prefill=" + window.location.href.split("?prefill=")[1];
-			// 	document.location.href = link;
-			// }
-			// else if (document.cookie === "FR" && document.location.href != "../formulairesdesoumission" && !window.location.href.includes("?prefill=")) {
-            //     var link = '../formulairesdesoumission/new';
-            //     if (window.location.href.indexOf("prefill") > -1) link += "?prefill=" + window.location.href.split("?prefill=")[1];
-			// 	document.location.href = link;
-			// }
 			function switchLanguage(value) {
                 document.cookie = value;
                 var link = '../formulairesdesoumission/new';
@@ -256,11 +231,10 @@
                               CONTACT
                           </a>
                       </li>
-                      <li><!-- LANGUAGE SWITHCER -->
-                          <select onchange="switchLanguage(this.value);" style="color: black;">
-                              <option id="EN" selected>EN</option>
-                              <option id="FR">FR</option>
-                          </select>
+                      <li class="hovered"><!-- LOGIN -->
+                          <a style="color: rgb(255,255,255);" href="../login">
+                              LOGIN
+                          </a>
                       </li>
                   </ul>
 
@@ -279,7 +253,7 @@
         <p style="font-size: 35px; font-style: bold;">Price Estimation Form</p>
         <p style="font-size: 20px;">Please select your desired options</p>
         <br>Select a building type<br>
-         <%= f.select("building-type-select", options_for_select([["-", "empty", {class: 'hidden'}], ["Residential", "residential"], ["Commercial", "commercial"], ["Corporate", "corporate"], ["Hybrid", "hybrid"]], selected: "-", disabled: "-"), {}, {class: "form-select", :id => "buildingSelect", :onchange => "inputs(this.value);"}) %><br><br>
+         <%= f.select(:building, options_for_select([["-", "empty", {class: 'hidden'}], ["Residential", "residential"], ["Commercial", "commercial"], ["Corporate", "corporate"], ["Hybrid", "hybrid"]], selected: "-", disabled: "-"), {}, {class: "form-select", :id => "buildingSelect", :onchange => "inputs(this.value);"}) %><br><br>
         <img class="center" id="residential" src="../assets/residentialBuilding.jpeg"
             alt="Residential Building" width="400">
         <img class="center" id="commercial" src="../assets/commercialBuilding.jpeg"
@@ -289,9 +263,9 @@
         <img class="center" id="hybrid" src="../assets/hybridBuilding.jpeg" alt="Hybrid Building"
             width="400">
         <div id="residentialDiv">
-            Number of appartments: <%= f.number_field(:appartmentsNbrRES, {min: 0, step: 1, placeholder: "0", :id => "appartmentsNbrRES", :oninput => "this.value = Math.abs(this.value)", :onchange => 'setRecommendedShafts(), setPrices()'}) %><br>
+            Number of appartments: <%= f.number_field("appartmentsNbrRES", {min: 0, step: 1, placeholder: "0", :id => "appartmentsNbrRES", :oninput => "this.value = Math.abs(this.value)", :onchange => 'setRecommendedShafts(), setPrices()'}) %><br>
             Number of floors: <%= f.number_field(:floorsNbrRES, {min: 0, step: 1, placeholder: "0", :id => "floorsNbrRES", :oninput => "this.value = Math.abs(this.value)", :onchange => 'setRecommendedShafts(), setPrices()'}) %><br>
-            Number of basements:<%= f.number_field(:basementsNbrRES, {min: 0, step: 1, placeholder: "0", :id => "basementsNbrRES", :oninput => "this.value = Math.abs(this.value)", :onchange => 'setRecommendedShafts(), setPrices()'}) %><br>
+            Number of basements: <%= f.number_field(:basementsNbrRES, {min: 0, step: 1, placeholder: "0", :id => "basementsNbrRES", :oninput => "this.value = Math.abs(this.value)", :onchange => 'setRecommendedShafts(), setPrices()'}) %><br>
         </div>
         <div id="commercialDiv">
             Number of floors: <%= f.number_field(:floorsNbrCOM, {min: 0, step: 1, placeholder: "0", :id => "floorsNbrCOM", :oninput => "this.value = Math.abs(this.value)", :onchange => 'setRecommendedShafts(), setPrices()'}) %><br>
@@ -319,18 +293,18 @@
         Recommended amount of elevators: <%= f.number_field(:recommendedShafts, {min: 0, step: 1, placeholder: "0", disabled: true, :id => "recommendedShafts", :oninput => "this.value = Math.abs(this.value)", :onchange => 'setRecommendedShafts(), setPrices()'}) %><br>
         Select an elevator range<br>
         <%= f.radio_button("quality", "standard", {:onchange => 'setRecommendedShafts(), setPrices()'}) %>Standard<br>
-        <%= f.radio_button(:quality, "premium", {:onchange => 'setRecommendedShafts(), setPrices()'}) %>Premium<br>
-        <%= f.radio_button(:quality, "excelium", {:onchange => 'setRecommendedShafts(), setPrices()'}) %>Excelium<br><br>
+        <%= f.radio_button("quality", "premium", {:onchange => 'setRecommendedShafts(), setPrices()'}) %>Premium<br>
+        <%= f.radio_button("quality", "excelium", {:onchange => 'setRecommendedShafts(), setPrices()'}) %>Excelium<br><br>
 
     <div style="text-align: center;">
-        Price for 1 elevator unit: <%= text_field_tag("priceUnit", "", placeholder: "0", disabled: true) %><br>
-        Installation costs: <%= text_field_tag("costInstallations", "", placeholder: "0", disabled: true) %><br>
-        Total cost: <%= text_field_tag("costTotal", "", placeholder: "0", disabled: true) %><br>
+        Price for 1 elevator unit: <%= f.text_field(:priceUnit, {placeholder: "0", disabled: true, :id => "priceUnit"}) %><br>
+        Installation costs: <%= f.text_field("costInstallations", {placeholder: "0", disabled: true, :id => "costInstallations"}) %><br>
+        Total cost: <%= f.text_field("costTotal", {placeholder: "0", disabled: true, :id => "costTotal"}) %><br>
     </div>
 
     <br>
 
-    <%= f.submit "Save Form" %>
+    <%= f.submit "Save Form", class: "btn btn-default" %>
 
     <% end %>
 
@@ -388,6 +362,23 @@
 
     <script lang="javascript">
         getUrlParam("prefill", null);
+        function getUrlVars() {
+            var prefill = window.location.href.split("prefill=")[1];
+            if (!prefill) return;
+            if (prefill != "Residential" && prefill != "Commercial" && prefill != "Corporate" && prefill != "Hybrid") return;
+            document.getElementById(prefill.toLowerCase()).setAttribute("selected", "true");
+            <!-- document.getElementById("building").textContent = prefill; -->
+            document.getElementById("building").setAttribute("style", "display: inline;");
+            document.getElementById("building").setAttribute("value", prefill.toLowerCase());
+            document.getElementById(prefill.toLowerCase()).style.display = "block";
+            document.getElementById(prefill.toLowerCase() + "Div").style.display = "inline";
+        }
+        function getUrlParam(parameter, defaultvalue) {
+            var urlparameter = defaultvalue;
+            if (window.location.href.indexOf(parameter) > -1) {
+                getUrlVars();
+            }
+        }
     </script>
 
 </body>

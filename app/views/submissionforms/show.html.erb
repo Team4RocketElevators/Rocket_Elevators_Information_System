@@ -1,1 +1,463 @@
-<h1 align="center"><%= @title %></h1>
+<head>
+    <meta charset="utf-8" />
+    <title><%= @page_title %></title>
+    <link rel="icon" type="image/png" href="../assets/images/favicon.png">
+    <meta name="description" content="Rocket Elevators - Price Estimate Form" />
+    <meta name="Author" content="Isaac Laquerre [www.codeboxx.biz]" />
+	<!-- mobile settings -->
+	<meta name="viewport" content="width=device-width, maximum-scale=1, initial-scale=1, user-scalable=0" />
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'><![endif]-->
+
+	<!-- WEB FONTS : use %7C instead of | (pipe) -->
+	<link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet" type="text/css" />
+
+	<!-- CORE CSS -->
+	<link href="../assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+
+	<!-- REVOLUTION SLIDER -->
+	<link href="../assets/plugins/slider.revolution/css/extralayers.css" rel="stylesheet" type="text/css" />
+	<link href="../assets/plugins/slider.revolution/css/settings.css" rel="stylesheet" type="text/css" />
+
+	<!-- THEME CSS -->
+	<link href="../assets/css/essentials.css" rel="stylesheet" type="text/css" />
+	<link href="../assets/css/layout.css" rel="stylesheet" type="text/css" />
+
+	<!-- PAGE LEVEL SCRIPTS -->
+	<link href="../assets/css/header-1.css" rel="stylesheet" type="text/css" />
+    <link href="../assets/css/color_scheme/darkblue.css" rel="stylesheet" type="text/css" id="color_scheme" />
+        
+	<!-- JQUERY -->
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+
+    <style>
+        .hidden {
+            display: none;
+        }
+
+        #form {
+            font-size: 18px;
+            font-family: system-ui;
+            text-align: center;
+        }
+
+        #residential,
+        #commercial,
+        #corporate,
+        #hybrid {
+            display: none;
+        }
+
+        #residentialDiv,
+        #commercialDiv,
+        #corporateDiv,
+        #hybridDiv {
+            display: none;
+        }
+
+        #submitButton {
+            background: #0066A2;
+            color: white;
+            border-style: outset;
+            border-color: #0066A2;
+            border-radius: 5px;
+            height: 25px;
+            width: 100px;
+            font: bold 15px arial, sans-serif;
+            text-shadow: none;
+        }
+
+        #submitButton:hover {
+            background: rgb(0, 86, 136);
+            color: rgb(228, 228, 228);
+            cursor: pointer;
+        }
+
+        .form-select {
+            font-size: 14px;
+        }
+
+        .center {
+            margin-left: auto;
+            margin-right: auto;
+            border: 1px solid black;
+        }
+
+        body {
+            background-color: #f8f8f8;
+        }
+
+        .btn-default {
+            color: white;
+        }
+
+        .btn-default:hover {
+            background-color: white !important;
+            color: #0b64a0 !important;
+        }
+
+        .dropbtn {
+            border: none;
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: rgba(0, 0, 0, 25);
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(255, 255, 255, 0.2);
+            z-index: 1;
+        }
+
+        .dropdown-content a {
+            color: rgb(255, 255, 255);
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #bbbbbb44;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .hovered:hover {
+            background-color: rgba(255, 255, 255, 0.192);
+        }
+
+        .rotate:hover i {
+            -webkit-transform: rotate(90deg);
+            transform: rotate(90deg);
+        }
+
+		.sticky {
+			position: fixed;
+        }
+    </style>
+    <script lang="javascript">
+        function numberWithCommas(x) {
+            return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+        }
+        function inputs(value) {
+            var values = [
+                "residential",
+                "commercial",
+                "corporate",
+                "hybrid"
+            ];
+            if (value === "empty") {
+                for (i in values) {
+                    document.getElementById(values[i]).style.display = "none";
+                    document.getElementById(values[i] + "Div").style.display = "none";
+                }
+            } else {
+                for (i in values) {
+                    if (values[i] === value) continue;
+                    document.getElementById(values[i]).style.display = "none";
+                    document.getElementById(values[i] + "Div").style.display = "none";
+                }
+                document.getElementById(value).style.display = "block";
+                document.getElementById(values[values.indexOf(value)] + "Div").style.display = "inline";
+            }
+            document.getElementById("recommendedShafts").value = "";
+            document.getElementById("priceUnit").value = "$0";
+            document.getElementById("costInstallations").value = "$0";
+            document.getElementById("costTotal").value = "$0";
+        }
+        function setPrices() {
+            var values = [];
+            var formselect = document.getElementById("building");
+            var buildingType = <%= @form.building.to_s %>.id
+            var buildingLetter = buildingType.toUpperCase().slice(0, 3);
+            for (i in document.getElementsByName("quality")) {
+                if (document.getElementsByName("quality")[i].checked) values.push(document.getElementsByName("quality")[i].value);
+            }
+            var value = values[0];
+            if (value === "standard") {
+                var result = 7565;
+                var fee = 7565 * 0.1;
+            } else if (value === "premium") {
+                result = 12345;
+                fee = 12345 * 0.13;
+            } else if (value === "excelium") {
+                result = 15400;
+                fee = 15400 * 0.16;
+            } else return;
+            document.getElementById("priceUnit").value = "$" + numberWithCommas(result.toFixed(2));
+            document.getElementById("costInstallations").value = "$" + numberWithCommas(fee.toFixed(2));
+            switch (buildingType) {
+                case "commercial":
+                    if (parseInt(document.getElementById("elevatorsNbr" + buildingLetter).value) === 0) fee = 0;
+                    var priceTotal = numberWithCommas((((result * parseInt(document.getElementById("elevatorsNbr" + buildingLetter).value))) + fee).toFixed(2)).replace(/NaN/g, "0");
+                    document.getElementById("costTotal").value = "$" + priceTotal;
+                    break;
+                case "residential":
+                    var recommendedShafts = parseInt(document.getElementById("recommendedShafts").value);
+                    var priceTotal = numberWithCommas((recommendedShafts * result) + fee);
+                    if (recommendedShafts === 0) priceTotal = 0;
+                    document.getElementById("costTotal").value = "$" + priceTotal;
+                    break;
+                case "corporate":
+                case "hybrid":
+                    var buildingLetter = buildingType.toUpperCase().slice(0, 3);
+                    var maxOccupants = parseInt(document.getElementById("occupantsPerFloor" + buildingLetter).value);
+                    var floorsNbr = parseInt(document.getElementById("floorsNbr" + buildingLetter).value);
+                    var totalOccupantsPerFloor = maxOccupants * floorsNbr;
+                    var totalShafts = Math.floor(totalOccupantsPerFloor / 1000);
+                    var basementsNbr = parseInt(document.getElementById("basementsNbr" + buildingLetter).value);
+                    var totalStories = floorsNbr + basementsNbr;
+                    var elevatorCollumns = Math.floor(totalStories / 20);
+                    if (elevatorCollumns < 1) elevatorCollumns = 1;
+                    var totalElevators = Math.round(totalShafts / elevatorCollumns);
+                    
+                    var priceTotal = numberWithCommas(((result * totalElevators) + fee).toFixed(2))
+                    if (totalElevators === 0) priceTotal = 0;
+                    document.getElementById("costTotal").value = "$" + priceTotal.toString().replace(/NaN/g, "0");
+                    break;
+                    break;
+                default:
+                    if (window.location.href.includes("prefill=")) {
+                        var prefill = window.location.href.split("prefill=")[1];
+                        var formselect = document.getElementById("building");
+                        formselect.options[formselect.selectedIndex].value = prefill.toLowerCase();
+                        setPrices();
+                    }
+                    break;
+            }
+        }
+        function setRecommendedShafts() {
+            var values = [];
+            var formselect = document.getElementById("building");
+            var buildingType = <%= @form.building.to_s %>.id
+            switch (buildingType) {
+                case "commercial":
+                    var formselect = document.getElementById("building");
+                    var buildingType = formselect.options[formselect.selectedIndex].value;
+                    var buildingLetter = buildingType.toUpperCase().slice(0, 3);
+                    var elevatorNbr = document.getElementById("elevatorsNbr" + buildingLetter).value;
+                    document.getElementById("recommendedShafts").value = elevatorNbr;
+                    break;
+                case "residential":
+                    var appartmentsNbr = parseInt(document.getElementById("appartmentsNbrRES").value);
+                    var floorsNbr = parseInt(document.getElementById("floorsNbrRES").value) || 1;
+                    var basementsNbr = parseInt(document.getElementById("basementsNbrRES").value) || 0;
+                    var shafts = Math.ceil(Math.ceil(appartmentsNbr / floorsNbr) / 6);
+                    if (floorsNbr > 20) {
+                        shafts = shafts * 2;
+                        var times = Math.ceil(floorsNbr / 20) - 1;
+                        if (times > 0) {
+                            for (var i = 0; i != times; i++) {
+                                shafts++;
+                            }
+                        }
+                    }
+                    if (floorsNbr < 2 && basementsNbr < 1) document.getElementById("recommendedShafts").value = 0;
+                    else document.getElementById("recommendedShafts").value = Math.ceil(shafts);
+                    break;
+                case "corporate":
+                case "hybrid":
+                    var buildingLetter = buildingType.toUpperCase().slice(0, 3);
+                    var maxOccupants = parseInt(document.getElementById("occupantsPerFloor" + buildingLetter).value);
+                    var floorsNbr = parseInt(document.getElementById("floorsNbr" + buildingLetter).value);
+                    var totalOccupantsPerFloor = maxOccupants * floorsNbr;
+                    var totalShafts = Math.floor(totalOccupantsPerFloor / 1000);
+                    var basementsNbr = parseInt(document.getElementById("basementsNbr" + buildingLetter).value);
+                    var totalStories = floorsNbr + basementsNbr;
+                    var elevatorCollumns = Math.floor(totalStories / 20);
+                    if (elevatorCollumns < 1) elevatorCollumns = 1;
+                    var totalElevators = Math.round(totalShafts / elevatorCollumns);
+
+                    if (isNaN(totalElevators) || isNaN(totalShafts)) return;
+                    else {
+                        document.getElementById("recommendedShafts").value = Math.ceil(totalShafts);
+                        document.getElementById("recommendedShafts").value = Math.ceil(totalElevators);
+                    }
+                    if (floorsNbr < 2 && basementsNbr < 1) document.getElementById("recommendedShafts").value = 0;
+                    break;
+                default:
+                    if (window.location.href.includes("prefill=")) {
+                        var prefill = window.location.href.split("prefill=")[1];
+                        var formselect = document.getElementById("building")
+                        formselect.options[formselect.selectedIndex].value = prefill.toLowerCase();
+                        setRecommendedShafts();
+                    }
+                    break;
+            }
+        }
+        function to24H(formField) {
+            if (formField.value > 24) document.getElementById("busyHoursNbrHYB").value = 24
+        }
+    </script>
+        <script>
+			function switchLanguage(value) {
+                document.cookie = value;
+                var link = '../formulairesdesoumission/new';
+                if (window.location.href.indexOf("prefill") > -1) {
+                    var prefill = window.location.href.split("prefill=")[1];
+                    if (prefill === "Residential") link += "?prefill=Residentiel";
+                    else if (prefill === "Commercial") link += "?prefill=Commercial";
+                    else if (prefill === "Corporate") link += "?prefill=Corporatif";
+                    else if (prefill === "Hybrid") link += "?prefill=Hybride";
+                }
+				if (value === "FR") document.location.href = link;
+				else return;
+			}
+        </script>
+        <%= javascript_include_tag 'functions.js' %>
+</head>
+<div id="body2" ></div>
+    <div id="header" style="background-color: rgba(0,0,0,25);" class="navbar-toggleable-md sticky header-md clearfix">
+    <!-- TOP NAV -->
+    <header id="topNav">
+        <div class="container">
+
+            <!-- Mobile Menu Button -->
+            <button class="btn btn-mobile" data-toggle="collapse" data-target=".nav-main-collapse">
+                <i class="fa fa-bars"></i>
+            </button>
+
+            <!-- LOGO-->
+            <a class="logo float-left" href="./en">
+                <img src="../assets/R2.png" alt="Rocket Elevator Logo">
+            </a>
+            <div class="navbar-collapse collapse float-right nav-main-collapse submenu-dark">
+                <nav class="nav-main">
+                    <ul id="topMain" class="nav nav-pills nav-main nav-onepage">
+                        <li class="active hovered"><!-- HOME -->
+                            <a style="color: rgb(255,255,255);" href="../en">
+                                HOME
+                            </a>
+                        </li>
+                        <li class="hovered"><!-- SERVICES -->
+                            <div class="dropdown dropbtn rotate">
+                                <a class="h-25" style="color: rgb(255,255,255);" href="./en#services">
+                                    SERVICES &nbsp; <i class="fa fa-angle-right"></i>
+                                </a>
+                                <div class="dropdown-content">
+                                    <a href="../en/residential-buildings">Residential Buildings</a>
+                                    <a href="../en/corporate-buildings">Corporate Buildings</a>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="hovered"><!-- AWARDS -->
+                            <a style="color: rgb(255,255,255);" href="../en#awards">
+                                AWARDS
+                            </a>
+                        </li>
+                        <li class="hovered"><!-- NEWS -->
+                            <a style="color: rgb(255,255,255);" href="../en#news">
+                                NEWS
+                            </a>
+                        </li>
+                        <li class="hovered"><!-- CLIENTS -->
+                            <a style="color: rgb(255,255,255);" href="../en#clients">
+                                CLIENTS
+                            </a>
+                        </li>
+                        <li class="hovered"><!-- CONTACT -->
+                            <a style="color: rgb(255,255,255);" href="../en#contact">
+                                CONTACT
+                            </a>
+                        </li>
+                        <li class="hovered"><!-- LOGIN -->
+                            <a style="color: rgb(255,255,255);" href="../login">
+                                LOGIN
+                            </a>
+                        </li>
+                    </ul>
+
+                </nav>
+            </div>
+
+        </div>
+    </header>
+    <!-- /Top Nav -->
+    </div>
+
+    <div id="form">
+        <h1 style="font-size: 35px; font-style: bold;">Price Estimation Form - #<%= @form.id %></h1>
+        <h2 style="font-size: 20px;">Your form has been saved <i style="color: green;">✓</i></h2>
+        <br><p>Selected building type:</p>
+        <%= select_tag(:building, options_for_select([@form.building.capitalize()]), {disabled: true, :class => "form-select"}) %><br><br>
+        <img class="center" id="residential" src="../assets/residentialBuilding.jpeg"
+            alt="Residential Building" width="400">
+        <img class="center" id="commercial" src="../assets/commercialBuilding.jpeg"
+            alt="Commercial Building" width="400">
+        <img class="center" id="corporate" src="../assets/corporateBuilding.jpeg"
+            alt="Corporate Building" width="400">
+        <img class="center" id="hybrid" src="../assets/hybridBuilding.jpeg" alt="Hybrid Building"
+            width="400">
+        <div id="residentialDiv">
+            Number of appartments: <%= number_field_tag("appartmentsNbrRES", @form.appartmentsNbrRES, {:id => "appartmentsNbrRES", disabled: true}) %><br>
+            Number of floors: <%= number_field_tag(:floorsNbrRES, @form.floorsNbrRES, {:id => "floorsNbrRES", disabled: true}) %><br>
+            Number of basements: <%= number_field_tag(:basementsNbrRES, @form.basementsNbrRES, {:id => "basementsNbrRES", disabled: true}) %><br>
+        </div>
+        <div id="commercialDiv">
+            Number of floors: <%= number_field_tag(:floorsNbrCOM, @form.floorsNbrCOM, {:id => "floorsNbrCOM", disabled: true}) %><br>
+            Number of basements: <%= number_field_tag(:basementsNbrCOM, @form.basementsNbrCOM, {:id => "basementsNbrCOM", disabled: true}) %><br>
+            Number of separate businesses: <%= number_field_tag(:seperateBusinessesNbrCOM, @form.seperateBusinessesNbrCOM, {:id => "seperateBusinessesNbrCOM", disabled: true}) %><br>
+            Number of available parking spaces: <%= number_field_tag(:parkingsNbrCOM, @form.parkingsNbrCOM, {:id => "parkingsNbrCOM", disabled: true}) %><br>
+            Number of elevator shafts: <%= number_field_tag(:elevatorsNbrCOM, @form.elevatorsNbrCOM, {:id => "elevatorsNbrCOM", disabled: true}) %><br>
+        </div>
+        <div id="corporateDiv">
+            Number of floors: <%= number_field_tag(:floorsNbrCOR, @form.floorsNbrCOR, {:id => "floorsNbrCOR", disabled: true}) %><br>
+            Number of basements: <%= number_field_tag(:basementsNbrCOR, @form.basementsNbrCOR, {:id => "basementsNbrCOR", disabled: true}) %><br>
+            Number of available parking spaces: <%= number_field_tag(:parkingsNbrCOR, @form.parkingsNbrCOR, {:id => "parkingsNbrCOR", disabled: true}) %><br>
+            Number of separate rental companies: <%= number_field_tag(:seperateRentalCompaniesNbrCOR, @form.seperateRentalCompaniesNbrCOR, {:id => "seperateRentalCompaniesNbrCOR", disabled: true}) %><br>
+            Maximum amount of occupants per floor: <%= number_field_tag(:occupantsPerFloorCOR, @form.occupantsPerFloorCOR, {:id => "occupantsPerFloorCOR", disabled: true}) %><br>
+        </div>
+        <div id="hybridDiv">
+            Number of floors: <%= number_field_tag(:nbrFloors, @form.nbrFloors, {:id => "floorsNbrHYB", disabled: true}) %><br>
+            Number of basements:<%= number_field_tag(:nbrBasements, @form.nbrBasements, {:id => "basementsNbrHYB", disabled: true}) %><br>
+            Number of available parking spaces: <%= number_field_tag(:availableParkingSpaces, @form.availableParkingSpaces, {:id => "parkingsNbrHYB", disabled: true}) %><br>
+            Number of separate businesses: <%= number_field_tag(:seperateBusinesses, @form.seperateBusinesses, {:id => "seperateBusinessesNbrHYB", disabled: true}) %><br>
+            Maximum amount of occupants per floor: <%= number_field_tag(:occupantsPerFloor, @form.occupantsPerFloor, {:id => "occupantsPerFloorHYB", disabled: true}) %><br>
+            Active/busy hours: <%= number_field_tag(:busyHours, @form.busyHours, {:id => "busyHoursNbrHYB", disabled: true}) %><br>
+        </div>
+        <br>
+        Recommended amount of elevators: <%= number_field_tag(:recommendedShafts, @form.recommendedShafts, {:id => "recommendedShafts", disabled: true}) %><br>
+        Select an elevator range<br>
+        <input type="radio" name="quality" id="standard" disabled value="standard">Standard<br>
+        <input type="radio" name="quality" id="premium" disabled value="premium">Premium<br>
+        <input type="radio" name="quality" id="excelium" disabled value="excelium">Excelium<br>
+
+    <div style="text-align: center;">
+        Price for 1 elevator unit: <%= text_field_tag(:priceUnit, "", {disabled: true, :id => "priceUnit"}) %><br>
+        Installation costs: <%= text_field_tag("costInstallations", "", {disabled: true, :id => "costInstallations"}) %><br>
+        Total cost: <%= text_field_tag("costTotal", "", {disabled: true, :id => "costTotal"}) %><br>
+    </div><br>
+
+    <a href="./new" target="_self">
+        <button class="btn btn-default">Submit a new form</button>
+    </a>
+
+    <br>
+
+    </div>
+    <script>
+        switch(<%= @form.quality.to_s %>) {
+            case standard:
+                var radio = "standard";
+            break
+            case premium:
+                var radio = "premium";
+            break
+            case excelium:
+                var radio = "excelium";
+            break
+            default:
+            break;
+        }
+        document.getElementById(radio).setAttribute("checked", true);
+        var building = <%= @form.building.to_s %>;
+        inputs(building.id);
+        setRecommendedShafts();
+        setPrices();
+    </script>
