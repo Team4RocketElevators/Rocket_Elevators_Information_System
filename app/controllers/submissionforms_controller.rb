@@ -2,6 +2,7 @@ require 'securerandom'
 
 class SubmissionformsController < ApplicationController
     def index
+        @forms = Form.all
         @title = "Price Estimation Form"
         @page_title = "Rocket Elevators - Price Estimation Form"
     end
