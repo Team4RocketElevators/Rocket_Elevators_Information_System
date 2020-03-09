@@ -8,47 +8,6 @@
 		
 		
 		<script>
-		    if (window.location.href.startsWith("https://www.rocketelevatorsil.com")) document.location.href = window.location.href.replace("www.", "");
-			/*if (document.cookie === "EN" && window.location.href != "./" && window.location.href != "./en" && !window.location.href.includes("#")) {
-    			var link = "./en";
-    			if (document.location.href.includes("#")) {
-    				var frsublink = document.location.href.split("#")[1];
-    				var ensublink;
-    				switch(frsublink) {
-    					case "attributions":
-    						ensublink = "awards";
-    					break;
-    					case "actualites":
-    						ensublink = "news";
-    					break;
-    					default:
-    						ensublink = frsublink;
-    					break;
-    				}
-    				if (ensublink != "#") link += "#" + ensublink;
-    			}
-    			document.location.href = link;
-			}
-			else if (document.cookie === "FR" && window.location.href != "./fr" && !window.location.href.includes("#")) {
-    			var link = "./fr";
-    			if (document.location.href.includes("#")) {
-    				var ensublink = document.location.href.split("#")[1];
-    				var frsublink;
-    				switch(ensublink) {
-    					case "awards":
-    						frsublink = "attributions";
-    					break;
-    					case "news":
-    						frsublink = "actualites";
-    					break;
-    					default:
-    						frsublink = ensublink;
-    					break;
-    				}
-    				if (frsublink != "#") link += "#" + frsublink;
-    			}
-    			document.location.href = link;
-			}*/
 			function triggeredKey(e) {
 				var pattern=/^[0-9-]+$/g;
 				if(pattern.test(e)){
@@ -86,50 +45,6 @@
 		</script>
 	</head>
 	<body class="enable-animation">
-
-		<!--
-			Oh hello there traveller,
-			Here's an ASCII potato;
-
-			                                           NNmmdhhhhhyyyyssssosssssssyyyhhdmN                       
-			                                 N dyssoo++oooooossyyhyyyyyysssssssssoooo+++++oyhmN                 
-			                             Nhyo+++ooossoooossssssyyyyyyyssooooosyyssooooooooo++++oy               
-			                         Nmhsosssyyyssssosssoosoosssssyssooooooooooooooooooooooooo+++++hN           
-			                     Nmhssssssyyyssssssssssooooooooooooo+oo+++++++++++++oooooooo++oooo+++y          
-			                 Nmdyssysssssssooosoosoossooooo++oooo++++++++++ooo++++++++++oooo++++++ooooos        
-			              Ndyyssssssssssooooooooooooooo+ooo++++++++++//++++++++++++++++++o+++++++++++o+++h      
-			           Ndyssssssssysssssooooooo++oooo+++++++++++/++///+////+/++++++++////+/+/++oo/++++++//sN    
-			         Nhssssysssyyysssoooooo++++++++o+++++++////////////+++////////+//////+////+++++o+++++//oN   
-			        hsssssssyyyyyssooooooo+++++++++++/+/////////////////////////////////:/:////+/++++++/////oN  
-			       ysssssssssysoooooooo++++++++++///////////////+/++/////:::::::::::///::::::::::/+++o+////+/s  
-			     dssssyysssssssoooooo+++++++////////////////////+//////:::::::::::::::::::::::-:::::/++/++////N 
-			    hsssyyysssssssoooooso++++//////////////////://////////:::::::------:---://---------:::///+/:/:h 
-			   hsssssssssssssoooo+++++//////////////////+///////:::::::/::::-::-::::-::::---:--------://+//:/:o 
-			  dsssssssssssosoo++oooo+/+/////////////////+++///:/::::::::::---:::::::/::-----:--::--:::://oo//:+ 
-			 Nssssyysssooooooo++ossyo+/////////////////++++/////:::::::--:---------://::/:-----:::/:/:::/os/+:: 
-			 yssssssssooooooooo++syso//////:////////////++++++///:://::::::-----:---//:/o/---:::/:::/::://+//::s
-			 ooossssssoooosssoo+//+++o+////+o/:::///////+++o++///////:::::::-::--:::---::-----:::::://///++///::
-			yoooooooooooo+ooo++////++ooo/++///::::://////+/++////::::::::::::-:------..----..-:--::/o++++++///::
-			soooooooooooo+++////::/+/+oo/+++/////////////////::/::::::::::::--::---...--....---::/++o+++////:/:o
-			ooooooooooooo++++///://///++//////////////////////////::/:::::-::--------:--....-::///+++////:::-:-h
-			ooooooooooso++++oooo+/////+/+///////////++///+///:///////::://::::::-----:----..-::://+//:::::----/ 
-			yoooooooooooooooooso+//+++/++///////////++//+//////////:::::/:::::::::/:-::::/::--::/:::-::::----/  
-			 oooooooo+ooo+oooooo+++/////++++///+//////+++++///////////////////:::::/:/:-:/:--:-::---:::-----:   
-			 sooooooooooooooo++++++++/+oo+++++++////////+++++/////++++///++/////////::::/::-------:-::---::/    
-			 Nsoooooooooooooooooo++++++oo+++++++/////+++++++/////+//+o++//+/////+///:::::::::-------:---:/sN    
-			   sosoosoossooooooo+oooooooooooooo++++++++oooo++///++//+++///////////:----::-:::----:-:-:-:o       
-			    ssssoossssooooooooooooooooooooooo+o+++osooo++++++++++//////:::://:-:--:::-:::::://::-:od        
-			    Nyosssoosysooooooooooososooooooooossooooooooosooo++++///://::::-------:-----/////::+yN          
-			      dsssooooooosoooooooooosoooooooooossooooooooo+oo++++++////:-------::---:-:://::/sd             
-			        ysoo+++oooooooooooooosooooooooooososoooooo++++++++////:::----:-::-:::::::/sdN               
-			          yo+++++oooooooooooooooooooosssysssssossoo++//++////:::::/:::/::::::/sh                    
-			            yo++++++++ooooooooooooooossyyyhyssssoo+++///////////////////oshdN                       
-			              dyo++oo+o++oooooooooosssyyhhyhyhyso+++/////+//+////osyhmN                             
-			                  hyyssooooooo++ooooosyyhhyyyyy+////::/:+oyyhddN                                    
-			                      N dyyssoooo+++++o+ooooo+/::/+sydN                                             
-			                           N dyso+/////++osyhhdN                                                    
-		-->
-
 		<!-- wrapper -->
 		<div id="wrapper"><div id="header" style="background-color: rgba(0,0,0,25);" class="navbar-toggleable-md sticky header-md clearfix">
 			<!-- TOP NAV -->
@@ -184,12 +99,15 @@
 										CONTACT
 									</a>
 								</li>
-								<li><!-- LANGUAGE SWITHCER -->
-									<select onchange="switchLanguage(this.value);" style="color: black;">
-										<option id="EN" selected>EN</option>
-										<option id="FR">FR</option>
-									</select>
+								<li class="hovered"><!-- LOGIN --> 
+									<a style="color: rgb(255,255,255);" href="./employees/sign_in">LOGIN</a>
 								</li>
+								<li class="hovered"><!-- ADMIN -->
+									<a style="color: rgb(255,255,255);" href="./admin">
+										ADMIN
+									</a>
+								</li>
+								
 							</ul>
 		
 						</nav>
@@ -1209,8 +1127,8 @@
 
 
 		<!-- JAVASCRIPT FILES -->
-		<%# <script>var plugin_path = 'assets/plugins/';</script>
-		<script src="assets/plugins/jquery/jquery-3.3.1.min.js"></script> %>
+		<script>var plugin_path = 'assets/';</script>
+		<%# <script src="assets/plugins/jquery/jquery-3.3.1.min.js"></script> %>
 
 		<%# <script src="assets/js/scripts.js"></script> %>
 
@@ -1221,5 +1139,6 @@
 
 		<!-- PAGELEVEL SCRIPTS -->
 		<%# <script src="assets/js/contact.js"></script> %>
+		
 	</body>
 </html>

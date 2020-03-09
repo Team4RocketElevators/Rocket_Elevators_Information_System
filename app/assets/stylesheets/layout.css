@@ -116,7 +116,7 @@ section {
 }
 #Services, #ProjAward, #News, #Clients, #contact, #form, #Acknowledge {
 	
-	background-image: url('../../assets/rocket-assets/backgrounds/bg2-min.jpg'); 
+	background-image: url('../../assets/bg2-min.jpg'); 
 	background-repeat: repeat;
 }
 
@@ -3986,7 +3986,7 @@ body.menu-vertical #mainMenu.sidebar-vertical .navbar-collapse>ul.nav.navbar-nav
 #toTop {
 	font-size:38px;
 	line-height:33px;
-	background-color: ;
+	background-color: rgba(0,0,0,0.3);
 	color: rgb(120, 175, 207);
 	position: fixed;
 	height: 35px; width: 40px;
@@ -5436,7 +5436,7 @@ section.page-header * {
 }
 .btn-default {
     color: #333;
-    background-color: #fff;
+    background-color: #0b64a0;
     border-color: #ccc;
     border-width: 1px;
     padding: 6px 12px;
@@ -7360,8 +7360,8 @@ section#slider:not(.custom-form) .btn-default {
 	#slider:not(.custom-form) .btn-default,
 	.slider .btn-default {
 		color:#fff;
-		background-color:transparent;
-		border-color:#fff;
+		background-color:#0b64a0;
+		border-color:#0b64a0;
 		border-width:2px;
 	}
 	#slider:not(.custom-form) .btn-default:hover,
@@ -9083,12 +9083,12 @@ section.dark-2 div.category-grid .card {
 
 	/* footer contact text */
 	#footer address {
-		background:url('../images/_smarty/world-map.png') no-repeat center;
+		background:url('assets/world-map.png') no-repeat center;
 	}
 	#footer address .footer-sprite {
 		margin-bottom:20px;
 		padding-left:30px; 
-		background:url('../images/_smarty/footer_sprite.png') no-repeat 0 0;
+		background:url('assets/footer_sprite.png') no-repeat 0 0;
 	}
 		#footer address .footer-sprite:last-child {
 			margin-bottom:0;

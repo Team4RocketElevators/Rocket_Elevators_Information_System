@@ -7,114 +7,7 @@
     <meta name="Author" content="Isaac Laquerre [www.codeboxx.biz]" />
 
 
-    <style>
-        #form {
-            font-size: 18px;
-            font-family: system-ui;
-            text-align: center;
-        }
 
-        #residentiel,
-        #commercial,
-        #corporatif,
-        #hybride {
-            display: none;
-        }
-
-        #residentielDiv,
-        #commercialDiv,
-        #corporatifDiv,
-        #hybrideDiv {
-            display: none;
-        }
-
-        #submitButton {
-            background: #0066A2;
-            color: white;
-            border-style: outset;
-            border-color: #0066A2;
-            border-radius: 5px;
-            height: 25px;
-            width: 100px;
-            font: bold 15px arial, sans-serif;
-            text-shadow: none;
-        }
-
-        #submitButton:hover {
-            background: rgb(0, 86, 136);
-            color: rgb(228, 228, 228);
-            cursor: pointer;
-        }
-
-        .form-select {
-            font-size: 14px;
-        }
-
-        .center {
-            margin-left: auto;
-            margin-right: auto;
-            border: 1px solid black;
-        }
-
-        body {
-            background-color: #f8f8f8;
-        }
-
-        .btn-default {
-            color: white;
-        }
-
-        .btn-default:hover {
-            background-color: white !important;
-            color: #0b64a0 !important;
-        }
-
-        .dropbtn {
-            border: none;
-        }
-
-        .dropdown {
-            position: relative;
-            display: inline-block;
-        }
-
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: rgba(0, 0, 0, 25);
-            min-width: 160px;
-            box-shadow: 0px 8px 16px 0px rgba(255, 255, 255, 0.2);
-            z-index: 1;
-        }
-
-        .dropdown-content a {
-            color: rgb(255, 255, 255);
-            padding: 12px 16px;
-            text-decoration: none;
-            display: block;
-        }
-
-        .dropdown-content a:hover {
-            background-color: #bbbbbb44;
-        }
-
-        .dropdown:hover .dropdown-content {
-            display: block;
-        }
-
-        .hovered:hover {
-            background-color: rgba(255, 255, 255, 0.192);
-        }
-
-        .rotate:hover i {
-            -webkit-transform: rotate(90deg);
-            transform: rotate(90deg);
-        }
-
-		.sticky {
-			position: fixed;
-		}
-    </style>
     <script lang="javascript">
         function numberWithCommas(x) {
             return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
@@ -285,16 +178,16 @@
         }
     </script>
         <script>
-			if (document.cookie === "EN" && document.location.href != "../submissionsform/new" && !window.location.href.includes("?prefill=")) {
-                var link = '../submissionsform/new';
-                if (window.location.href.indexOf("prefill") > -1) link += "?prefill=" + window.location.href.split("?prefill=")[1];
-				document.location.href = link;
-			}
-			else if (document.cookie === "FR" && document.location.href != "../formulairesdesoumission/new" && !window.location.href.includes("?prefill=")) {
-                var link = '../formulairesdesoumission/new';
-                if (window.location.href.indexOf("prefill") > -1) link += "?prefill=" + window.location.href.split("?prefill=")[1];
-				document.location.href = link;
-			}
+			// if (document.cookie === "EN" && document.location.href != "../submissionsform/new" && !window.location.href.includes("?prefill=")) {
+            //     var link = '../submissionsform/new';
+            //     if (window.location.href.indexOf("prefill") > -1) link += "?prefill=" + window.location.href.split("?prefill=")[1];
+			// 	document.location.href = link;
+			// }
+			// else if (document.cookie === "FR" && document.location.href != "../formulairesdesoumission/new" && !window.location.href.includes("?prefill=")) {
+            //     var link = '../formulairesdesoumission/new';
+            //     if (window.location.href.indexOf("prefill") > -1) link += "?prefill=" + window.location.href.split("?prefill=")[1];
+			// 	document.location.href = link;
+			// }
 			function switchLanguage(value) {
                 document.cookie = value;
                 var link = '../submissionforms/new';
@@ -323,7 +216,7 @@
 
             <!-- Logo -->
             <a class="logo float-left" href="../fr">
-                <img src="../assets/images/R2.png" alt="Rocket Elevator Logo">
+                <img src="../assets/R2.png" alt="Rocket Elevator Logo">
             </a>
             <div class="navbar-collapse collapse float-right nav-main-collapse submenu-dark">
                 <nav class="nav-main">
@@ -388,13 +281,13 @@
         <p style="font-size: 20px;">Veuillez selectionner les options désirées</p>
         <br>Choisir un bâtiment<br>
          <%= f.select("building-type-select", options_for_select([["-", "empty", {class: 'hidden'}], ["Residentiel", "residentiel"], ["Commercial", "commercial"], ["Corporatif", "corporatif"], ["Hybride", "hybride"]], selected: "-", disabled: "-"), {}, {class: "form-select", :id => "buildingSelect", :onchange => "inputs(this.value);"}) %><br><br>
-        <img class="center" id="residentiel" src="../assets/images/residentialBuilding.jpeg"
+        <img class="center" id="residentiel" src="../assets/residentialBuilding.jpeg"
             alt="Bâtiment Résidentiel" width="400">
-        <img class="center" id="commercial" src="../assets/images/commercialBuilding.jpeg"
+        <img class="center" id="commercial" src="../assets/commercialBuilding.jpeg"
             alt="Bâtiment Commercial" width="400">
-        <img class="center" id="corporatif" src="../assets/images/corporateBuilding.jpeg"
+        <img class="center" id="corporatif" src="../assets/corporateBuilding.jpeg"
             alt="Bâtiment Corporatif" width="400">
-        <img class="center" id="hybride" src="../assets/images/hybridBuilding.jpeg" alt="Bâtiment Hybride" width="400">
+        <img class="center" id="hybride" src="../assets/hybridBuilding.jpeg" alt="Bâtiment Hybride" width="400">
         <div id="residentielDiv">
             Nombre d'appartments: <input placeholder="0" id="number" onchange="setRecommendedShafts(), setPrices()" type="number" name="appartmentsNbrRES" min="0"
                 oninput="this.value = Math.abs(this.value)"><br>
@@ -462,7 +355,7 @@
             <div class="row">
                 <div class="col-md-3">
                     <!-- Footer Logo -->
-                    <img class="footer-logo" src="../assets/images/R2.png" alt="Rocket Elevators logo"
+                    <img class="footer-logo" src="../assets/R2.png" alt="Rocket Elevators logo"
                         width="250" />
 
                     <!-- Contact Address -->
@@ -510,5 +403,6 @@
     <script lang="javascript">
         getUrlParam("prefill", null);
     </script>
-
+<!-- JAVASCRIPT FILES -->
+		<script>var plugin_path = 'assets/';</script>
 </body>

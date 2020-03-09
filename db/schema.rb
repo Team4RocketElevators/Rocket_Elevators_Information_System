@@ -10,7 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 2020_03_05_192610) do
+=======
+ActiveRecord::Schema.define(version: 2020_03_06_191828) do
+>>>>>>> 368103bf86d661f7a18ced27e080660cdd8b88f3
 
   create_table "admins", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -36,7 +40,11 @@ ActiveRecord::Schema.define(version: 2020_03_05_192610) do
     t.index ["reset_password_token"], name: "index_employees_on_reset_password_token", unique: true
   end
 
+<<<<<<< HEAD
   create_table "tests", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+=======
+  create_table "forms", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+>>>>>>> 368103bf86d661f7a18ced27e080660cdd8b88f3
     t.string "building"
     t.integer "appartmentsNbrRES"
     t.integer "floorsNbrRES"
