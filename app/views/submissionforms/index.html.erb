@@ -85,7 +85,10 @@
 <h1 align="center"><%= @title %></h1>
 <title><%= @page_title %></title>
 
-<div class="h-150"></div>
+<div align="center">Your forms:<br>
+<% @forms.each do |form| %>
+    <%= link_to "Form #" + form.id.to_s, "/submissionforms/" + form.id.to_s %>;
+<% end %></div><br>
 
         <button align="center" class="btn btn-default center">New Form</button>
 </a>

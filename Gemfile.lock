@@ -252,9 +252,13 @@ GEM
       tilt (>= 1.1, < 3)
     sassc (2.2.1)
       ffi (~> 1.9)
+<<<<<<< HEAD
+    sassc (2.2.1x86-mingw32)
+=======
     sassc (2.2.1-x64-mingw32)
       ffi (~> 1.9)
     sassc (2.2.1-x86-mingw32)
+>>>>>>> d528d29506fd5e71bc74dfa12e08672ae3a3965d
       ffi (~> 1.9)
     sassc-rails (2.1.2)
       railties (>= 4.0.0)
