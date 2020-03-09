@@ -2,6 +2,7 @@ require 'securerandom'
 
 class SubmissionformsController < ApplicationController
     def index
+        @forms = Form.all
         @title = "Price Estimation Form"
         @page_title = "Rocket Elevators - Price Estimation Form"
     end
@@ -21,6 +22,6 @@ class SubmissionformsController < ApplicationController
     end
 
     private def form_params
-        params.require(:form).permit(:building, :appartmentsNbrRES, :floorsNbrRES, :floorsNbrCOM, :floorsNbrCOR, :basementsNbrRES, :basementsNbrCOM, :basementsNbrCOR, :seperateBusinessesNbrCOM, :parkingsNbrCOM, :parkingsNbrCOR, :elevatorsNbrCOM, :seperateRentalCompaniesNbrCOR, :occupantsPerFloorCOR, :occupantsPerFloor, :nbrFloors, :nbrBasements, :availableParkingSpaces, :seperateBusinesses,  :busyHours,  :recommendedShafts,  :quality,  :priceUnit,  :costInstallations,  :costTotal)
+        params.require(:form).permit(:building, :appartmentsNbrRES, :floorsNbrRES, :floorsNbrCOM, :floorsNbrCOR, :basementsNbrRES, :basementsNbrCOM, :basementsNbrCOR, :seperateBusinessesNbrCOM, :parkingsNbrCOM, :parkingsNbrCOR, :elevatorsNbrCOM, :seperateRentalCompaniesNbrCOR, :occupantsPerFloorCOR, :occupantsPerFloor, :nbrFloors, :nbrBasements, :availableParkingSpaces, :seperateBusinesses, :busyHours, :recommendedShafts, :quality, :priceUnit, :costInstallations, :costTotal, :timestamps)
     end
 end

@@ -383,7 +383,7 @@
 
     <div id="form">
         <h1 style="font-size: 35px; font-style: bold;">Price Estimation Form - #<%= @form.id %></h1>
-        <h2 style="font-size: 20px;">Your form has been saved <i style="color: green;">✓</i></h2>
+        <h2 style="font-size: 20px;">Your form has been saved <i style="color: green;">✓</i> - <%= @form.updated_at %></h2>
         <br><p>Selected building type:</p>
         <%= select_tag(:building, options_for_select([@form.building.capitalize()]), {disabled: true, :class => "form-select"}) %><br><br>
         <img class="center" id="residential" src="../assets/images/residentialBuilding.jpeg"
@@ -435,9 +435,16 @@
     </div><br>
 
     <a href="./new" target="_self">
-        <button class="btn btn-default">Submit a new form</button>
+        <button class="btn btn-flat">Submit a new form</button>
+    </a>
+    <a href="./" target="_self">
+        <button class="btn btn-primary">Edit this form</button>
+    </a>
+    <a href="./" target="_self">
+        <button class="btn btn-warning">Delete this form</button>
     </a>
 
+    <br>
     <br>
 
     </div>

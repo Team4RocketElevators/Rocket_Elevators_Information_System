@@ -29,7 +29,7 @@ class DeviseCreateForms < ActiveRecord::Migration[5.2]
       t.text :costInstallations
       t.text :costTotal
 
-      t.timestamps
+      t.timestamps :timestamps
     end
   end
 end
