@@ -164,7 +164,9 @@
                     document.getElementById(values[i] + "Div").style.display = "none";
                 }
                 document.getElementById(value).style.display = "block";
-                document.getElementById(values[values.indexOf(value)] + "Div").style.display = "inline";
+                document.getElementById(value + "Div").style.display = "inline";
+                document.getElementById(value + "Div").setAttribute("required", "");
+                console.log(document.getElementById(value + "Div"));
             }
             document.getElementById("recommendedShafts").value = "";
             document.getElementById("priceUnit").value = "$0";
@@ -500,7 +502,7 @@
             if (!prefill) return;
             if (prefill != "Residential" && prefill != "Commercial" && prefill != "Corporate" && prefill != "Hybrid") return;
             document.getElementById(prefill.toLowerCase()).setAttribute("selected", "true");
-            #document.getElementById("building").textContent = prefill;
+            <!-- document.getElementById("building").textContent = prefill; -->
             document.getElementById("building").setAttribute("style", "display: inline;");
             document.getElementById("building").setAttribute("value", prefill.toLowerCase());
             document.getElementById(prefill.toLowerCase()).style.display = "block";

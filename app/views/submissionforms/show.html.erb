@@ -142,9 +142,6 @@
         }
     </style>
     <script lang="javascript">
-        function share() {
-            document.getElementById("body2").setAttribute('style', 'display: block; color: rgba(229,229,229,0.42);')
-        }
         function numberWithCommas(x) {
             return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
         }
@@ -177,10 +174,10 @@
         function setPrices() {
             var values = [];
             var formselect = document.getElementById("building");
-            var buildingType = formselect.options[formselect.selectedIndex].value;
+            var buildingType = <%= @form.building.to_s %>.id
             var buildingLetter = buildingType.toUpperCase().slice(0, 3);
-            for (i in document.getElementsByName("form[quality]")) {
-                if (document.getElementsByName("form[quality]")[i].checked) values.push(document.getElementsByName("form[quality]")[i].value);
+            for (i in document.getElementsByName("quality")) {
+                if (document.getElementsByName("quality")[i].checked) values.push(document.getElementsByName("quality")[i].value);
             }
             var value = values[0];
             if (value === "standard") {
@@ -238,7 +235,7 @@
         function setRecommendedShafts() {
             var values = [];
             var formselect = document.getElementById("building");
-            var buildingType = formselect.options[formselect.selectedIndex].value;
+            var buildingType = <%= @form.building.to_s %>.id
             switch (buildingType) {
                 case "commercial":
                     var formselect = document.getElementById("building");
@@ -398,43 +395,43 @@
         <img class="center" id="hybrid" src="../assets/images/hybridBuilding.jpeg" alt="Hybrid Building"
             width="400">
         <div id="residentialDiv">
-            Number of appartments: <%= number_field_tag("appartmentsNbrRES", {:id => "appartmentsNbrRES"}) %><br>
-            Number of floors: <%= number_field_tag(:floorsNbrRES, {:id => "floorsNbrRES"}) %><br>
-            Number of basements: <%= number_field_tag(:basementsNbrRES, {:id => "basementsNbrRES"}) %><br>
+            Number of appartments: <%= number_field_tag("appartmentsNbrRES", @form.appartmentsNbrRES, {:id => "appartmentsNbrRES", disabled: true}) %><br>
+            Number of floors: <%= number_field_tag(:floorsNbrRES, @form.floorsNbrRES, {:id => "floorsNbrRES", disabled: true}) %><br>
+            Number of basements: <%= number_field_tag(:basementsNbrRES, @form.basementsNbrRES, {:id => "basementsNbrRES", disabled: true}) %><br>
         </div>
         <div id="commercialDiv">
-            Number of floors: <%= number_field_tag(:floorsNbrCOM, {:id => "floorsNbrCOM"}) %><br>
-            Number of basements: <%= number_field_tag(:basementsNbrCOM, {:id => "basementsNbrCOM"}) %><br>
-            Number of separate businesses: <%= number_field_tag(:seperateBusinessesNbrCOM, {:id => "seperateBusinessesNbrCOM"}) %><br>
-            Number of available parking spaces: <%= number_field_tag(:parkingsNbrCOM, {:id => "parkingsNbrCOM"}) %><br>
-            Number of elevator shafts: <%= number_field_tag(:elevatorsNbrCOM, {:id => "elevatorsNbrCOM"}) %><br>
+            Number of floors: <%= number_field_tag(:floorsNbrCOM, @form.floorsNbrCOM, {:id => "floorsNbrCOM", disabled: true}) %><br>
+            Number of basements: <%= number_field_tag(:basementsNbrCOM, @form.basementsNbrCOM, {:id => "basementsNbrCOM", disabled: true}) %><br>
+            Number of separate businesses: <%= number_field_tag(:seperateBusinessesNbrCOM, @form.seperateBusinessesNbrCOM, {:id => "seperateBusinessesNbrCOM", disabled: true}) %><br>
+            Number of available parking spaces: <%= number_field_tag(:parkingsNbrCOM, @form.parkingsNbrCOM, {:id => "parkingsNbrCOM", disabled: true}) %><br>
+            Number of elevator shafts: <%= number_field_tag(:elevatorsNbrCOM, @form.elevatorsNbrCOM, {:id => "elevatorsNbrCOM", disabled: true}) %><br>
         </div>
         <div id="corporateDiv">
-            Number of floors: <%= number_field_tag(:floorsNbrCOR, {:id => "floorsNbrCOR"}) %><br>
-            Number of basements: <%= number_field_tag(:basementsNbrCOR, {:id => "basementsNbrCOR"}) %><br>
-            Number of available parking spaces: <%= number_field_tag(:parkingsNbrCOR, {:id => "parkingsNbrCOR"}) %><br>
-            Number of separate rental companies: <%= number_field_tag(:seperateRentalCompaniesNbrCOR, {:id => "seperateRentalCompaniesNbrCOR"}) %><br>
-            Maximum amount of occupants per floor: <%= number_field_tag(:occupantsPerFloorCOR, {:id => "occupantsPerFloorCOR"}) %><br>
+            Number of floors: <%= number_field_tag(:floorsNbrCOR, @form.floorsNbrCOR, {:id => "floorsNbrCOR", disabled: true}) %><br>
+            Number of basements: <%= number_field_tag(:basementsNbrCOR, @form.basementsNbrCOR, {:id => "basementsNbrCOR", disabled: true}) %><br>
+            Number of available parking spaces: <%= number_field_tag(:parkingsNbrCOR, @form.parkingsNbrCOR, {:id => "parkingsNbrCOR", disabled: true}) %><br>
+            Number of separate rental companies: <%= number_field_tag(:seperateRentalCompaniesNbrCOR, @form.seperateRentalCompaniesNbrCOR, {:id => "seperateRentalCompaniesNbrCOR", disabled: true}) %><br>
+            Maximum amount of occupants per floor: <%= number_field_tag(:occupantsPerFloorCOR, @form.occupantsPerFloorCOR, {:id => "occupantsPerFloorCOR", disabled: true}) %><br>
         </div>
         <div id="hybridDiv">
-            Number of floors: <%= number_field_tag(:nbrFloors, {:id => "floorsNbrHYB"}) %><br>
-            Number of basements:<%= number_field_tag(:nbrBasements, {:id => "basementsNbrHYB"}) %><br>
-            Number of available parking spaces: <%= number_field_tag(:availableParkingSpaces, {:id => "parkingsNbrHYB"}) %><br>
-            Number of separate businesses: <%= number_field_tag(:seperateBusinesses, {:id => "seperateBusinessesNbrHYB"}) %><br>
-            Maximum amount of occupants per floor: <%= number_field_tag(:occupantsPerFloor, {:id => "occupantsPerFloorHYB"}) %><br>
-            Active/busy hours: <%= number_field_tag(:busyHours, {:id => "busyHoursNbrHYB", :oninput => "this.value = Math.abs(this.value)", :onchange => 'to24H(this);'}) %><br>
+            Number of floors: <%= number_field_tag(:nbrFloors, @form.nbrFloors, {:id => "floorsNbrHYB", disabled: true}) %><br>
+            Number of basements:<%= number_field_tag(:nbrBasements, @form.nbrBasements, {:id => "basementsNbrHYB", disabled: true}) %><br>
+            Number of available parking spaces: <%= number_field_tag(:availableParkingSpaces, @form.availableParkingSpaces, {:id => "parkingsNbrHYB", disabled: true}) %><br>
+            Number of separate businesses: <%= number_field_tag(:seperateBusinesses, @form.seperateBusinesses, {:id => "seperateBusinessesNbrHYB", disabled: true}) %><br>
+            Maximum amount of occupants per floor: <%= number_field_tag(:occupantsPerFloor, @form.occupantsPerFloor, {:id => "occupantsPerFloorHYB", disabled: true}) %><br>
+            Active/busy hours: <%= number_field_tag(:busyHours, @form.busyHours, {:id => "busyHoursNbrHYB", disabled: true}) %><br>
         </div>
         <br>
-        Recommended amount of elevators: <%= number_field_tag(:recommendedShafts, @form.recommendedShafts, {disabled: true, :id => "recommendedShafts", }) %><br>
+        Recommended amount of elevators: <%= number_field_tag(:recommendedShafts, @form.recommendedShafts, {:id => "recommendedShafts", disabled: true}) %><br>
         Select an elevator range<br>
         <input type="radio" name="quality" id="standard" disabled value="standard">Standard<br>
         <input type="radio" name="quality" id="premium" disabled value="premium">Premium<br>
         <input type="radio" name="quality" id="excelium" disabled value="excelium">Excelium<br>
 
     <div style="text-align: center;">
-        Price for 1 elevator unit: <%= text_field_tag(:priceUnit, @form.priceUnit, {disabled: true, :id => "priceUnit"}) %><br>
-        Installation costs: <%= text_field_tag("costInstallations", @form.costInstallations, {disabled: true, :id => "costInstallations"}) %><br>
-        Total cost: <%= text_field_tag("costTotal", @form.costTotal, {disabled: true, :id => "costTotal"}) %><br>
+        Price for 1 elevator unit: <%= text_field_tag(:priceUnit, "", {disabled: true, :id => "priceUnit"}) %><br>
+        Installation costs: <%= text_field_tag("costInstallations", "", {disabled: true, :id => "costInstallations"}) %><br>
+        Total cost: <%= text_field_tag("costTotal", "", {disabled: true, :id => "costTotal"}) %><br>
     </div><br>
 
     <a href="./new" target="_self">
@@ -444,22 +441,23 @@
     <br>
 
     </div>
-
     <script>
-            switch(<%= @form.quality.to_s %>) {
-                case standard:
-                    var radio = "standard";
-                break
-                case premium:
-                    var radio = "premium";
-                break
-                case excelium:
-                    var radio = "excelium";
-                break
-                default:
-                break;
-            }
-            document.getElementById(radio).setAttribute("checked", true);
-            var building = <%= @form.building.to_s %>;
-            inputs(building);
+        switch(<%= @form.quality.to_s %>) {
+            case standard:
+                var radio = "standard";
+            break
+            case premium:
+                var radio = "premium";
+            break
+            case excelium:
+                var radio = "excelium";
+            break
+            default:
+            break;
+        }
+        document.getElementById(radio).setAttribute("checked", true);
+        var building = <%= @form.building.to_s %>;
+        inputs(building.id);
+        setRecommendedShafts();
+        setPrices();
     </script>
