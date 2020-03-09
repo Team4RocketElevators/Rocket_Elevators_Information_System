@@ -24,8 +24,6 @@ ActiveRecord::Schema.define(version: 2020_03_06_191828) do
     t.index ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true
   end
 
-<<<<<<< HEAD
-=======
   create_table "employees", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -68,7 +66,6 @@ ActiveRecord::Schema.define(version: 2020_03_06_191828) do
     t.datetime "updated_at", null: false
   end
 
->>>>>>> d528d29506fd5e71bc74dfa12e08672ae3a3965d
   create_table "views", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
