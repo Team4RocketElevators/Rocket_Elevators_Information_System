@@ -324,7 +324,7 @@
 
             <!-- LOGO-->
             <a class="logo float-left" href="./en">
-                <img src="../assets/images/R2.png" alt="Rocket Elevator Logo">
+                <img src="../assets/R2.png" alt="Rocket Elevator Logo">
             </a>
             <div class="navbar-collapse collapse float-right nav-main-collapse submenu-dark">
                 <nav class="nav-main">
@@ -385,13 +385,13 @@
         <h2 style="font-size: 20px;">Your form has been saved <i style="color: green;">✓</i> - <%= @form.updated_at %></h2>
         <br><p>Selected building type:</p>
         <%= select_tag(:building, options_for_select([@form.building.capitalize()]), {disabled: true, :class => "form-select"}) %><br><br>
-        <img class="center" id="residential" src="../assets/images/residentialBuilding.jpeg"
+        <img class="center" id="residential" src="../assets/residentialBuilding.jpeg"
             alt="Residential Building" width="400">
-        <img class="center" id="commercial" src="../assets/images/commercialBuilding.jpeg"
+        <img class="center" id="commercial" src="../assets/commercialBuilding.jpeg"
             alt="Commercial Building" width="400">
-        <img class="center" id="corporate" src="../assets/images/corporateBuilding.jpeg"
+        <img class="center" id="corporate" src="../assets/corporateBuilding.jpeg"
             alt="Corporate Building" width="400">
-        <img class="center" id="hybrid" src="../assets/images/hybridBuilding.jpeg" alt="Hybrid Building"
+        <img class="center" id="hybrid" src="../assets/hybridBuilding.jpeg" alt="Hybrid Building"
             width="400">
         <div id="residentialDiv">
             Number of appartments: <%= number_field_tag("appartmentsNbrRES", @form.appartmentsNbrRES, {:id => "appartmentsNbrRES", disabled: true}) %><br>

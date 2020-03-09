@@ -1,0 +1,1205 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Rocket Elevators - Page d'accueil</title>
+		<meta name="description" content="Bienvenue à Rocket Elevators!" />
+		<meta name="Author" content="Isaac Laquerre - Vyle" />
+
+		
+		
+		<script>
+			/*if (document.cookie === "EN" && document.location.href != "./" && document.location.href != "./en" && !window.location.href.includes("#")) {
+    			var link = "./en";
+    			if (document.location.href.includes("#")) {
+    				var frsublink = document.location.href.split("#")[1];
+    				var ensublink;
+    				switch(ensublink) {
+    					case "attributions":
+    						ensublink = "awards";
+    					break;
+    					case "actualites":
+    						ensublink = "news";
+    					break;
+    					default:
+    						ensublink = frsublink;
+    					break;
+    				}
+    				if (ensublink != "#") link += "#" + ensublink;
+    			}
+    			document.location.href = link;
+		    }
+			else if (document.cookie === "FR" && document.location.href != "./fr" && !window.location.href.includes("#")) {
+    			var link = "./fr";
+    			if (document.location.href.includes("#")) {
+    				var ensublink = document.location.href.split("#")[1];
+    				var frsublink;
+    				switch(ensublink) {
+    					case "awards":
+    						frsublink = "attributions";
+    					break;
+    					case "news":
+							frsublink = "actualites";
+    					break;
+    					default:
+    						frsublink = ensublink;
+    					break;
+    				}
+    				if (frsublink != "#") link += "#" + frsublink;
+				}
+    			document.location.href = link;
+			}*/
+			function triggeredKey(e) {
+				var pattern=/^[0-9-]+$/g;
+				if(pattern.test(e)){
+					document.getElementById("contact:phone").value = e;
+				}
+				else{
+					var txt = e.slice(0, -1);
+					document.getElementById("contact:phone").value = txt;
+				}
+			}
+			function switchLanguage(value) {
+				document.cookie = value;
+				if (value === "EN") {
+					var link = "./en";
+					if (document.location.href.includes("#")) {
+						var frsublink = document.location.href.split("#")[1];
+						var ensublink;
+						switch(frsublink) {
+							case "attributions":
+								ensublink = "awards";
+							break;
+							case "actualites":
+								ensublink = "news";
+							break;
+							default:
+								ensublink = frsublink;
+							break;
+						}
+						if (ensublink != "#") link += "#" + ensublink;
+					}
+					document.location.href = link;
+				}else return;
+			}
+		</script>
+	</head>
+	<body class="enable-animation">
+
+		<!--
+			Salut voyageur,
+			Voici une patate ASCII;
+
+			                                           NNmmdhhhhhyyyyssssosssssssyyyhhdmN                       
+			                                 N dyssoo++oooooossyyhyyyyyysssssssssoooo+++++oyhmN                 
+			                             Nhyo+++ooossoooossssssyyyyyyyssooooosyyssooooooooo++++oy               
+			                         Nmhsosssyyyssssosssoosoosssssyssooooooooooooooooooooooooo+++++hN           
+			                     Nmhssssssyyyssssssssssooooooooooooo+oo+++++++++++++oooooooo++oooo+++y          
+			                 Nmdyssysssssssooosoosoossooooo++oooo++++++++++ooo++++++++++oooo++++++ooooos        
+			              Ndyyssssssssssooooooooooooooo+ooo++++++++++//++++++++++++++++++o+++++++++++o+++h      
+			           Ndyssssssssysssssooooooo++oooo+++++++++++/++///+////+/++++++++////+/+/++oo/++++++//sN    
+			         Nhssssysssyyysssoooooo++++++++o+++++++////////////+++////////+//////+////+++++o+++++//oN   
+			        hsssssssyyyyyssooooooo+++++++++++/+/////////////////////////////////:/:////+/++++++/////oN  
+			       ysssssssssysoooooooo++++++++++///////////////+/++/////:::::::::::///::::::::::/+++o+////+/s  
+			     dssssyysssssssoooooo+++++++////////////////////+//////:::::::::::::::::::::::-:::::/++/++////N 
+			    hsssyyysssssssoooooso++++//////////////////://////////:::::::------:---://---------:::///+/:/:h 
+			   hsssssssssssssoooo+++++//////////////////+///////:::::::/::::-::-::::-::::---:--------://+//:/:o 
+			  dsssssssssssosoo++oooo+/+/////////////////+++///:/::::::::::---:::::::/::-----:--::--:::://oo//:+ 
+			 Nssssyysssooooooo++ossyo+/////////////////++++/////:::::::--:---------://::/:-----:::/:/:::/os/+:: 
+			 yssssssssooooooooo++syso//////:////////////++++++///:://::::::-----:---//:/o/---:::/:::/::://+//::s
+			 ooossssssoooosssoo+//+++o+////+o/:::///////+++o++///////:::::::-::--:::---::-----:::::://///++///::
+			yoooooooooooo+ooo++////++ooo/++///::::://////+/++////::::::::::::-:------..----..-:--::/o++++++///::
+			soooooooooooo+++////::/+/+oo/+++/////////////////::/::::::::::::--::---...--....---::/++o+++////:/:o
+			ooooooooooooo++++///://///++//////////////////////////::/:::::-::--------:--....-::///+++////:::-:-h
+			ooooooooooso++++oooo+/////+/+///////////++///+///:///////::://::::::-----:----..-::://+//:::::----/ 
+			yoooooooooooooooooso+//+++/++///////////++//+//////////:::::/:::::::::/:-::::/::--::/:::-::::----/  
+			 oooooooo+ooo+oooooo+++/////++++///+//////+++++///////////////////:::::/:/:-:/:--:-::---:::-----:   
+			 sooooooooooooooo++++++++/+oo+++++++////////+++++/////++++///++/////////::::/::-------:-::---::/    
+			 Nsoooooooooooooooooo++++++oo+++++++/////+++++++/////+//+o++//+/////+///:::::::::-------:---:/sN    
+			   sosoosoossooooooo+oooooooooooooo++++++++oooo++///++//+++///////////:----::-:::----:-:-:-:o       
+			    ssssoossssooooooooooooooooooooooo+o+++osooo++++++++++//////:::://:-:--:::-:::::://::-:od        
+			    Nyosssoosysooooooooooososooooooooossooooooooosooo++++///://::::-------:-----/////::+yN          
+			      dsssooooooosoooooooooosoooooooooossooooooooo+oo++++++////:-------::---:-:://::/sd             
+			        ysoo+++oooooooooooooosooooooooooososoooooo++++++++////:::----:-::-:::::::/sdN               
+			          yo+++++oooooooooooooooooooosssysssssossoo++//++////:::::/:::/::::::/sh                    
+			            yo++++++++ooooooooooooooossyyyhyssssoo+++///////////////////oshdN                       
+			              dyo++oo+o++oooooooooosssyyhhyhyhyso+++/////+//+////osyhmN                             
+			                  hyyssooooooo++ooooosyyhhyyyyy+////::/:+oyyhddN                                    
+			                      N dyyssoooo+++++o+ooooo+/::/+sydN                                             
+			                           N dyso+/////++osyhhdN                                                    
+		-->
+
+		<!-- wrapper -->
+		<div id="wrapper">
+			<div id="header" style="background-color: rgba(0,0,0,25);" class="navbar-toggleable-md sticky header-md clearfix">
+
+				<!-- TOP NAV -->
+				<header id="topNav">
+					<div class="container">
+
+						<!-- Mobile Menu Button -->
+						<button class="btn btn-mobile" data-toggle="collapse" data-target=".nav-main-collapse">
+							<i class="fa fa-bars"></i>
+						</button>
+
+						<!-- Logo -->
+						<a class="logo float-left" href="./fr">
+							<img src="assets/R2.png" alt="Rocket Elevator Logo">
+						</a>
+						<div class="navbar-collapse collapse float-right nav-main-collapse submenu-dark">
+							<nav class="nav-main">
+								<ul id="topMain" class="nav nav-pills nav-main nav-onepage">
+									<li class="active hovered"><!-- HOME -->
+										<a style="color: rgb(255,255,255);" href="./fr">
+											PAGE D'ACCUEIL
+										</a>
+									</li>
+									<li class="hovered"><!-- SERVICES -->
+										<div class="dropdown dropbtn rotate">
+											<a class="h-25" style="color: rgb(255,255,255);" href="./fr#services">
+												SERVICES &nbsp; <i class="fa fa-angle-right"></i>
+											</a>
+											<div class="dropdown-content">
+												<a href="./fr/batiments-residentiels">Bâtiments Résidentiels</a>
+												<a href="./fr/batiments-corporatifs">Bâtiments Corporatifs</a>
+											</div>
+										</div>
+									</li>
+									<li class="hovered"><!-- ATTRIBUTIONS -->
+										<a style="color: rgb(255,255,255);" href="./fr#attributions">
+											ATTRIBUTIONS
+										</a>
+									</li>
+									<li class="hovered"><!-- ACTUALITÉS -->
+										<a style="color: rgb(255,255,255);" href="./fr#actualites">
+											ACTUALITÉS
+										</a>
+									</li>
+									<li class="hovered"><!-- CLIENTS -->
+										<a style="color: rgb(255,255,255);" href="./fr#clients">
+											CLIENTS
+										</a>
+									</li>
+									<li class="hovered"><!-- CONTACT -->
+										<a style="color: rgb(255,255,255);" href="./fr#contact">
+											CONTACT
+										</a>
+									</li>
+									<li><!-- LANGUAGE SWITHCER -->
+										<select onchange="switchLanguage(this.value);" style="color: black;">
+											<option id="EN">EN</option>
+											<option id="FR" selected>FR</option>
+										</select>
+									</li>
+								</ul>
+
+							</nav>
+						</div>
+
+					</div>
+				</header>
+				<!-- /Top Nav -->
+			</div>
+			<!-- REVOLUTION SLIDER -->
+			<div class="slider fullwidthbanner-container roundedcorners">
+				<div class="fullwidthbanner" data-height="600" data-shadow="0" data-navigationStyle="preview2">
+					<ul class="hide">
+					
+						<!-- SLIDE 1 -->
+						<li data-transition="parallaxtobottom" data-slotamount="7" data-masterspeed="600"  data-saveperformance="off"  data-title="Rocket Elevators">
+							<!-- MAIN IMAGE -->
+							<img src="assets/firstSlide.jpeg"  alt="elevators cover slide"  data-bgposition="center" data-bgfit="cover" data-bgrepeat="no-repeat">
+
+							<div class="tp-caption white_big skewfromleft tp-resizeme"
+								data-x="471"
+								data-y="100" 
+								data-speed="500"
+								data-start="1500"
+								data-easing="Power3.easeInOut"
+								data-splitin="words"
+								data-splitout="none"
+								data-elementdelay="0.1"
+								data-endelementdelay="0.1"
+								data-endspeed="600"
+								style="z-index: 2; color:#fff; font-size:75px; line-height:85px; font-weight:bold; letter-spacing:0; text-shadow:none;">
+								⠀Rocket Elevators
+							</div>
+
+							<div class="tp-caption content_text_center skewfromleft tp-resizeme"
+								data-x="530"
+								data-y="190" 
+								data-speed="500"
+								data-start="2000"
+								data-easing="Power3.easeInOut"
+								data-splitin="none"
+								data-splitout="none"
+								data-elementdelay="0.1"
+								data-endelementdelay="0.1"
+								data-endspeed="600"
+
+								style="z-index: 3; font-size:30px; color:#fff; font-weight:300; text-shadow:none;">
+								⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀Élever la sécurité,<br>⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ rapidité et le style
+							</div>
+
+							<div class="tp-caption skewfromleft tp-resizeme  un-button-2-lg"
+								data-x="540"
+								data-y="300" 
+								data-speed="500"
+								data-start="2500"
+								data-easing="Power3.easeInOut"
+								data-splitin="none"
+								data-splitout="none"
+								data-elementdelay="0.1"
+								data-endelementdelay="0.1"
+								data-endspeed="300"
+
+								style="z-index: 5; max-width: auto; max-height: auto; white-space: nowrap;">
+									<a class="btn btn-default btn-lg" target="_blank" href="./formulairesdesoumission/new">REMPLIR UN FORMULAIRE DE SOUMISSION &nbsp; <i class="fa fa-angle-right"></i></a>
+									<a class="btn btn-default btn-lg" href="#services">VOIR NOS SERVICES &nbsp; <i class="fa fa-angle-right"></i></a>
+							</div>
+						</li>
+					
+						<!-- SLIDE 2 -->
+						<li data-transition="parallaxtobottom" data-slotamount="7" data-masterspeed="300"  data-saveperformance="off" data-title="Bâtiments Résidentiels">
+							<!-- MAIN IMAGE -->
+							<img src="assets/secondSlide.jpeg" alt="elevators cover slide 2"  data-bgposition="center" data-bgfit="cover" data-bgrepeat="no-repeat">
+
+							<div class="overlay dark-4"><!-- dark overlay [0 to 9 opacity] --></div>
+
+							<div class="tp-caption font-roboto skewfromleft tp-resizeme"
+								data-x="50"
+								data-y="100" 
+								data-speed="500"
+								data-start="1500"
+								data-easing="Cubic.easeOut"
+								data-splitin="none"
+								data-splitout="none"
+								data-elementdelay="0.1"
+								data-endelementdelay="0.1"
+								data-endspeed="500"
+								style="z-index: 2; color:#fff; font-size:65px; line-height:85px; font-weight:bold; letter-spacing:0; text-shadow:none;">
+									Bâtiments Résidentiels<br/>
+							</div>
+
+							<div class="tp-caption skewfromrightshort tp-resizeme"
+								data-x="50"
+								data-y="300" 
+								data-speed="500"
+								data-start="1000"
+								data-easing="easeInCirc"
+								data-splitin="none"
+								data-splitout="none"
+								data-elementdelay="0.1"
+								data-endelementdelay="0.1"
+								data-endspeed="500"
+								style="z-index: 3; font-size:25px; color:#fff; font-weight:300; text-shadow:none;">
+									Si vous rêvez d'un ascenseur avec une fondation de qualité ainsi qu'un désign subtile,<br />
+									notre équipe est la meilleure dans ce champ.
+							</div>
+
+							<div class="tp-caption sfb tp-resizeme"
+								data-x="50"
+								data-y="410" 
+								data-speed="500"
+								data-start="1500"
+								data-easing="Power3.easeIn"
+								data-splitin="none"
+								data-splitout="none"
+								data-elementdelay="1"
+								data-endelementdelay="0.1"
+								data-endspeed="500"
+								style="z-index: 4; max-width: auto;">
+									<a class="btn btn-default btn-lg" href="./fr/batiments-residentiels">EN SAVOIR PLUS &nbsp; <i class="fa fa-angle-right"></i></a>
+									<a class="btn btn-default btn-lg" href="#services">NOS SERVICES &nbsp; <i class="fa fa-angle-right"></i></a>
+							</div>
+						</li>
+
+						<!-- SLIDE 3 -->
+						<li data-transition="parallaxtobottom" data-slotamount="7" data-masterspeed="600"  data-saveperformance="off"  data-title="Bâtiments Corporatifs">
+							<!-- MAIN IMAGE -->
+							<img src="assets/slide3.jpeg"  alt="elevators cover slide 3"  data-bgposition="center" data-bgfit="cover" data-bgrepeat="no-repeat">
+
+							<div class="tp-caption white_big skewfromleft tp-resizeme"
+								data-x="15"
+								data-y="100" 
+								data-speed="500"
+								data-start="1500"
+								data-easing="Power3.easeInOut"
+								data-splitin="words"
+								data-splitout="none"
+								data-elementdelay="0.1"
+								data-endelementdelay="0.1"
+								data-endspeed="600"
+								style="z-index: 2; color:#fff; font-size:75px; line-height:85px; font-weight:bold; letter-spacing:0; text-shadow:none;">
+									Bâtiments Corporatifs
+							</div>
+
+							<div class="tp-caption skewfromrightshort tp-resizeme"
+								data-x="400"
+								data-y="210" 
+								data-speed="500"
+								data-start="1000"
+								data-easing="easeInCirc"
+								data-splitin="none"
+								data-splitout="none"
+								data-elementdelay="0.1"
+								data-endelementdelay="0.1"
+								data-endspeed="500"
+								style="z-index: 3; font-size:25px; color:#fff; font-weight:300; text-shadow:none;">
+									Désigns spécialisés<br>pour les entreprises
+							</div>
+
+							<div class="tp-caption skewfromleft tp-resizeme  un-button-2-lg"
+								data-x="175"
+								data-y="300" 
+								data-speed="500"
+								data-start="2500"
+								data-easing="Power3.easeInOut"
+								data-splitin="none"
+								data-splitout="none"
+								data-elementdelay="0.1"
+								data-endelementdelay="0.1"
+								data-endspeed="300"
+
+								style="z-index: 5; max-width: auto; max-height: auto; white-space: nowrap;">
+									<a class="btn btn-default btn-lg" href="./fr/batiments-corporatifs">EN SAVOIR PLUS &nbsp; <i class="fa fa-angle-right"></i></a>
+									<a class="btn btn-default btn-lg" href="#services">NOS SERVICES &nbsp; <i class="fa fa-angle-right"></i></a>
+							</div>
+						</li>
+					</ul>
+
+				</div>
+			</div>
+			<!-- /REVOLUTION SLIDER -->
+
+			<!-- BUTTON CALLOUT -->
+			<a id="contactbar" href="#contact" class="btn btn-xlg btn-primary fs-15 fullwidth m-0 rad-0 p-15">
+				<span class="font-lato fs-23">
+					Êtes-vous convaincu? 
+					<strong>Contactez nous! &raquo;</strong>
+				</span>
+			</a>
+			<!-- /BUTTON CALLOUT -->
+
+			<p style="width:400px;"></p>
+
+			<!-- PARALLAX -->
+			<section class="parallax parallax-1" style="background-image: url('assets/parallax.jpeg');">
+				<div class="overlay dark-5"></div>
+
+				<div class="container">
+
+					<div class="text-center">
+						<h2 class="fs-40 fw-300">Conception &amp; Construction d'Ascenseurs Depuis 1976</h2>
+						<a class="btn btn-default btn-lg" style="border-color: #0b64a0;"  target="_blank" href="./formulairesdesoumission/new">REMPLIR UN FORMULAIRE DE SOUMISSION <i class="fa fa-angle-right"></i></a>
+					</div>
+
+				</div>
+			</section>
+			<!-- /PARALLAX -->
+			
+			<!-- SERVICES -->
+			<section id="services">
+				<div w-500 class="container">
+                    <div class="row" style="align-self: auto;">
+                        <div class="col-sm-4">
+                        	<img class="img-fluid w-300" src="assets/awardfinal.jpg" alt="img" />
+                            <h3 class="mt-10">Toutes nos distinctions</h3>
+                            <a href="#attributions" class="btn btn-default">ATTRIBUTIONS</a>
+                        </div>
+ 
+                        <div class="col-sm-4">
+                            <img class="img-fluid w-300" src="assets/residentialBuilding.jpeg" alt="Residential Building" />
+                            <h3 class="mt-10">Bâtiments Résidentiels</h3>
+								<p>Nous offrons du travail résidentiel en ce qui concerne les bâtiments de communautés et/ou<br>partagés comme des complexes d'appartement, bibliothèques, etc.</p>
+								<a href="./fr/batiments-residentiels" class="btn btn-default">EN SAVOIR PLUS</a>
+								<a target="_blank" href="./formulairesdesoumission/new?prefill=Residentiel" class="btn btn-default">ESTIMATION DE PRIX</a target="_blank">
+							</div>
+							<div class="col-sm-4">
+								<img class="img-fluid w-300" src="assets/corporateBuilding.jpeg" alt="Corporate Building" />
+								<h3 class="mt-10">Bâtiment Corporatifs</h3>
+									<p>Accompagnant vos structures voisines, votre bâtiment corporatifaura un piquant extra avec notre tout-nouveau désign d'ascenseur à murs vitrés!</p>
+									<a href="./fr/batiments-corporatifs" class="btn btn-default">EN SAVOIR PLUS</a>
+									<a target="_blank" href="./formulairesdesoumission/new?prefill=Corporatif" class="btn btn-default">ESTIMATION DE PRIX</a target="_blank">
+								</div>
+							</div>
+                        </div>
+                    </div>
+			</section>
+			<!-- /SERVICES -->
+
+			<!-- AWARDS -->
+			<section id="attributions">
+				<div class="container">
+ 
+                    <div class="heading-title heading-dotted text-center">
+                        <h2>Attributions</h2>
+                    </div>
+ 
+                    <div class="text-center">
+                        <ul class="nav nav-pills mix-filter mb-60">
+                            <li data-filter="all" class="filter active"><a href="">Tous</a></li>
+                            <li data-filter="elevators" class="filter"><a href="">Ascenseurs</a></li>
+                            <li data-filter="efficiency" class="filter"><a href="">Efficacité</a></li>
+                            <li data-filter="customerRelationship" class="filter"><a href="">Relations Clientelle</a></li>
+                        </ul>
+                    </div>
+ 
+                </div>
+ 
+                <div id="portfolio" class="portfolio-nogutter">
+ 
+                        <div class="row mix-grid">
+ 
+                            <div class="col-md-3 col-sm-3 mix elevators"><!-- item -->
+ 
+                                <div class="item-box">
+                                    <figure>
+                                        <span class="item-hover">
+                                            <span class="overlay dark-5"></span>
+                                            <span class="inner">
+ 
+                                                <!-- lightbox -->
+                                                <a class="ico-rounded lightbox" href="assets/award1.jpg" data-plugin-options='{"type":"image"}'>
+                                                    <span class="fa fa-plus fs-20"></span>
+                                                </a>
+ 
+                                            </span>
+                                        </span>
+ 
+										<img class="img-fluid h-300 w-250" src="assets/award1.jpg" alt="award1">
+                                    </figure>
+ 
+                                    <div class="item-box-desc">
+                                        <h3>Best Elevator Shafts (2020)</h3>
+                                        <ul class="list-inline categories m-0">
+                                            <li style="font-size: 11px;">Ascenseurs</a></li>
+                                            <li style="font-size: 11px;">2020</a></li>
+                                        </ul>
+                                    </div>
+ 
+                                </div>
+ 
+                            </div><!-- /item -->
+ 
+ 
+                            <div class="col-md-3 col-sm-3 mix efficiency customerRelationship"><!-- item -->
+ 
+                                <div class="item-box">
+                                    <figure>
+                                        <span class="item-hover">
+                                            <span class="overlay dark-5"></span>
+                                            <span class="inner">
+ 
+                                                <!-- lightbox -->
+                                                <a class="ico-rounded lightbox" href="assets/award5.jpg" data-plugin-options='{"type":"image"}'>
+                                                    <span class="fa fa-plus fs-20"></span>
+                                                </a>
+
+                                            </span>
+                                        </span>
+ 
+                                        <img class="img-fluid h-300 w-250" src="assets/award5.jpg" height="200" alt="award2">
+                                    </figure>
+ 
+                                    <div class="item-box-desc">
+                                        <h3>Fastest Customer Response (2012)</h3>
+                                        <ul class="list-inline categories m-0">
+                                            <li style="font-size: 11px;">Efficacité, Relations Clientelle</a></li>
+                                            <li style="font-size: 11px;">2012</a></li>
+                                        </ul>
+                                    </div>
+ 
+                                </div>
+ 
+                            </div><!-- /item -->
+ 
+ 
+                            <div class="col-md-3 col-sm-3 mix elevators"><!-- item -->
+ 
+                                <div class="item-box">
+                                    <figure>
+                                        <span class="item-hover">
+                                            <span class="overlay dark-5"></span>
+                                            <span class="inner">
+ 
+                                                <!-- lightbox -->
+                                                <a class="ico-rounded lightbox" href="assets/award3.JPG" data-plugin-options='{"type":"image"}'>
+                                                    <span class="fa fa-plus fs-20"></span>
+                                                </a>
+ 
+                                            </span>
+                                        </span>
+ 
+                                        <img class="img-fluid h-300 w-250" src="assets/award3.JPG" width="600" height="399" alt="">
+                                    </figure>
+ 
+                                    <div class="item-box-desc">
+                                        <h3>Reach For The Stars Award (2014)<br>Highest Elevator (240 étages)</h3>
+                                        <ul class="list-inline categories m-0">
+                                            <li style="font-size: 11px;">Ascenseurs</a></li>
+                                            <li style="font-size: 11px;">2014</a></li>
+                                        </ul>
+                                    </div>
+ 
+                                </div>
+ 
+                            </div><!-- /item -->
+ 
+ 
+                            <div class="col-md-3 col-sm-3 mix customerRelationship"><!-- item -->
+ 
+                                <div class="item-box">
+                                    <figure>
+                                        <span class="item-hover">
+                                            <span class="overlay dark-5"></span>
+                                            <span class="inner">
+ 
+                                                <!-- lightbox -->
+                                                <a class="ico-rounded lightbox" href="assets/award4.JPG" data-plugin-options='{"type":"image"}'>
+                                                    <span class="fa fa-plus fs-20"></span>
+                                                </a>
+ 
+                                            </span>
+                                        </span>
+ 
+                                        <img class="img-fluid h-300 w-200" src="assets/award4.JPG" width="600" height="399" alt="">
+                                    </figure>
+ 
+                                    <div class="item-box-desc">
+                                        <h3>Most Young At Heart Staff (2006)</h3>
+                                        <ul class="list-inline categories m-0">
+                                            <li style="font-size: 11px;">Relations Clientelle</a></li>
+                                            <li style="font-size: 11px;">2004</a></li>
+                                        </ul>
+                                    </div>
+ 
+                                </div>
+ 
+                            </div><!-- /item -->
+ 
+ 
+                            <div class="col-md-3 col-sm-3 mix customerRelationship"><!-- item -->
+ 
+                                <div class="item-box">
+                                    <figure>
+                                        <span class="item-hover">
+                                            <span class="overlay dark-5"></span>
+                                            <span class="inner">
+ 
+                                                <!-- lightbox -->
+                                                <a class="ico-rounded lightbox" href="assets/award2.jpg" data-plugin-options='{"type":"image"}'>
+                                                    <span class="fa fa-plus fs-20"></span>
+                                                </a>
+ 
+                                            </span>
+                                        </span>
+ 
+                                        <img class="img-fluid h-300 w-200" src="assets/award2.jpg" width="600" height="399" alt="">
+                                    </figure>
+ 
+                                    <div class="item-box-desc">
+                                        <h3>Most Dedicated Staff (1998)</h3>
+                                        <ul class="list-inline categories m-0">
+                                            <li style="font-size: 11px;">Relations Clientelle</a></li>
+                                            <li style="font-size: 11px;">1998</a></li>
+                                        </ul>
+                                    </div>
+ 
+                                </div>
+ 
+                            </div><!-- /item -->
+ 
+ 
+                            <div class="col-md-3 col-sm-3 mix efficiency"><!-- item -->
+ 
+                                <div class="item-box">
+                                    <figure>
+                                        <span class="item-hover">
+                                            <span class="overlay dark-5"></span>
+                                            <span class="inner">
+ 
+                                                <!-- lightbox -->
+                                                <a class="ico-rounded lightbox" href="assets/award7.JPG" data-plugin-options='{"type":"image"}'>
+                                                    <span class="fa fa-plus fs-20"></span>
+                                                </a>
+ 
+                                            </span>
+                                        </span>
+ 
+                                        <img class="img-fluid h-300 w-275" src="assets/award7.JPG" width="600" height="399" alt="">
+                                    </figure>
+ 
+                                    <div class="item-box-desc">
+                                        <h3>Best Website Award (2020)</h3>
+                                        <ul class="list-inline categories m-0">
+                                            <li style="font-size: 11px;">Efficacité</a></li>
+                                            <li style="font-size: 11px;">2020</a></li>
+                                        </ul>
+                                    </div>
+ 
+                                </div>
+ 
+                            </div><!-- /item -->
+ 
+ 
+                            <div class="col-md-3 col-sm-3 mix efficiency customerRelationship"><!-- item -->
+ 
+                                <div class="item-box">
+                                    <figure>
+                                        <span class="item-hover">
+                                            <span class="overlay dark-5"></span>
+                                            <span class="inner">
+ 
+                                                <!-- lightbox -->
+                                                <a class="ico-rounded lightbox" href="assets/award6.jpg" data-plugin-options='{"type":"image"}'>
+                                                    <span class="fa fa-plus fs-20"></span>
+                                                </a>
+ 
+                                            </span>
+                                        </span>
+ 
+										<img class="img-fluid h-300 w-300" src="assets/award6.jpg" width="600" height="399" alt="">
+                                    </figure>
+ 
+                                    <div class="item-box-desc">
+                                        <h3>Staff Excellence Recognition (2018)</h3>
+                                        <ul class="list-inline categories m-0">
+                                            <li style="font-size: 11px;">Efficacité, Relations Clientelle</a></li>
+                                            <li style="font-size: 11px;">2018</a></li>
+                                        </ul>
+                                    </div>
+ 
+                                </div>
+ 
+                            </div><!-- /item -->
+ 
+ 
+                            <div class="col-md-3 col-sm-3 mix elevators"><!-- item -->
+ 
+                                <div class="item-box">
+                                    <figure>
+                                        <span class="item-hover">
+                                            <span class="overlay dark-5"></span>
+                                            <span class="inner">
+ 
+                                                <!-- lightbox -->
+                                                <a class="ico-rounded lightbox" href="assets/award8.JPG" data-plugin-options='{"type":"image"}'>
+                                                    <span class="fa fa-plus fs-20"></span>
+                                                </a>
+ 
+                                            </span>
+                                        </span>
+ 
+                                        <img class="img-fluid h-300 w-250" src="assets/award8.JPG" width="600" height="399" alt="">
+                                    </figure>
+ 
+                                    <div class="item-box-desc">
+                                        <h3>Most Original Elevator Architecture (1985)</h3>
+                                        <ul class="list-inline categories m-0">
+                                            <li style="font-size: 11px;">Ascenseurs</a></li>
+                                            <li style="font-size: 11px;">1985</a></li>
+                                        </ul>
+                                    </div>
+ 
+                                </div>
+ 
+                            </div><!-- /item -->
+ 
+                            <div class="col-md-3 col-sm-3 mix elevators"><!-- item -->
+ 
+                                <div class="item-box">
+                                    <figure>
+                                        <span class="item-hover">
+                                            <span class="overlay dark-5"></span>
+                                            <span class="inner">
+ 
+                                                <!-- lightbox -->
+                                                <a class="ico-rounded lightbox" href="assets/award9.JPG" data-plugin-options='{"type":"image"}'>
+                                                    <span class="fa fa-plus fs-20"></span>
+                                                </a>
+ 
+                                            </span>
+                                        </span>
+ 
+                                        <img class="img-fluid h-300 w-300" src="assets/award9.JPG" width="600" height="399" alt="">
+                                    </figure>
+ 
+                                    <div class="item-box-desc">
+                                        <h3>Reach For The Stars Award (2016)<br>Highest Elevator (265 étages)</h3>
+                                        <ul class="list-inline categories m-0">
+                                            <li style="font-size: 11px;">Ascenseurs</a></li>
+                                            <li style="font-size: 11px;">2016</a></li>
+                                        </ul>
+                                    </div>
+ 
+                                </div>
+ 
+                            </div><!-- /item -->
+                       
+                            <div class="col-md-3 col-sm-3 mix efficiency"><!-- item -->
+ 
+                                <div class="item-box">
+                                    <figure>
+                                        <span class="item-hover">
+                                            <span class="overlay dark-5"></span>
+                                            <span class="inner">
+ 
+                                                <!-- lightbox -->
+                                                <a class="ico-rounded lightbox" href="assets/award10.jpg" data-plugin-options='{"type":"image"}'>
+                                                    <span class="fa fa-plus fs-20"></span>
+                                                </a>
+ 
+                                            </span>
+                                        </span>
+ 
+                                        <img class="img-fluid h-300 w-300" src="assets/award10.jpg" width="600" height="399" alt="">
+                                    </figure>
+ 
+                                    <div class="item-box-desc">
+                                        <h3>Efficacité Recognition Certificate (1996)</h3>
+                                        <ul class="list-inline categories m-0">
+                                            <li style="font-size: 11px;">Efficacité</a></li>
+                                            <li style="font-size: 11px;">1996</a></li>
+                                        </ul>
+                                    </div>
+ 
+                                </div>
+ 
+                            </div><!-- /item -->
+                       
+                            <div class="col-md-3 col-sm-3 mix elevators"><!-- item -->
+ 
+                                <div class="item-box">
+                                    <figure>
+                                        <span class="item-hover">
+                                            <span class="overlay dark-5"></span>
+                                            <span class="inner">
+ 
+                                                <!-- lightbox -->
+                                                <a class="ico-rounded lightbox" href="assets/award11.JPG" data-plugin-options='{"type":"image"}'>
+                                                    <span class="fa fa-plus fs-20"></span>
+                                                </a>
+                                            </span>
+                                        </span>
+ 
+                                        <img class="img-fluid h-300 w-200" src="assets/award11.JPG" width="600" height="399" alt="">
+                                    </figure>
+ 
+                                    <div class="item-box-desc">
+                                        <h3>Best Elevator Music Award (2007)</h3>
+                                        <ul class="list-inline categories m-0">
+                                            <li style="font-size: 11px;">Ascenseurs</a></li>
+                                            <li style="font-size: 11px;">2007</a></li>
+                                        </ul>
+                                    </div>
+ 
+                                </div>
+ 
+                            </div><!-- /item -->   
+                       
+                            <div class="col-md-3 col-sm-3 mix efficiency customerRelationship"><!-- item -->
+ 
+                                <div class="item-box">
+                                    <figure>
+                                        <span class="item-hover">
+                                            <span class="overlay dark-5"></span>
+                                            <span class="inner">
+ 
+                                                <!-- lightbox -->
+                                                <a class="ico-rounded lightbox" href="assets/award12.jpg" data-plugin-options='{"type":"image"}'>
+                                                    <span class="fa fa-plus fs-20"></span>
+                                                </a>
+ 
+                                            </span>
+                                        </span>
+ 
+                                        <img class="img-fluid h-300 w-300" src="assets/award12.jpg" width="600" height="399" alt="">
+                                    </figure>
+ 
+                                    <div class="item-box-desc">
+                                        <h3>Best Customer Service -<br>Elevator Companies (2017)</h3>
+                                        <ul class="list-inline categories m-0">
+                                            <li style="font-size: 11px;">Efficacité, Relations Clientelle</a></li>
+                                            <li style="font-size: 11px;">2017</a></li>
+                                        </ul>
+                                    </div>
+ 
+                                </div>
+ 
+                            </div><!-- /item -->
+                       
+                        </div>
+
+                </div>
+			</section>
+			<!-- /AWARDS -->
+
+
+			<!-- TESTIMONIALS -->
+			<section class="section-xs dark">
+				<div class="container">
+
+					<div class="owl-carousel text-center owl-testimonial m-0" data-plugin-options='{"singleItem": true, "autoPlay": 3500, "navigation": false, "pagination": true, "transitionStyle":"fade"}'>
+						<div class="testimonial">
+							<figure>
+								<img class="rounded" src="assets/ceo.png" alt="" />
+							</figure>
+							<div class="testimonial-content p-0">
+								<cite>
+									Serge Savoie
+									<span>PDG de Rocket Elevators</span>
+								</cite>
+							</div>
+						</div>
+						<div class="testimonial">
+							<figure>
+								<img class="rounded" src="assets/employee-month.JPG" alt="" />
+							</figure>
+							<div class="testimonial-content p-0">
+								<cite>
+									Isaac Laquerre
+									<span>Employé du mois</span>
+								</cite>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</section>
+			<!-- TESTIMONIALS -->
+
+			<!-- NEWS -->
+			<section id="actualites">
+				<div class="container">
+
+					<div class="heading-title heading-dotted text-center">
+						<h2>Actualités</h2>
+					</div>
+					<div class="owl-carousel owl-padding-10 buttons-autohide controlls-over" data-plugin-options='{"singleItem": false, "items":"4", "autoPlay": 4000, "navigation": true, "pagination": false}'>
+						<div class="img-hover">
+							<a target="_blank" href="https://vancouverisland.ctvnews.ca/10-uvic-students-freed-after-getting-trapped-in-5th-floor-elevator-1.4790533">
+								<img class="img-fluid" src="assets/newsImage1.jpg" alt="">
+							</a>
+
+							<h4 class="text-left mt-20"><a target="_blank" href="https://vancouverisland.ctvnews.ca/10-uvic-students-freed-after-getting-trapped-in-5th-floor-elevator-1.4790533">CTV News - Victoria (US)</a></h4>
+							<p class="text-left">10 University of Victoria students freed after getting trapped in 5th-floor elevator.</p>
+							<ul class="text-left fs-12 list-inline list-separator">
+								<li>
+									<i class="fa fa-calendar"></i> 
+									30 Janvier 2020
+								</li>
+							</ul>
+						</div>
+						<div class="img-hover">
+							<a target="_blank" href="https://ca.finance.yahoo.com/news/kone-makes-highest-offer-thyssenkrupp-161159396.html">
+								<img class="img-fluid" src="assets/newsImage2.JPG" alt="">
+							</a>
+
+							<h4 class="text-left mt-20"><a target="_blank" href="https://ca.finance.yahoo.com/news/kone-makes-highest-offer-thyssenkrupp-161159396.html">Yahoo Canada Finance - Canada</a></h4>
+							<p class="text-left">Kone Makes Highest Offer for Thyssenkrupp Elevators.</p>
+							<ul class="text-left fs-12 list-inline list-separator">
+								<li>
+									<i class="fa fa-calendar"></i> 
+									28 Janvier 2020
+								</li>
+							</ul>
+						</div>
+						<div class="img-hover">
+							<a target="_blank" href="https://montrealgazette.com/news/local-news/work-begins-next-month-on-elevators-at-mcgill-metro-station">
+								<img class="img-fluid" src="assets/newsImage3.jpg" alt="">
+							</a>
+
+							<h4 class="text-left mt-20"><a target="_blank" href="https://montrealgazette.com/news/local-news/work-begins-next-month-on-elevators-at-mcgill-metro-station">Montréal Gazette - Montréal (Canada)</a></h4>
+							<p class="text-left">Work begins next month on elevators at McGill métro station.</p>
+							<ul class="text-left fs-12 list-inline list-separator">
+								<li>
+									<i class="fa fa-calendar"></i> 
+									20 Janvier 2020
+								</li>
+							</ul>
+						</div>
+						<div class="img-hover">
+							<a target="_blank" href="https://www.cbc.ca/news/canada/calgary/st-stephen-school-elevator-1.5430824">
+								<img class="img-fluid" src="assets/newsImage4.jpg" alt="">
+							</a>
+
+							<h4 class="text-left mt-20">
+								<a target="_blank" href="https://www.cbc.ca/news/canada/calgary/st-stephen-school-elevator-1.5430824">CBC News - Calgary (Canada)</a>
+							</h4>
+							<p class="text-left">New elevator at St. Stephen School opens up whole new world for students with mobility issues; "Everybody should get a chance to go upstairs".</p>
+							<ul class="text-left fs-12 list-inline list-separator">
+								<li>
+									<i class="fa fa-calendar"></i> 
+									20 Janvier 2020
+									</li>
+							</ul>
+						</div>
+						<div class="img-hover">
+							<a target="_blank" href="https://globalnewspaper24.com/645/global-smart-elevators-market-to-see-strong-investment-opportunity/">
+								<img class="img-fluid" src="assets/newsImage5.jpg" alt="">
+							</a>
+							<h4 class="text-left mt-20"><a target="_blank" href="https://globalnewspaper24.com/645/global-smart-elevators-market-to-see-strong-investment-opportunity/">Global Newspaper 24 - World</a></h4>
+							<p class="text-left">Global Smart Elevators Market to See Strong Investment Opportunity.</p>
+							<ul class="text-left fs-12 list-inline list-separator">
+								<li>
+									<i class="fa fa-calendar"></i> 
+									3 Février 2020
+								</li>
+							</ul>
+						</div>
+						<div class="img-hover">
+							<a target="_blank" href="https://www.architecturaldigest.com/story/the-story-behind-nicole-holliss-glamorous-golden-globes-elevator-lounge">
+								<img class="img-fluid" src="assets/newsImage6.jpg" alt="">
+							</a>
+							<h4 class="text-left mt-20"><a target="_blank" href="https://www.architecturaldigest.com/story/the-story-behind-nicole-holliss-glamorous-golden-globes-elevator-lounge">Architectural Digest - World</a></h4>
+							<p class="text-left">The Story Behind Nicole Hollis’s Glamorous Golden Globes Elevator Lounge.</p>
+							<ul class="text-left fs-12 list-inline list-separator">
+								<li>
+									<i class="fa fa-calendar"></i> 
+									6 Janvier 2020
+								</li>
+							</ul>
+						</div>
+					</div>
+
+				</div>
+			</section>
+			<!-- /NEWS -->
+
+			<!-- Clients -->
+			<section id="clients" class="alternate">
+				<div class="container">
+
+					<div class="heading-title heading-dotted text-center">
+						<h2>Nos Clients</h2>
+					</div>
+
+					<ul class="row clients-dotted list-inline">
+						<li class="col-md-3 col-sm-3 col-6">
+							<img class="img-fluid" src="assets/brand1.JPG" alt="client1" />
+						</li>
+						<li class="col-md-3 col-sm-3 col-6">
+							<img class="img-fluid" src="assets/brand2.jpg" alt="client2" />
+						</li>
+						<li class="col-md-3 col-sm-3 col-6">
+							<img class="img-fluid" src="assets/brand3.JPG" alt="client3" />
+						</li>
+						<li class="col-md-3 col-sm-3 col-6">
+							<img class="img-fluid" src="assets/brand4.jpg" alt="client4" />
+						</li>
+						<li class="col-md-3 col-sm-3 col-6">
+							<img class="img-fluid" src="assets/brand5.jpg" alt="client5" />
+						</li>
+						<li class="col-md-3 col-sm-3 col-6">
+							<img class="img-fluid" src="assets/brand6.jpg" alt="client6" />
+						</li>
+						<li class="col-md-3 col-sm-3 col-6">
+							<img class="img-fluid" src="assets/brand7.jpg" alt="client7" />
+						</li>
+						<li class="col-md-3 col-sm-3 col-6">
+							<img class="img-fluid" src="assets/brand8.jpg" alt="client8" />
+						</li>
+						<li class="col-md-3 col-sm-3 col-6">
+							<img class="img-fluid" src="assets/brand9.jpg" alt="client9" />
+						</li>
+						<li class="col-md-3 col-sm-3 col-6">
+							<img class="img-fluid h-250 w-250" src="assets/brand10.jpg" alt="client10" />
+						</li>
+						<li class="col-md-3 col-sm-3 col-6">
+							<img class="img-fluid" src="assets/brand11.jpg" alt="client11" />
+						</li>
+						<li class="col-md-3 col-sm-3 col-6">
+							<img class="img-fluid" src="assets/brand12.jpg" alt="client12" />
+						</li>
+					</ul>
+
+				</div>
+			</section>
+			<!-- /Clients -->
+
+			<!-- CONTACT -->
+			<section id="contact">
+				<div class="container">
+
+					<header class="text-center mb-60">
+						<h2>Contactez Nous</h2>
+						<p class="lead font-lato"><em>Ouvert de 9h00 à 18h00</em></p>
+						<hr />
+					</header>
+
+
+					<div class="row">
+
+						<!-- FORM -->
+						<div class="col-md-8 col-sm-8">
+
+							<h3>Écrivez-nous ou dites simplement <em>Bonjour</em>!</h3>
+							<p>* champs requis</p>
+
+							<!-- Alert Success -->
+							<div id="alert_success" class="alert alert-success mb-30">
+								<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+								<strong>Merci!</strong> Votre message a été envoyé!
+							</div><!-- /Alert Success -->
+
+
+							<!-- Alert Failed -->
+							<div id="alert_failed" class="alert alert-danger mb-30">
+								<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+								<strong>[SMTP] Oups!</strong> Erreur de serveur interne!
+							</div><!-- /Alert Failed -->
+
+
+							<!-- Alert Mandatory -->
+							<div id="alert_mandatory" class="alert alert-danger mb-30">
+								<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+								<strong>Désolé!</strong> Vous devez répondre à tous les champs requis! (*)
+							</div><!-- /Alert Mandatory -->
+
+
+							<form action="#alert_failed" method="post" enctype="multipart/form-data">
+								<fieldset>
+									<input type="hidden" name="action" value="contact_send" />
+
+									<div class="row w-750">
+											<div class="col-md-4">
+												<label for="contact:name">Nom Complet *</label>
+												<input required type="text" placeholder="John Doe" value="" class="form-control" name="contact[name][required]" id="contact:name">
+											</div>
+											<div class="col-md-4">
+												<label for="contact:company-name">Nom De Companie *</label>
+												<input required type="text" placeholder="Ma Companie" value="" class="form-control" name="contact[company-name][required]" id="contact:company-name">
+											</div>
+											<div class="col-md-4">
+												<label for="contact:email">Adresse E-Mail *</label>
+												<input required type="email" placeholder="johndoe@example.com" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" value="" class="form-control" name="contact[email][required]" id="contact:email">
+											</div>
+											<div class="col-md-4">
+												<label for="contact:phone">Numéro De Téléphone</label>
+												<input type="text" placeholder="123-456-7890" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}|[0-9]{3} [0-9]{3} [0-9]{4}|[0-9]{3}[0-9]{3}[0-9]{4}" oninput="triggeredKey(this.value);" class="form-control" name="contact[phone]" id="contact:phone">
+											</div>
+											<div class="col-md-4">
+												<label for="contact_department">Département</label>
+												<select class="form-control pointer" name="contact[department]">
+													<option selected disabled hidden value="">--- Choisir ---</option>
+													<option value="Marketing">Commercialisation</option>
+													<option value="Webdesign">Design Web</option>
+													<option value="Architecture">Architecture</option>
+												</select>
+											</div>
+									</div>
+									<div class="row">
+											<div class="col-md-4">
+												<label for="contact:phone">Nom De Votre Projet *</label>
+												<input require type="text" placeholder="Mon Projet" class="form-control" name="contact[project-name][require]" id="contact:project-name">
+											</div>
+											<div class="col-md-8">
+												<label for="contact:project-description">Description Du Projet *</label>
+												<textarea required maxlength="2500" placeholder="Longueur max 2 500 caractères" rows="4" type="text" value="" class="form-control" name="contact[project-description][required]" id="contact:project-description"></textarea>
+											</div>
+									</div>
+									<div class="row">
+											<div class="col-md-12">
+												<label for="contact:message">Message *</label>
+												<textarea required placeholder="Longueur max 10 000 caractères" maxlength="10000" rows="8" class="form-control" name="contact[message]" id="contact:message"></textarea>
+											</div>
+									</div>
+									<div class="row">
+											<div class="col-md-12">
+												<label for="contact:attachment">Pièce Jointe</label>
+
+												<!-- custom file upload -->
+												<input class="custom-file-upload" type="file" id="file" name="contact[attachment]" id="contact:attachment" data-btn-text="Séléctionner un fichier" />
+												<small class="text-muted block">Taille de fichier max: 10Mb (zip/pdf/jpg/png)</small>
+
+											</div>
+									</div>
+
+								</fieldset>
+
+								<div class="row">
+									<div class="col-md-12">
+										<button type="submit" class="btn btn-default"><i class="fa fa-check"></i> ENVOYER</button>
+									</div>
+								</div>
+							</form>
+
+						</div>
+						<!-- /FORM -->
+
+
+						<!-- INFO -->
+						<div class="col-md-4 col-sm-4">
+
+							<h2>Visitez Nous</h2>
+							<div class="mapouter">
+								<div class="gmap_canvas">
+									<iframe width="400" height="500" id="gmap_canvas" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1364.5215896630948!2d-71.28066974762221!3d46.842839895861125!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4cb897d0e1cafe3f%3A0x9863b2d992c71670!2sCodeBoxx!5e0!3m2!1sen!2sca!4v1581098923458!5m2!1sen!2sca&language=fr" width="400" height="500" frameborder="0" style="border:0;" allowfullscreen="false"></iframe id="map2">
+								</div>
+							</div>
+
+							<hr />
+
+							<p>
+								<span class="block"><strong><i class="fa fa-map-marker"></i> Addresse:</strong> 725 Boulevard Lebourgneuf, Québec, QC G2J 0C4</span>
+								<span class="block"><strong><i class="fa fa-phone"></i> Téléphone:</strong> <a href="tel:581-701-0303">(581) 701-0303</a></span>
+								<span class="block"><strong><i class="fa fa-envelope"></i> E-Mail:</strong> <a href="mailto:info@codeboxx.biz">info@codeboxx.biz</a></span>
+							</p>
+							</div>
+
+						</div>
+						<!-- /INFO -->
+
+					</div>
+
+				</div>
+			</section>
+			<!-- /CONTACT -->
+
+
+
+
+			<!-- FOOTER -->
+			<footer id="footer">
+				<div class="container">
+
+
+					<div class="row">
+
+						<!-- col #1 -->
+						<div class="col-md-8">
+
+							<h3 class="letter-spacing-1">POURQUOI CHOISIR ROCKET ELEVATORS?</h3>
+
+							<!-- Small Description -->
+							<p>
+								Rocket Elevators a été un prestataire d'ascenseurs pour bientôt 50 ans. Nous avons et allons continuer de satisfaire les exigences de nos clients.
+							</p>
+							<h2><a href="tel:581-701-0303">(581) 701-0303</a></h2>
+						</div>
+						<!-- /col #1 -->
+
+					</div>
+				</div>
+
+				<div class="copyright">
+					<div class="container">
+						&copy; Tous droits réservés, Rocket Elevators LTD
+					</div>
+				</div>
+			</footer>
+			<!-- /FOOTER -->
+
+		</div>
+		<!-- /wrapper -->
+
+
+		<!-- SCROLL TO TOP -->
+		<a title="Scroll to top" href="#top" id="toTop"></a>
+
+		<!-- JAVASCRIPT FILES -->
+		<script>var plugin_path = 'assets/';</script>
+		
+
+	</body>
+</html>
