@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_10_172527) do
+ActiveRecord::Schema.define(version: 2020_03_10_200121) do
 
   create_table "employees", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -25,6 +25,36 @@ ActiveRecord::Schema.define(version: 2020_03_10_172527) do
     t.index ["reset_password_token"], name: "index_employees_on_reset_password_token", unique: true
   end
 
+  create_table "forms", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "building"
+    t.integer "appartmentsNbrRES"
+    t.integer "floorsNbrRES"
+    t.integer "floorsNbrCOM"
+    t.integer "floorsNbrCOR"
+    t.integer "basementsNbrRES"
+    t.integer "basementsNbrCOM"
+    t.integer "basementsNbrCOR"
+    t.integer "seperateBusinessesNbrCOM"
+    t.integer "parkingsNbrCOM"
+    t.integer "parkingsNbrCOR"
+    t.integer "elevatorsNbrCOM"
+    t.integer "seperateRentalCompaniesNbrCOR"
+    t.integer "occupantsPerFloorCOR"
+    t.integer "occupantsPerFloor"
+    t.integer "nbrFloors"
+    t.integer "nbrBasements"
+    t.integer "availableParkingSpaces"
+    t.integer "seperateBusinesses"
+    t.time "busyHours"
+    t.integer "recommendedShafts"
+    t.string "quality"
+    t.text "priceUnit"
+    t.text "costInstallations"
+    t.text "costTotal"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -33,7 +63,6 @@ ActiveRecord::Schema.define(version: 2020_03_10_172527) do
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "admin", default: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
