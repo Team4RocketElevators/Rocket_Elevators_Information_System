@@ -84,11 +84,15 @@
 </div>
 <h1 align="center"><%= @title %></h1>
 <title><%= @page_title %></title>
-
-<div align="center">Your forms:<br>
-<% @forms.each do |form| %>
-    <%= link_to "Form #" + form.id.to_s, "/submissionforms/" + form.id.to_s %>;
-<% end %></div><br>
-
-        <button align="center" class="btn btn-default center">New Form</button>
+<h3 align="center">Your saved forms:<br></h3>
+<div align="center">
+    <% @forms.each do |form| %>
+        <%= button_to "Form #" + form.id.to_s, "/submissionforms/" + form.id.to_s, :class => "btn btn-flat", :title => form.updated_at, :method => "get", :style => "display: inline; white-space: nowrap;", form: {:style => "display: inline;"} %>
+    <% end %>
+</div><br>
+<div align="center">
+    <a href="./submissionforms/new">
+        <button class="btn btn-default">Submit a new form</button>
+    </a>
+</div>
 </a>

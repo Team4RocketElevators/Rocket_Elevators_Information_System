@@ -22,14 +22,14 @@ class DeviseCreateForms < ActiveRecord::Migration[5.2]
       t.integer :nbrBasements
       t.integer :availableParkingSpaces
       t.integer :seperateBusinesses
-      t.time :busyHours
+      t.integer :busyHours
       t.integer :recommendedShafts
       t.string :quality
       t.text :priceUnit
       t.text :costInstallations
       t.text :costTotal
 
-      t.timestamps :timestamps
+      t.timestamps
     end
   end
 end

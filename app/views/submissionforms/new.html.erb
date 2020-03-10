@@ -40,7 +40,7 @@
         }
         function setPrices() {
             var values = [];
-            var formselect = document.getElementById("building");
+            var formselect = document.getElementById("buildingSelect");
             var buildingType = formselect.options[formselect.selectedIndex].value;
             var buildingLetter = buildingType.toUpperCase().slice(0, 3);
             for (i in document.getElementsByName("form[quality]")) {
@@ -61,7 +61,7 @@
             document.getElementById("costInstallations").value = "$" + numberWithCommas(fee.toFixed(2));
             switch (buildingType) {
                 case "commercial":
-                    if (parseInt(document.getElementById("elevatorsNbr" + buildingLetter).value) === 0) fee = 0;	                    if (parseInt(document.getElementsByName("elevatorsNbr" + buildingLetter)[0].value) === 0) fee = 0;
+                    if (parseInt(document.getElementById("elevatorsNbr" + buildingLetter).value) === 0) fee = 0;
                     var priceTotal = numberWithCommas((((result * parseInt(document.getElementById("elevatorsNbr" + buildingLetter).value))) + fee).toFixed(2)).replace(/NaN/g, "0");
                     document.getElementById("costTotal").value = "$" + priceTotal;
                     break;
@@ -92,7 +92,7 @@
                 default:
                     if (window.location.href.includes("prefill=")) {
                         var prefill = window.location.href.split("prefill=")[1];
-                        var formselect = document.getElementById("building");
+                        var formselect = document.getElementById("buildingSelect");
                         formselect.options[formselect.selectedIndex].value = prefill.toLowerCase();
                         setPrices();
                     }
@@ -101,11 +101,11 @@
         }
         function setRecommendedShafts() {
             var values = [];
-            var formselect = document.getElementById("building");
+            var formselect = document.getElementById("buildingSelect");
             var buildingType = formselect.options[formselect.selectedIndex].value;
             switch (buildingType) {
                 case "commercial":
-                    var formselect = document.getElementById("building");
+                    var formselect = document.getElementById("buildingSelect");
                     var buildingType = formselect.options[formselect.selectedIndex].value;
                     var buildingLetter = buildingType.toUpperCase().slice(0, 3);
                    var elevatorNbr = document.getElementById("elevatorsNbr" + buildingLetter).value;
@@ -151,7 +151,7 @@
                 default:
                     if (window.location.href.includes("prefill=")) {
                         var prefill = window.location.href.split("prefill=")[1];
-                        var formselect = document.getElementById("building")
+                        var formselect = document.getElementById("buildingSelect")
                         formselect.options[formselect.selectedIndex].value = prefill.toLowerCase();
                         setRecommendedShafts();
                     }
@@ -341,10 +341,10 @@
                     <!-- Links -->
                     <h4 class="letter-spacing-1">EXPLORE ROCKET ELEVATORS</h4>
                     <ul class="footer-links list-unstyled">
-                        <li><a href="https://rocketelevatorsil.com">Home</a></li>
-                        <li><a href="https://rocketelevatorsil.com#services">Our Services</a></li>
-                        <li><a href="https://rocketelevatorsil.com#clients">Our Clients</a></li>
-                        <li><a href="https://rocketelevatorsil.com#contact">Contact Us</a></li>
+                        <li><a href="../en">Home</a></li>
+                        <li><a href="../en#services">Our Services</a></li>
+                        <li><a href="../en#clients">Our Clients</a></li>
+                        <li><a href="../en#contact">Contact Us</a></li>
                     </ul>
                     <!-- /Links -->
 
@@ -367,9 +367,9 @@
             if (!prefill) return;
             if (prefill != "Residential" && prefill != "Commercial" && prefill != "Corporate" && prefill != "Hybrid") return;
             document.getElementById(prefill.toLowerCase()).setAttribute("selected", "true");
-            <!-- document.getElementById("building").textContent = prefill; -->
-            document.getElementById("building").setAttribute("style", "display: inline;");
-            document.getElementById("building").setAttribute("value", prefill.toLowerCase());
+            <!-- document.getElementById("buildingSelect").textContent = prefill; -->
+            document.getElementById("buildingSelect").setAttribute("style", "display: inline;");
+            document.getElementById("buildingSelect").setAttribute("value", prefill.toLowerCase());
             document.getElementById(prefill.toLowerCase()).style.display = "block";
             document.getElementById(prefill.toLowerCase() + "Div").style.display = "inline";
         }

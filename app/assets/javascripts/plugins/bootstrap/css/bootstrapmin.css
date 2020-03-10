@@ -1,4 +1,10 @@
-:root {
+/*!
+ * Bootstrap v4.0.0 (https://getbootstrap.com)
+ * Copyright 2011-2018 The Bootstrap Authors
+ * Copyright 2011-2018 Twitter, Inc.
+ * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+ */
+ :root {
     --blue:#007bff;--indigo:#6610f2;--purple:#6f42c1;--pink:#e83e8c;--red:#dc3545;--orange:#fd7e14;--yellow:#ffc107;--green:#28a745;--teal:#20c997;--cyan:#17a2b8;--white:#fff;--gray:#6c757d;--gray-dark:#343a40;--primary:#007bff;--secondary:#6c757d;--success:#28a745;--info:#17a2b8;--warning:#ffc107;--danger:#dc3545;--light:#f8f9fa;--dark:#343a40;--breakpoint-xs:0;--breakpoint-sm:576px;--breakpoint-md:768px;--breakpoint-lg:992px;--breakpoint-xl:1200px;--font-family-sans-serif:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";--font-family-monospace:SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace}
 
 *,::after,::before {
@@ -2632,14 +2638,14 @@ a.btn.disabled,fieldset:disabled a.btn {
 
 .btn-warning {
     color: #212529;
-    background-color: #ffc107;
-    border-color: #ffc107
+    background-color: #db0000;
+    border-color: #db0000
 }
 
 .btn-warning:hover {
     color: #212529;
-    background-color: #d49f00;
-    border-color: #d49f00
+    background-color: #c00000;
+    border-color: #c00000
 }
 
 .btn-warning.focus,.btn-warning:focus {
@@ -2648,14 +2654,14 @@ a.btn.disabled,fieldset:disabled a.btn {
 
 .btn-warning.disabled,.btn-warning:disabled {
     color: #212529;
-    background-color: #ffc107;
-    border-color: #ffc107
+    background-color: #db0000;
+    border-color: #db0000
 }
 
 .btn-warning:not(:disabled):not(.disabled).active,.btn-warning:not(:disabled):not(.disabled):active,.show>.btn-warning.dropdown-toggle {
     color: #212529;
-    background-color: #d49f00;
-    border-color: #d49f00
+    background-color: #c00000;
+    border-color: #c00000
 }
 
 .btn-warning:not(:disabled):not(.disabled).active:focus,.btn-warning:not(:disabled):not(.disabled):active:focus,.show>.btn-warning.dropdown-toggle:focus {

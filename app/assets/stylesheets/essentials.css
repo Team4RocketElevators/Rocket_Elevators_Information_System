@@ -4943,9 +4943,10 @@ a.social-icon.social-icon-transparent:hover>i {
 	background-color: #ddd;
 	color: #333;
 	border: 0;
+	opacity: 0.9;
 }
 	.btn-flat:hover {
-		opacity: 0.7;
+		opacity: 1;
 	}
 
 /* btn dark */
