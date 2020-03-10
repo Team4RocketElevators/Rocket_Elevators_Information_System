@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  ColumnId: MyString
+  integer: MyString
+
+two:
+  ColumnId: MyString
+  integer: MyString

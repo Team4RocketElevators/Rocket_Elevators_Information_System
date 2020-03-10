@@ -1,0 +1,2 @@
+class Batteri < ApplicationRecord
+end
