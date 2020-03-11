@@ -30,7 +30,7 @@ class DeviseCreateForms < ActiveRecord::Migration[5.2]
       t.text :costTotal
       t.string :name, :default => "Form #"
 
-      t.timestamps
+      t.timestamps null: false
     end
   end
 end

@@ -1,0 +1,25 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  FullNameOfTheContact: MyString
+  CompanyName: MyString
+  EMail: MyString
+  Phone: 1
+  ProjectName: 
+  ProjecDescription: MyText
+  DepartmentInChargeOfTheElevators: MyString
+  Message: MyText
+  AttachedFile: MyText
+  DateOfTheContactRequest: 2020-03-09
+
+two:
+  FullNameOfTheContact: MyString
+  CompanyName: MyString
+  EMail: MyString
+  Phone: 1
+  ProjectName: 
+  ProjecDescription: MyText
+  DepartmentInChargeOfTheElevators: MyString
+  Message: MyText
+  AttachedFile: MyText
+  DateOfTheContactRequest: 2020-03-09

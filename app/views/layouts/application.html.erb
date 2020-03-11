@@ -49,7 +49,9 @@
     var plugin_path = "../assets/plugins/"</script>
   </head>
 
-  <body id="body">
+
+  <body>
+    <% render 'layouts/alerts' %>
     <%= yield %>
   </body>
 </html>
