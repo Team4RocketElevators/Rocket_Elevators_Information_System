@@ -1,37 +1,38 @@
 <body>
-  <div id="wrapper" class="container w-500" align="center" style="white-space: nowrap; padding-top: 100px; padding-left: 10px; padding-right: 10px;">
+  <div id="wrapper" class="container w-1000" align="center" style="white-space: nowrap; padding-top: 100px; padding-left: 10px; padding-right: 10px;">
     <h2>Log in</h2>
-      <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+      <%= render "devise/shared/error_messages", resource: resource %>
+      <div class="field">
+        <label>Email 
+          <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+        </label>
+      </div>
+      <div class="field">
+        <label>Password 
+          <%= f.password_field :password, autocomplete: "current-password" %>
+        </label>
+      </div>
+
+      <% if devise_mapping.rememberable? %>
         <div class="field">
-          <label>Email 
-            <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+          <label>
+            <%= f.check_box :remember_me %> Remember me
           </label>
         </div>
-        <div class="field">
-          <label>Password 
-            <%= f.password_field :password, autocomplete: "current-password" %>
-          </label>
-        </div>
+      <% end %>
 
-        <% if devise_mapping.rememberable? %>
-          <div class="field">
-            <label>
-              <%= f.check_box :remember_me %> Remember me
-            </label>
-          </div>
-        <% end %>
-
-        <div class="actions">
+      <div class="actions">
         <button class="btn btn-default btn-lg">
           <a <%=f.submit%> Log in </a>
         </button>
         </br></br>
         Don't have an account? <%= render "devise/shared/links" %>
-        </div>
-      </br></br>
+      </div>
+    </br></br>
     <div>
       <img class="footer-logo" src="../assets/R2.png" alt="Rocket Elevators logo" width="500px">
     </div>
   </div>
-</body>    
+</body>
 <% end %>
