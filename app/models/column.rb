@@ -1,3 +1,4 @@
 class Column < ApplicationRecord
-    belongs_to :batteris
+    belongs_to :batteri, optional: true
+    has_many :elevators
   end
