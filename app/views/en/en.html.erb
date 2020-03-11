@@ -45,6 +45,7 @@
 		</script>
 	</head>
 	<body class="enable-animation">
+
 		<!-- wrapper -->
 		<div id="wrapper"><div id="header" style="background-color: rgba(0,0,0,25);" class="navbar-toggleable-md sticky header-md clearfix">
 			<!-- TOP NAV -->
@@ -58,7 +59,7 @@
 		
 					<!-- Logo -->
 					<a class="logo float-left" href="./en">
-						<img src="assets/R2.png" alt="Rocket Elevator Logo">
+						<%= image_tag "R2.png" %>
 					</a>
 					<div class="navbar-collapse collapse float-right nav-main-collapse submenu-dark">
 						<nav class="nav-main">
@@ -99,15 +100,24 @@
 										CONTACT
 									</a>
 								</li>
-								<li class="hovered"><!-- LOGIN --> 
-									<a style="color: rgb(255,255,255);" href="./employees/sign_in">LOGIN</a>
-								</li>
-								<li class="hovered"><!-- ADMIN -->
+
+
+								<li class="hovered"><!-- CONTACT -->
 									<a style="color: rgb(255,255,255);" href="./admin">
-										ADMIN
+										USERS
 									</a>
 								</li>
-								
+								<li class="hovered"><!-- CONTACT -->
+									<a style="color: rgb(255,255,255);" href="./admin">
+										EMPLOYEE
+									</a>
+								</li>																
+								<%# <li><!-- LANGUAGE SWITHCER -->
+									<select onchange="switchLanguage(this.value);" style="color: black;">
+										<option id="EN" selected>EN</option>
+										<option id="FR">FR</option>
+									</select>
+								</li> %>
 							</ul>
 		
 						</nav>
