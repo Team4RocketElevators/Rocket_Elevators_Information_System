@@ -1,4 +1,4 @@
 class Customer < ApplicationRecord
-    has_many :building
-    belongs_to :user
+    has_many :buildings
+    belongs_to :user, optional: true
 end

@@ -7,7 +7,7 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 20.times do 
-    Lead.create([{
+    Lead.create!([{
         FullNameOfTheContact: Faker::Name.unique.name,
         CompanyName: Faker::Company.unique.name,
         EMail: Faker::Internet.unique.email,
@@ -22,8 +22,21 @@
 
     end
 
+    20.times do
+        Building.create!([{
+            # CustomerId:
+            # BuildingAddress:
+            AdministratorFullName: Faker::Name.unique.name,
+            AdministratorEMail: Faker::Internet.unique.email,
+            AdministratorPhoneNumber: Faker::PhoneNumber.unique.phone_number,
+            TechnicalContactFullName: Faker::Name.unique.name,
+            TechnicalContactEMail: Faker::Internet.unique.email,
+            TechnicalContactPhoneNumber: Faker::PhoneNumber.unique.phone_number,
+        }])
+    end
+
 20.times do
-    Address.create([{
+    Address.create!([{
         TypeOfAddress: [:Billing, :Shipping, :Home, :Business].sample,
         Status: [:Active, :Inactive].sample,
         Entity: [:Building, :Customer].sample,
@@ -37,7 +50,7 @@
     end
 
 20.times do
-    Customer.create([{
+    Customer.create!([{
         # userId
         CustomerCreationDate: Faker::Time.between(from: DateTime.now - 1095, to: DateTime.now),
         CompanyName: Faker::Company.unique.name,
@@ -53,28 +66,7 @@
     end
 
 20.times do
-    Building.create([{
-        # CustomerId:
-        # BuildingAddress:
-        AdministratorFullName: Faker::Name.unique.name,
-        AdministratorEMail: Faker::Internet.unique.email,
-        AdministratorPhoneNumber: Faker::PhoneNumber.unique.phone_number,
-        TechnicalContactFullName: Faker::Name.unique.name,
-        TechnicalContactEMail: Faker::Internet.unique.email,
-        TechnicalContactPhoneNumber: Faker::PhoneNumber.unique.phone_number,
-    }])
-    end
-
-20.times do 
-    Building_detail.create([{
-        # BuildingId:
-        # Key:
-        # Value:
-    }])
-    end
-
-20.times do
-    Batteri.create([{
+    Batteri.create!([{
     #   BuildingId:
       Type: [:Residential, :Commercial, :Corporate, :Hybrid].sample,
       Status: [:Active, :intervation, :Inactive].sample,
@@ -88,7 +80,7 @@
     end
 
 20.times do
-    Column.create([{
+    Column.create!([{
         # BatteryId:
         Type: [:Residential, :Commercial, :Corporate, :Hybrid].sample,
         NumberOfFloors: Faker::Number.number(digits: 2),
@@ -100,7 +92,7 @@
     
 
 20.times do
-    Elevator.create([{
+    Elevator.create!([{
         # ColumnId
         SerialNumber: Faker::Device.unique.serial,
         Model: [:Standard, :Premium, :Excelium].sample,
@@ -113,3 +105,5 @@
         Notes: Faker::Lorem.paragraph
     }])
     end
+
+puts 'done seeding'
