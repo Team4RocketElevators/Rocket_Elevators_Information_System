@@ -11,13 +11,70 @@
         else if (document.referrer.cookie === "FR" && document.location.href != "../fr/batiments-corporatifs") {
             document.location.href = "../fr/batiments-corporatifs";
         }
-        function switchLanguage(value) {
+
+			.btn-default {
+				color:white;
+			}
+
+			.btn-default:hover {
+				background-color:white !important;
+				color:#0b64a0 !important;
+			}
+
+			#contactbar {
+				background-color: #0b64a0;
+				color: lightgray;
+			}
+
+			#contactbar:hover {
+				background-color: #1980b6 !important;
+				color: white !important;
+			}
+			.dropbtn {
+				border: none;
+			}
+
+			.dropdown {
+				position: relative;
+				display: inline-block;
+			}
+
+			.dropdown-content {
+				display: none;
+				position: absolute;
+				background-color: rgba(0,0,0,25);
+				min-width: 160px;
+				box-shadow: 0px 8px 16px 0px rgba(255,255,255,0.2);
+				z-index: 1;
+			}
+
+			.dropdown-content a {
+				color: rgb(255, 255, 255);
+				padding: 12px 16px;
+				text-decoration: none;
+				display: block;
+			}
+
+			.dropdown-content a:hover {background-color: #bbbbbb44;}
+
+			.dropdown:hover .dropdown-content {display: block;}
+
+			.hovered:hover {
+				background-color: rgba(255, 255, 255, 0.192);
+			}
+			.rotate:hover i {
+				-webkit-transform: rotate(90deg);
+						transform: rotate(90deg);
+			}
+        </style>
+        <script>
+			function switchLanguage(value) {
             document.cookie = value;
             if (value === "FR") document.location.href = '../fr/batiments-corporatifs';
             else return;
-        }
-    </script>
-   </head>
+            }
+        </script>
+</head>
 <body  class="enable-animation">
     <!-- wrapper -->
     <div id="wrapper">
@@ -75,6 +132,8 @@
                                         CONTACT
                                     </a>
                                 </li>
+
+
 								</li>
 								<li class="hovered"><!-- CONTACT -->
 									<a style="color: rgb(255,255,255);" href="./admin">
@@ -92,6 +151,7 @@
                                         <option id="FR">FR</option>
                                     </select>
                                 </li> %>
+
                             </ul>
 
                         </nav>
