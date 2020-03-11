@@ -339,9 +339,12 @@
                                 CONTACT
                             </a>
                         </li>
-                        <li class="hovered"><!-- LOGIN -->
-                            <a style="color: rgb(255,255,255);" href="../login">
-                                LOGIN
+                        <li class="hovered"><!-- LOGIN --> 
+                            <a style="color: rgb(255,255,255);" href="../employees/sign_in">LOGIN</a>
+                        </li>
+                        <li class="hovered"><!-- ADMIN -->
+                            <a style="color: rgb(255,255,255);" href="../admin">
+                                ADMIN
                             </a>
                         </li>
                     </ul>
@@ -355,11 +358,15 @@
     </div>
 
     <div id="form">
-        <h1 style="font-size: 35px; font-style: bold;">Price Estimation Form - #<%= @form.id %></h1>
-        <h2 style="font-size: 20px;">Your form has been saved <i style="color: green;">✓</i> - <%= @form.updated_at %></h2>
-        <a href="./"><button class="btn btn-default">View all your saved forms</button></a><br>
+        <h1 title=<%= @form.name %> style="font-size: 35px; font-style: bold;">
+            <% if @form.name.length() > 60 %>
+                <% @form.name = @form.name.slice(0, 60) + "..." %>
+            <% end %>
+        Price Estimation Form - #<%= @form.id %> (<%= @form.name %>)</h1>
+        <h2 style="font-size: 20px; background-color: #95F897;">Your form has been saved <i style="color: green;">✓</i> - <%= @form.updated_at.in_time_zone("America/New_York").to_s.gsub(/ -0400/, "").gsub(/-/, "/") %></h2>
+        <a href="../submissionforms"><button class="btn btn-default">View all your saved forms</button></a><br>
         <br><p>Selected building type:</p>
-        <%= select_tag(:building, options_for_select([@form.building.capitalize()]), {disabled: true, :class => "form-select"}) %><br><br>
+        <%= select_tag(:building, options_for_select([[@form.building.capitalize(), @form.building]]), {disabled: true, :class => "form-select"}) %><br><br>
         <img class="center" id="residential" src="../assets/residentialBuilding.jpeg"
             alt="Residential Building" width="400">
         <img class="center" id="commercial" src="../assets/commercialBuilding.jpeg"
@@ -397,7 +404,7 @@
         </div>
         <br>
         Recommended amount of elevators: <%= number_field_tag(:recommendedShafts, @form.recommendedShafts, {:id => "recommendedShafts", disabled: true}) %><br>
-        Selected elevator range<br>
+        Selected elevator quality<br>
         <input type="radio" name="quality" id="standard" disabled value="standard">Standard<br>
         <input type="radio" name="quality" id="premium" disabled value="premium">Premium<br>
         <input type="radio" name="quality" id="excelium" disabled value="excelium">Excelium<br>
@@ -408,20 +415,67 @@
         Total cost: <%= text_field_tag("costTotal", "", {disabled: true, :id => "costTotal"}) %><br>
     </div><br>
 
-    <a href="./new" target="_self">
-        <button class="btn btn-default">New form</button>
-    </a>
-    <a href="./" target="_self">
+    <a href="./<%= @form.id.to_s %>/edit" target="_self">
         <button class="btn btn-flat">Edit</button>
     </a>
-    <a href="./" target="_self">
-        <button class="btn btn-danger">Delete</button>
-    </a>
+    <%= link_to  "Delete", submissionform_path, method: :delete, data: {confirm: "Are you sure?"}, :class => "btn btn-danger" %>
 
     <br>
     <br>
 
     </div>
+    <div class="h-100"></div>
+
+    <section id="footer">
+        <div class="container h-350">
+            <div class="row">
+                <div class="col-md-3">
+                    <!-- Footer Logo -->
+                    <img class="footer-logo" src="../assets/R2.png" alt="Rocket Elevators logo"
+                        width="250" />
+
+                    <!-- Contact Address -->
+                    <address>
+                        <ul class="list-unstyled">
+                            <li class="footer-sprite address">
+                                <a target="_blank" href="https://www.google.com/maps/place/725+Boulevard+Lebourgneuf,+Qu%C3%A9bec,+QC+G2J+1S1/@46.8428399,-71.2818835,17z/data=!3m1!4b1!4m5!3m4!1s0x4cb897ddc2cec043:0xd450d4d0da014cc8!8m2!3d46.8428399!4d-71.2796948">725 Boulevard Lebourgneuf, Québec, QC G2J 0C4</a><br>
+                            </li>
+                            <li class="footer-sprite phone">
+                                Phone: <a href="tel:581-701-0303">(581) 701-0303</a>
+                            </li>
+                            <li class="footer-sprite email">
+                                <a href="mailto:info@codeboxx.biz">info@codeboxx.biz</a>
+                            </li>
+                        </ul>
+                    </address>
+                    <!-- /Contact Address -->
+
+                </div>
+
+                <div class="col-md-2">
+
+                    <!-- Links -->
+                    <h4 class="letter-spacing-1">EXPLORE ROCKET ELEVATORS</h4>
+                    <ul class="footer-links list-unstyled">
+                        <li><a href="../en">Home</a></li>
+                        <li><a href="../en#services">Our Services</a></li>
+                        <li><a href="../en#clients">Our Clients</a></li>
+                        <li><a href="../en#contact">Contact Us</a></li>
+                    </ul>
+                    <!-- /Links -->
+
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+            <div class="container">
+                &copy; All Rights Reserved, Rocket Elevators LTD
+            </div>
+        </div>
+        </div>
+    </section>
+</div>
+
     <script>
         switch(<%= @form.quality.to_s %>) {
             case standard:
@@ -436,9 +490,11 @@
             default:
             break;
         }
-        document.getElementById(radio).setAttribute("checked", true);
+        document.getElementById(radio).setAttribute("checked", "");
         var building = <%= @form.building.to_s %>;
-        inputs(building.id);
-        setRecommendedShafts();
-        setPrices();
+        $(document).ready(function() {
+            inputs(building.id);
+            setRecommendedShafts();
+            setPrices();
+        });
     </script>

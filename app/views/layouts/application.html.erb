@@ -8,15 +8,13 @@
     <%= csp_meta_tag %>
     <link rel="icon" type="image/png" href="assets/favicon.png">
     <meta charset="utf-8" />
-
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
-  
+    
     <%= javascript_include_tag 'jquery-3.3.1.min', 'data-turbolinks-track': 'reload'  %>
-    <%= javascript_include_tag 'bootstrap.min', 'data-turbolinks-track': 'reload'  %>
     <%= javascript_include_tag 'scripts', 'data-turbolinks-track': 'reload'  %>    
     <%= javascript_include_tag 'jquery.themepunch.tools.min', 'data-turbolinks-track': 'reload'  %>
     <%= javascript_include_tag 'jquery.themepunch.revolution.min', 'data-turbolinks-track': 'reload'  %>
     <%= javascript_include_tag 'demo.revolution_slider', 'data-turbolinks-track': 'reload'  %>
+    <%= javascript_include_tag 'bootstrap.min', 'data-turbolinks-track': 'reload'  %>
     <%= javascript_include_tag 'owl.carousel.min', 'data-turbolinks-track': 'reload'  %>
     <%= javascript_include_tag 'jquery.magnific-popup.min', 'data-turbolinks-track': 'reload'  %>
     <%= javascript_include_tag 'jquery.mixitup.min', 'data-turbolinks-track': 'reload'  %>
@@ -53,8 +51,5 @@
 
   <body id="body">
     <%= yield %>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
-      
   </body>
 </html>

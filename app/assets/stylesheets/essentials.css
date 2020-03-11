@@ -1581,7 +1581,7 @@ section.dark .inline-search form button:hover {
 	z-index:10;
 }
 .parallax .btn-default {
-	background-color:transparent;
+	background-color:white;
 }
 .parallax .overlay {
 	background-color: rgba(34,34,34, .3);
@@ -5158,8 +5158,8 @@ body:not(.device-touch) .btn.btn-reveal span {
 
 
 section.dark .btn-default {
-	color:#fff;
-	background-color:transparent;
+	color:#fff !important;
+	background-color:white;
 	border-color:rgba(255,255,255,0.5);
 }
 

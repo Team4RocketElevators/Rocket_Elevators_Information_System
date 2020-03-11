@@ -1,7 +1,6 @@
 <head>
     
     <title><%= @page_title %></title>
-    <link rel="icon" type="image/png" href="../assets/favicon.png">
     <meta name="description" content="Rocket Elevators - Price Estimate Form" />
     <meta name="Author" content="Isaac Laquerre [www.codeboxx.biz]" />
 	
@@ -12,6 +11,22 @@
     </style>
 
     <script lang="javascript">
+        function insertAfter(element, referenceNode) {
+            referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
+        }
+        function checkLength(elem) {
+            if (elem.value.length < 1) elem.setAttribute("placeholder", "Form #<%= @form.id.to_s %>")
+            if (elem.value.length > 100) {
+                document.getElementById("name").value = "";
+                if (document.getElementById("charMaxExceeded")) return;
+                var newDiv = document.createElement("div");
+                newDiv.appendChild(document.createTextNode("Form name cannot exceed 100 characters"))
+                document.getElementById("nameParent").appendChild(newDiv);
+                newDiv.setAttribute("align", "center");
+                newDiv.setAttribute("id", "charMaxExceeded")
+                newDiv.setAttribute("style", "background-color:rgba(255,51,51,0.2); font-size: 15px; text-align: center;");
+            }
+        }
         function numberWithCommas(x) {
             return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
         }
@@ -194,7 +209,7 @@
 
           <!-- LOGO-->
           <a class="logo float-left" href="./en">
-              <img src="../assets/R2.png" alt="Rocket Elevator Logo">
+              <img src="../../assets/R2.png" alt="Rocket Elevator Logo">
           </a>
           <div class="navbar-collapse collapse float-right nav-main-collapse submenu-dark">
               <nav class="nav-main">
@@ -256,25 +271,25 @@
     <!-- wrapper -->
     <div id="wrapper">
 
-    <%= form_for :form, url: submissionforms_path, :html => {:id => "form"} do |f| %>
+    <%= form_for :form, url: "/submissionforms/" + @form.id.to_s, method: :patch, :html => {:id => "form"} do |f| %>
         <% if @form.errors.any? %>
             <% @form.errors.full_messages.each do |msg| %>
                 <div class="alert alert-danger"><%= msg %></div>
             <% end %>
         <% end %>
-        <p style="font-size: 35px; font-style: bold;">Price Estimation Form</p>
-        <p title="Adding a name to your form
-        can help you identify it" style="font-size: 25px; font-style: bold;">Name your form: <%= f.text_field(:name, {placeholder: "Form #" + (Form.all.length + 1).to_s, :id => "name", :value => ""}) %></p>
+        <p style="font-size: 35px; font-style: bold;">Price Estimation Form - #<%= @form.id.to_s %> (Edit)</p>
+        <p id="nameParent" title="Adding a name to your form
+        can help you identify it" style="font-size: 25px; font-style: bold;">Rename your form: <%= f.text_field(:name, {:value => @form.name, :id => "name", :onchange => "checkLength(this);"}) %></p>
         <p style="font-size: 20px;">Please select your desired options</p>
         <br>Select a building type<br>
-         <%= f.select(:building, options_for_select([["-", "empty", {id: "emptyOption", class: 'hidden'}], ["Residential", "residential", {id: "residentialOption"}], ["Commercial", "commercial", {id: "commercialOption"}], ["Corporate", "corporate", {id: "corporateOption"}], ["Hybrid", "hybrid", {id: "hybridOption"}]], selected: "-", disabled: "-"), {}, {class: "form-select", :id => "buildingSelect", :onchange => "inputs(this.value);"}) %><br><br>
-        <img class="center" id="residential" src="../assets/residentialBuilding.jpeg"
+         <%= f.select(:building, options_for_select([[@form.building.capitalize(), @form.building, {:style => "display: none;"}], ["Residential", "residential", {id: "residentialOption"}], ["Commercial", "commercial", {id: "commercialOption"}], ["Corporate", "corporate", {id: "corporateOption"}], ["Hybrid", "hybrid", {id: "hybridOption"}]], selected: @form.building.capitalize()), {}, {class: "form-select", :id => "buildingSelect", :onchange => "inputs(this.value);"}) %><br><br>
+        <img class="center" id="residential" src="../../assets/residentialBuilding.jpeg"
             alt="Residential Building" width="400">
-        <img class="center" id="commercial" src="../assets/commercialBuilding.jpeg"
+        <img class="center" id="commercial" src="../../assets/commercialBuilding.jpeg"
             alt="Commercial Building" width="400">
-        <img class="center" id="corporate" src="../assets/corporateBuilding.jpeg"
+        <img class="center" id="corporate" src="../../assets/corporateBuilding.jpeg"
             alt="Corporate Building" width="400">
-        <img class="center" id="hybrid" src="../assets/hybridBuilding.jpeg" alt="Hybrid Building"
+        <img class="center" id="hybrid" src="../../assets/hybridBuilding.jpeg" alt="Hybrid Building"
             width="400">
         <div id="residentialDiv">
             Number of appartments: <%= f.number_field(:appartmentsNbrRES, {min: 0, step: 1, placeholder: "0", :id => "appartmentsNbrRES", :oninput => "this.value = Math.abs(this.value)", :onchange => 'setRecommendedShafts(), setPrices()'}) %><br>
@@ -317,9 +332,9 @@
     </div>
 
     <br>
-    <input type="button" onclick="window.location.href = '../submissionforms'" class="btn btn-danger h-40" align="center" value="Cancel">
+    <input type="button" onclick="window.history.back();" class="btn btn-danger h-40" align="center" value="Cancel">
     
-    <%= f.submit "Save Form", class: "btn btn-primary" %>
+    <%= f.submit "Save", class: "btn btn-primary" %>
 
     <% end %>
 
@@ -330,7 +345,7 @@
             <div class="row">
                 <div class="col-md-3">
                     <!-- Footer Logo -->
-                    <img class="footer-logo" src="../assets/R2.png" alt="Rocket Elevators logo"
+                    <img class="footer-logo" src="../../assets/R2.png" alt="Rocket Elevators logo"
                         width="250" />
 
                     <!-- Contact Address -->
@@ -356,10 +371,10 @@
                     <!-- Links -->
                     <h4 class="letter-spacing-1">EXPLORE ROCKET ELEVATORS</h4>
                     <ul class="footer-links list-unstyled">
-                        <li><a href="../en">Home</a></li>
-                        <li><a href="../en#services">Our Services</a></li>
-                        <li><a href="../en#clients">Our Clients</a></li>
-                        <li><a href="../en#contact">Contact Us</a></li>
+                        <li><a href="../../en">Home</a></li>
+                        <li><a href="../../en#services">Our Services</a></li>
+                        <li><a href="../../en#clients">Our Clients</a></li>
+                        <li><a href="../../en#contact">Contact Us</a></li>
                     </ul>
                     <!-- /Links -->
 
@@ -394,6 +409,13 @@
                 getUrlVars();
             }
         }
+        var radio = "form_quality_<%= @form.quality %>";
+        document.getElementById(radio).setAttribute("checked", "");
+        var building = <%= @form.building.to_s %>;
+        console.log(building);
+        inputs(building.id);
+        setRecommendedShafts();
+        setPrices();
     </script>
 
 </body>
