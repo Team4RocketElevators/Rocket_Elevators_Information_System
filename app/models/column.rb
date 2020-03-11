@@ -1,2 +1,3 @@
 class Column < ApplicationRecord
-end
+    belongs_to :batteris
+  end
