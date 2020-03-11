@@ -354,7 +354,7 @@
 		});
 
 
-		// Search
+		// Srearch
 		jQuery('li.search i.fa').click(function () {
 			if(jQuery('#header .search-box').is(":visible")) {
 				jQuery('#header .search-box').fadeOut(300);
