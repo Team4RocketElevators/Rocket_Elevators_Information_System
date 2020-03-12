@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  mount Blazer::Engine, at: "blazer"
+  
   
   devise_for :users
   get 'login', to: 'pages#login'

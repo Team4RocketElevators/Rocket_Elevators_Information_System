@@ -10,9 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-
 ActiveRecord::Schema.define(version: 2020_03_12_122828) do
-
 
   create_table "addresses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "TypeOfAddress"
@@ -103,7 +101,6 @@ ActiveRecord::Schema.define(version: 2020_03_12_122828) do
 
   create_table "building_details", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "buildings_id"
-    t.integer "BuildingId"
     t.string "Key"
     t.string "Value"
     t.datetime "created_at", null: false
@@ -113,7 +110,7 @@ ActiveRecord::Schema.define(version: 2020_03_12_122828) do
 
   create_table "buildings", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "customers_id"
-    t.bigint "addresses_id"
+    t.bigint "address_id"
     t.integer "CustomerId"
     t.string "BuildingAddress"
     t.string "AdministratorFullName"
@@ -124,12 +121,12 @@ ActiveRecord::Schema.define(version: 2020_03_12_122828) do
     t.integer "TechnicalContactPhoneNumber"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["addresses_id"], name: "index_buildings_on_addresses_id"
+    t.index ["address_id"], name: "index_buildings_on_address_id"
     t.index ["customers_id"], name: "index_buildings_on_customers_id"
   end
 
   create_table "columns", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.bigint "batteris_id"
+    t.bigint "batteri_id"
     t.string "Type"
     t.integer "NumberOfFloors"
     t.string "Status"
@@ -137,11 +134,11 @@ ActiveRecord::Schema.define(version: 2020_03_12_122828) do
     t.text "Notes"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["batteris_id"], name: "index_columns_on_batteris_id"
+    t.index ["batteri_id"], name: "index_columns_on_batteri_id"
   end
 
   create_table "customers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.bigint "addresses_id"
+    t.bigint "address_id"
     t.integer "UserId"
     t.date "CustomerCreationDate"
     t.string "CompanyName"
@@ -156,7 +153,7 @@ ActiveRecord::Schema.define(version: 2020_03_12_122828) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "users_id"
-    t.index ["addresses_id"], name: "index_customers_on_addresses_id"
+    t.index ["address_id"], name: "index_customers_on_address_id"
     t.index ["users_id"], name: "index_customers_on_users_id"
   end
 
@@ -250,10 +247,10 @@ ActiveRecord::Schema.define(version: 2020_03_12_122828) do
   add_foreign_key "batteris", "buildings"
   add_foreign_key "batteris", "employees"
   add_foreign_key "building_details", "buildings", column: "buildings_id"
-  add_foreign_key "buildings", "addresses", column: "addresses_id"
+  add_foreign_key "buildings", "addresses"
   add_foreign_key "buildings", "customers", column: "customers_id"
-  add_foreign_key "columns", "batteris", column: "batteris_id"
-  add_foreign_key "customers", "addresses", column: "addresses_id"
+  add_foreign_key "columns", "batteris"
+  add_foreign_key "customers", "addresses"
   add_foreign_key "customers", "users", column: "users_id"
   add_foreign_key "elevators", "columns"
 end

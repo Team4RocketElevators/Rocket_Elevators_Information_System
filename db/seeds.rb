@@ -6,7 +6,7 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-20.times do 
+1.times do 
     Lead.create!([{
         FullNameOfTheContact: Faker::Name.unique.name,
         CompanyName: Faker::Company.unique.name,
@@ -22,10 +22,16 @@
 
     end
 
-    20.times do
+    # 1.times do
+    #     User.create([{
+    #         email: Faker::Internet.unique.email,
+    #     }])
+    #     end
+
+    1.times do
         Building.create!([{
-            # CustomerId:
-            # BuildingAddress:
+            CustomerId: Customer.find(:id),
+            # BuildingAddress: 1,
             AdministratorFullName: Faker::Name.unique.name,
             AdministratorEMail: Faker::Internet.unique.email,
             AdministratorPhoneNumber: Faker::PhoneNumber.unique.phone_number,
@@ -35,7 +41,15 @@
         }])
     end
 
-20.times do
+
+    # 1.times do
+    #     Building_detail.create([{
+    #         Key: ::Faker::Lorem.unique.word, 
+    #         Value: :: Faker::Lorem.unique.word
+    #     }])
+    #     end
+
+1.times do
     Address.create!([{
         TypeOfAddress: [:Billing, :Shipping, :Home, :Business].sample,
         Status: [:Active, :Inactive].sample,
@@ -49,7 +63,7 @@
     }])
     end
 
-20.times do
+1.times do
     Customer.create!([{
         # userId
         CustomerCreationDate: Faker::Time.between(from: DateTime.now - 1095, to: DateTime.now),
@@ -65,7 +79,7 @@
     }])
     end
 
-20.times do
+1.times do
     Batteri.create!([{
     #   BuildingId:
       Type: [:Residential, :Commercial, :Corporate, :Hybrid].sample,
@@ -79,7 +93,7 @@
     }])
     end
 
-20.times do
+1.times do
     Column.create!([{
         # BatteryId:
         Type: [:Residential, :Commercial, :Corporate, :Hybrid].sample,
@@ -91,7 +105,7 @@
     end
     
 
-20.times do
+1.times do
     Elevator.create!([{
         # ColumnId
         SerialNumber: Faker::Device.unique.serial,
@@ -105,5 +119,3 @@
         Notes: Faker::Lorem.paragraph
     }])
     end
-
-puts 'done seeding'

@@ -3,7 +3,7 @@ class CreateBuildingDetails < ActiveRecord::Migration[5.2]
 
     create_table :building_details do |t|
       t.references :buildings, foreign_key: true
-      t.integer :BuildingId
+
       t.string :Key
       t.string :Value
 
