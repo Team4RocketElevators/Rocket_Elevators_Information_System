@@ -22,7 +22,7 @@ gem 'rails_admin'
 
 gem 'faker'
 
-gem 'pg'
+gem 'pg', '~> 0.18.4'
 
 gem 'blazer'
 
