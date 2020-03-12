@@ -75,6 +75,7 @@
                 $.ajax({
                     type: "DELETE",
                     url: "./submissionforms/" + deleteArray[checkbox].getAttribute("data-id"),
+                    success: function(data) {console.log(data);}
                     error: function(data) {console.log(data);}
                 });
             }
