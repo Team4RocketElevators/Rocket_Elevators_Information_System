@@ -22,6 +22,11 @@ gem 'rails_admin'
 
 gem 'faker'
 
+<<<<<<< HEAD
+=======
+gem 'pg'
+
+>>>>>>> e8215d28b761d6dcab152228c40b623dd3050eb0
 gem 'blazer'
 
 # Use CoffeeScript for .coffee assets and views
