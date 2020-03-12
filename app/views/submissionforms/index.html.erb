@@ -165,15 +165,15 @@
 <h1 align="center"><%= @title %></h1>
 <title><%= @page_title %></title>
 <h3 align="center">Your saved forms:<br></h3>
-<div class="container">
-    <div class="row">
-        <div class="col-sm" style="float: right;">
-            <button id="selectAll" class="selectButton" style="visibility: hidden;" onclick="selectAll();">Select all</button>
-            <button id="select" class="selectButton" onclick="switchDisplay(document.getElementsByClassName('deleteCheck'));">Select </button>
+<% if Form.all.length > 0 %>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm" style="float: right;">
+                <button id="selectAll" class="selectButton" style="visibility: hidden;" onclick="selectAll();">Select all</button>
+                <button id="select" class="selectButton" onclick="switchDisplay(document.getElementsByClassName('deleteCheck'));">Select </button>
+            </div>
         </div>
     </div>
-</div>
-<% if Form.all.length > 0 %>
     <div style="padding: 75px; width: 1500px; display: inline-block;" align="center">
         <div class="row">
             <% @forms.each_slice(5).to_a.each do |i|%>
