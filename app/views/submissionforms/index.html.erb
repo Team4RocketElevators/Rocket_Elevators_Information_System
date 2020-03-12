@@ -18,7 +18,83 @@
             if (value === "FR") document.location.href = link;
             else return;
         }
+        var deleteArray = [];
+        function switchDisplay(elemList) {
+            for (var element = 0; element < elemList.length; element++) {
+                let elem = elemList[element];
+                if (elem.style.visibility === "visible") {
+                    elem.style.visibility = "hidden";
+                    document.getElementById("select").setAttribute("style", "background-color: rgb(209, 209, 209);");
+                    document.getElementById("selectAll").style.visibility = "hidden";
+                    elem.checked = false;
+                    deleteArray = [];
+                }
+                else {
+                    elem.style.visibility = "visible";
+                    document.getElementById("select").setAttribute("style", "background-color: rgb(171, 171, 171);");
+                    document.getElementById("selectAll").style.visibility = "visible";
+                }
+                deleteCheck(elem);
+            }
+        }
+        function selectAll() {
+            var elemList = document.getElementsByClassName("deleteCheck");
+            
+            for (var element = 0; element < elemList.length; element++) {
+                let elem = elemList[element];
+                if (document.getElementById("selectAll").textContent === "Deselect all") {
+                    elem.checked = false;
+                }
+                else {
+                    elem.checked = true;
+                }
+                deleteCheck(elem);
+            }
+            if (document.getElementById("selectAll").textContent === "Deselect all") document.getElementById("selectAll").textContent = "Select all";
+            else document.getElementById("selectAll").textContent = "Deselect all";
+        }
+        function deleteCheck(checkbox) {
+            if (checkbox.checked) deleteArray.push(checkbox);
+            else deleteArray.splice(deleteArray.indexOf(checkbox), 1);
+            if (deleteArray.length > 0) document.getElementById("deleteButton").style.visibility = "visible";
+            else document.getElementById("deleteButton").style.visibility = "hidden";
+
+            var elemList = document.getElementsByClassName("deleteCheck");
+            var checkedList = 0;
+            var uncheckedList = 0;
+            
+            for (var element = 0; element < elemList.length; element++) {
+                let elem = elemList[element];
+                if (elem.checked) checkedList++;
+                else uncheckedList++;
+            }
+        }
+        function deleteForm() {
+            for (var checkbox = 0; checkbox < deleteArray.length; checkbox++) {
+                console.log(deleteArray[checkbox]);
+                $.ajax({
+                    type: "DELETE",
+                    url: "./submissionforms/" + deleteArray[checkbox].getAttribute("data-id"),
+                    error: function(data) {console.log(data);}
+                });
+            }
+        }
     </script>
+
+    <style>
+        .deleteCheck {
+            visibility: none;
+        }
+        .selectButton {
+            background-color: rgb(209, 209, 209);
+            padding: 10px;
+            border-radius: 5px;
+            float: right;
+        }
+        .selectButton:hover {
+            background-color: rgb(171, 171, 171);
+        }
+    </style>
 </head>
 <div id="header" style="background-color: rgba(0,0,0,25);" class="navbar-toggleable-md sticky header-md clearfix">
     <!-- TOP NAV -->
@@ -89,11 +165,19 @@
 <h1 align="center"><%= @title %></h1>
 <title><%= @page_title %></title>
 <h3 align="center">Your saved forms:<br></h3>
+<div class="container">
+    <div class="row">
+        <div class="col-sm" style="float: right;">
+            <button id="selectAll" class="selectButton" style="visibility: hidden;" onclick="selectAll();">Select all</button>
+            <button id="select" class="selectButton" onclick="switchDisplay(document.getElementsByClassName('deleteCheck'));">Select </button>
+        </div>
+    </div>
+</div>
 <% if Form.all.length > 0 %>
-    <div style="padding: 50px; display: inline-block;" align="center">
+    <div style="padding: 75px; width: 1500px; display: inline-block;" align="center">
         <div class="row">
             <% @forms.each_slice(5).to_a.each do |i|%>
-                <div class="col-sm-1" style="padding: 25px">
+                <div id="formList" class="col-sm-1" style="padding: 10px;">
                     <% i.each do |form| %>
                         <% @form = Form.find(form.id) %>
                         <% if @form.name === "" %>
@@ -103,12 +187,12 @@
                             <% @form.name = @form.name.slice(0,25) + "..." %>
                         <% end %>
                         <% title = @form.name + " (ID: " + @form.id.to_s + ")
-                        " %>
+" %>
                         <% if @form.name.length() > 8 %>
                             <% @form.name = @form.name.slice(0, 6) + "..." %>
                         <% end %>
                         <% title += form.updated_at.in_time_zone("America/New_York").to_s.gsub(/ -0400/, "").gsub(/-/, "/") %>
-                        <%= button_to @form.name, "/submissionforms/" + form.id.to_s, :class => "btn btn-flat", :title => title, :method => "get", :style => "display: inline-block; white-space: pre; padding: 10px; width: 75px; font-size: 13px;", form: {:style => "display: inline;"} %>
+                        <input type="checkbox" data-id="<%= @form.id.to_s %>" onchange="deleteCheck(this);" style="display: inline; visibility: hidden;" class="deleteCheck"></input> <%= button_to @form.name, "/submissionforms/" + form.id.to_s, :class => "btn btn-flat form-link-button", :title => title, :method => "get", :style => "display: inline-block; white-space: pre; padding: 10px; width: 75px; font-size: 13px;", form: {:style => "display: inline;"} %><br>
                     <% end %>
                 </div>
             <% end %>
@@ -117,10 +201,19 @@
 <% else %>
     <p align="center" style="font-size: 20px; color: rgb(178,178,178);">You don't have any saved forms!<br>Click the "New form" button below to get started</p>
 <% end %><br>
-<div align="center">
-    <a href="./submissionforms/new">
-        <button class="btn btn-primary">New form</button>
-    </a>
+<div class="container">
+    <div class="row">
+        <div class="col-sm w-1500" style="float: right;">
+            <button id="deleteButton" style="background-color: #fa3628; padding: 10px; border-color: black; border-radius: 5px; float: right; display: block; visibility: hidden;" onclick="deleteForm();">
+                <img width="25px" src="https://cdn2.iconfinder.com/data/icons/finance-2-25/48/68-512.png"/> Delete
+            </button>
+            <div align="center">
+                <a href="./submissionforms/new">
+                    <button class="btn btn-primary">New form</button>
+                </a>
+            </div>
+        </div>
+    </div>
 </div>
 </a>
 

@@ -50,48 +50,51 @@
             for (i in document.getElementsByName("form[quality]")) {
                 if (document.getElementsByName("form[quality]")[i].checked) values.push(document.getElementsByName("form[quality]")[i].value);
             }
+            if (!values.length > 0) return;
+            var elevatorsNbr = document.getElementById("elevatorsNbr" + buildingLetter);
+            if (elevatorsNbr === null) elevatorsNbr = document.getElementById("recommendedShafts");
+            elevatorsNbr = parseInt(elevatorsNbr.value);
             var value = values[0];
             if (value === "standard") {
                 var result = 7565;
-                var fee = 7565 * 0.1;
+                var fee = (result * elevatorsNbr) * 0.1;
             } else if (value === "premium") {
                 result = 12345;
-                fee = 12345 * 0.13;
+                fee = (result * elevatorsNbr) * 0.13;
             } else if (value === "excelium") {
                 result = 15400;
-                fee = 15400 * 0.16;
-            } else return;
+                fee = (result * elevatorsNbr) * 0.16;
+            }
             document.getElementById("priceUnit").value = "$" + numberWithCommas(result.toFixed(2));
-            document.getElementById("costInstallations").value = "$" + numberWithCommas(fee.toFixed(2));
+            document.getElementById("costInstallations").value = "$" + numberWithCommas(fee.toFixed(2).replace(/NaN/g, "0"));
             switch (buildingType) {
                 case "commercial":
                     if (parseInt(document.getElementById("elevatorsNbr" + buildingLetter).value) === 0) fee = 0;
-                    var priceTotal = numberWithCommas((((result * parseInt(document.getElementById("elevatorsNbr" + buildingLetter).value))) + fee).toFixed(2)).replace(/NaN/g, "0");
+                    var priceTotal = numberWithCommas((((result * elevatorsNbr) + fee).toFixed(2)).replace(/NaN/g, "0"));
                     document.getElementById("costTotal").value = "$" + priceTotal;
                     break;
                 case "residential":
-                    var recommendedShafts = parseInt(document.getElementById("recommendedShafts").value);
-                    var priceTotal = numberWithCommas((recommendedShafts * result) + fee);
+                    var priceTotal = numberWithCommas(((result * elevatorsNbr) + fee).toFixed(2));
                     if (recommendedShafts === 0) priceTotal = 0;
-                    document.getElementById("costTotal").value = "$" + priceTotal;
+                    document.getElementById("costTotal").value = "$" + priceTotal.replace(/NaN/g, "0");
                     break;
                 case "corporate":
                 case "hybrid":
                     var buildingLetter = buildingType.toUpperCase().slice(0, 3);
                     var maxOccupants = parseInt(document.getElementById("occupantsPerFloor" + buildingLetter).value);
                     var floorsNbr = parseInt(document.getElementById("floorsNbr" + buildingLetter).value);
-                    var totalOccupantsPerFloor = maxOccupants * floorsNbr;
-                    var totalShafts = Math.floor(totalOccupantsPerFloor / 1000);
                     var basementsNbr = parseInt(document.getElementById("basementsNbr" + buildingLetter).value);
                     var totalStories = floorsNbr + basementsNbr;
-                    var elevatorCollumns = Math.floor(totalStories / 20);
+                    var totalOccupantsPerFloor = maxOccupants * totalStories;
+                    var totalShafts = Math.ceil(totalOccupantsPerFloor / 1000);
+                    var elevatorCollumns = Math.ceil(totalStories / 20);
                     if (elevatorCollumns < 1) elevatorCollumns = 1;
-                    var totalElevators = Math.round(totalShafts / elevatorCollumns);
+                    var total = Math.ceil(totalShafts / elevatorCollumns);
+                    var totalElevators = total * elevatorCollumns;
                     
                     var priceTotal = numberWithCommas(((result * totalElevators) + fee).toFixed(2))
                     if (totalElevators === 0) priceTotal = 0;
                     document.getElementById("costTotal").value = "$" + priceTotal.toString().replace(/NaN/g, "0");
-                    break;
                     break;
                 default:
                     if (window.location.href.includes("prefill=")) {
@@ -116,13 +119,13 @@
                     document.getElementById("recommendedShafts").value = elevatorNbr;
                     break;
                 case "residential":
-                      var appartmentsNbr = parseInt(document.getElementById("appartmentsNbrRES").value);
-                    var floorsNbr = parseInt(document.getElementById("floorsNbrRES").value) || 1;
-                     var basementsNbr = parseInt(document.getElementById("basementsNbrRES").value) || 0;
+                    var appartmentsNbr = parseInt(document.getElementById("appartmentsNbrRES").value);
+                    var floorsNbr = parseInt(document.getElementById("floorsNbrRES").value);
+                    var basementsNbr = parseInt(document.getElementById("basementsNbrRES").value);
                     var shafts = Math.ceil(appartmentsNbr / (floorsNbr * 6));
                     if (floorsNbr > 20) {
                         shafts = shafts * 2;
-                        var times = Math.ceil(floorsNbr / 20) - 1;
+                        var times = Math.ceil(floorsNbr / 20);
                         if (times > 0) {
                             for (var i = 0; i != times; i++) {
                                 shafts++;
@@ -137,17 +140,17 @@
                     var buildingLetter = buildingType.toUpperCase().slice(0, 3);
                     var maxOccupants = parseInt(document.getElementById("occupantsPerFloor" + buildingLetter).value);
                     var floorsNbr = parseInt(document.getElementById("floorsNbr" + buildingLetter).value);
-                    var totalOccupantsPerFloor = maxOccupants * floorsNbr;
-                    var totalShafts = Math.floor(totalOccupantsPerFloor / 1000);
                     var basementsNbr = parseInt(document.getElementById("basementsNbr" + buildingLetter).value);
                     var totalStories = floorsNbr + basementsNbr;
-                    var elevatorCollumns = Math.floor(totalStories / 20);
+                    var totalOccupantsPerFloor = maxOccupants * totalStories;
+                    var totalShafts = Math.ceil(totalOccupantsPerFloor / 1000);
+                    var elevatorCollumns = Math.ceil(totalStories / 20);
                     if (elevatorCollumns < 1) elevatorCollumns = 1;
-                    var totalElevators = Math.round(totalShafts / elevatorCollumns);
+                    var total = Math.ceil(totalShafts / elevatorCollumns);
+                    var totalElevators = total * elevatorCollumns;
 
                     if (isNaN(totalElevators) || isNaN(totalShafts)) return;
                     else {
-                        document.getElementById("recommendedShafts").value = Math.ceil(totalShafts);
                         document.getElementById("recommendedShafts").value = Math.ceil(totalElevators);
                     }
                     if (floorsNbr < 2 && basementsNbr < 1) document.getElementById("recommendedShafts").value = 0;
@@ -260,7 +263,7 @@
         <% end %>
         <p style="font-size: 35px; font-style: bold;">Price Estimation Form</p>
         <p title="Adding a name to your form
-        can help you identify it" style="font-size: 25px; font-style: bold;">Name your form: <%= f.text_field(:name, {placeholder: "Form #" + (Form.all.length + 1).to_s, :id => "name", :value => ""}) %></p>
+can help you identify it" style="font-size: 25px; font-style: bold;">Name your form: <%= f.text_field(:name, {placeholder: "Form #" + (Form.all.length + 1).to_s, :id => "name", :value => ""}) %></p>
         <p style="font-size: 20px;">Please select your desired options</p>
         <br>Select a building type<br>
          <%= f.select(:building, options_for_select([["-", "empty", {id: "emptyOption", class: 'hidden'}], ["Residential", "residential", {id: "residentialOption"}], ["Commercial", "commercial", {id: "commercialOption"}], ["Corporate", "corporate", {id: "corporateOption"}], ["Hybrid", "hybrid", {id: "hybridOption"}]], selected: "-", disabled: "-"), {}, {class: "form-select", :id => "buildingSelect", :onchange => "inputs(this.value);"}) %><br><br>
@@ -302,9 +305,9 @@
         <br>
         Recommended amount of elevators: <%= f.number_field(:recommendedShafts, {min: 0, step: 1, placeholder: "0", disabled: true, :id => "recommendedShafts", :oninput => "this.value = Math.abs(this.value)", :onchange => 'setRecommendedShafts(), setPrices()'}) %><br>
         Select an elevator quality<br>
-        <label><%= f.radio_button("quality", "standard", {:onchange => 'setRecommendedShafts(), setPrices()'}) %>Standard</label><br>
-        <label><%= f.radio_button("quality", "premium", {:onchange => 'setRecommendedShafts(), setPrices()'}) %>Premium</label><br>
-        <label><%= f.radio_button("quality", "excelium", {:onchange => 'setRecommendedShafts(), setPrices()'}) %>Excelium</label><br><br>
+        <%= f.radio_button("quality", "standard", {:onchange => 'setRecommendedShafts(), setPrices()'}) %>Standard<br>
+        <%= f.radio_button("quality", "premium", {:onchange => 'setRecommendedShafts(), setPrices()'}) %>Premium<br>
+        <%= f.radio_button("quality", "excelium", {:onchange => 'setRecommendedShafts(), setPrices()'}) %>Excelium<br><br>
 
     <div style="text-align: center;">
         Price for 1 elevator unit: <%= f.text_field(:priceUnit, {placeholder: "0", disabled: true, :id => "priceUnit"}) %><br>

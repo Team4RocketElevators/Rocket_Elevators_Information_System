@@ -275,7 +275,7 @@
         <% end %>
         <p style="font-size: 35px; font-style: bold;">Price Estimation Form - #<%= @form.id.to_s %> (Edit)</p>
         <p id="nameParent" title="Adding a name to your form
-        can help you identify it" style="font-size: 25px; font-style: bold;">Rename your form: <%= f.text_field(:name, {:value => @form.name, :id => "name", :onchange => "checkLength(this);"}) %></p>
+can help you identify it" style="font-size: 25px; font-style: bold;">Rename your form: <%= f.text_field(:name, {:value => @form.name, :id => "name", :onchange => "checkLength(this);"}) %></p>
         <p style="font-size: 20px;">Please select your desired options</p>
         <br>Select a building type<br>
          <%= f.select(:building, options_for_select([[@form.building.capitalize(), @form.building, {:style => "display: none;"}], ["Residential", "residential", {id: "residentialOption"}], ["Commercial", "commercial", {id: "commercialOption"}], ["Corporate", "corporate", {id: "corporateOption"}], ["Hybrid", "hybrid", {id: "hybridOption"}]], selected: @form.building.capitalize()), {}, {class: "form-select", :id => "buildingSelect", :onchange => "inputs(this.value);"}) %><br><br>
@@ -317,9 +317,9 @@
         <br>
         Recommended amount of elevators: <%= f.number_field(:recommendedShafts, {min: 0, step: 1, placeholder: "0", disabled: true, :id => "recommendedShafts", :oninput => "this.value = Math.abs(this.value)", :onchange => 'setRecommendedShafts(), setPrices()'}) %><br>
         Select an elevator quality<br>
-        <label><%= f.radio_button("quality", "standard", {:onchange => 'setRecommendedShafts(), setPrices()'}) %>Standard</label><br>
-        <label><%= f.radio_button("quality", "premium", {:onchange => 'setRecommendedShafts(), setPrices()'}) %>Premium</label><br>
-        <label><%= f.radio_button("quality", "excelium", {:onchange => 'setRecommendedShafts(), setPrices()'}) %>Excelium</label><br><br>
+        <%= f.radio_button("quality", "standard", {:onchange => 'setRecommendedShafts(), setPrices()'}) %>Standard<br>
+        <%= f.radio_button("quality", "premium", {:onchange => 'setRecommendedShafts(), setPrices()'}) %>Premium<br>
+        <%= f.radio_button("quality", "excelium", {:onchange => 'setRecommendedShafts(), setPrices()'}) %>Excelium<br><br>
 
     <div style="text-align: center;">
         Price for 1 elevator unit: <%= f.text_field(:priceUnit, {placeholder: "0", disabled: true, :id => "priceUnit"}) %><br>
