@@ -68,14 +68,14 @@
 20.times do
     Batteri.create!([{
     #   BuildingId:
-      Type: [:Residential, :Commercial, :Corporate, :Hybrid].sample,
-      Status: [:Active, :intervation, :Inactive].sample,
+        Type: [:Residential, :Commercial, :Corporate, :Hybrid].sample,
+        Status: [:Active, :intervation, :Inactive].sample,
     #   EmployeeId:
-      DateOfCommissioning: Faker::Time.between(from: DateTime.now - 1095, to: DateTime.now),
-      DateOfLastInspection: Faker::Time.between(from: DateTime.now - 1095, to: DateTime.now),
-      CertificateOfOperations: Faker::File.file_name,
-      Information: Faker::Lorem.paragraph,
-      Notes: Faker::Lorem.paragraph 
+        DateOfCommissioning: Faker::Time.between(from: DateTime.now - 1095, to: DateTime.now),
+        DateOfLastInspection: Faker::Time.between(from: DateTime.now - 1095, to: DateTime.now),
+        CertificateOfOperations: Faker::File.file_name,
+        Information: Faker::Lorem.paragraph,
+        Notes: Faker::Lorem.paragraph 
     }])
     end
 
