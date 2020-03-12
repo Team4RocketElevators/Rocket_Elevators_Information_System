@@ -6,8 +6,8 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-1.times do 
-    Lead.create([{
+20.times do 
+    Lead.create!([{
         FullNameOfTheContact: Faker::Name.unique.name,
         CompanyName: Faker::Company.unique.name,
         EMail: Faker::Internet.unique.email,
@@ -22,25 +22,39 @@
 
     end
 
-1.times do
-    Address.create([{
+    20.times do
+        Building.create!([{
+            # CustomerId:
+            # BuildingAddress:
+            AdministratorFullName: Faker::Name.unique.name,
+            AdministratorEMail: Faker::Internet.unique.email,
+            AdministratorPhoneNumber: Faker::PhoneNumber.unique.phone_number,
+            TechnicalContactFullName: Faker::Name.unique.name,
+            TechnicalContactEMail: Faker::Internet.unique.email,
+            TechnicalContactPhoneNumber: Faker::PhoneNumber.unique.phone_number,
+        }])
+    end
+
+20.times do
+    Address.create!([{
         TypeOfAddress: [:Billing, :Shipping, :Home, :Business].sample,
         Status: [:Active, :Inactive].sample,
         Entity: [:Building, :Customer].sample,
         NumberAndStreet: Faker::Address.unique.secondary_address,
         SuiteOrAppartment: Faker::Number.unique.number(digits: 2),
-        City: Faker::Address.unique.city_prefix,
+        City: Faker::Address.city_prefix,
         PostalCode: Faker::Address.unique.postcode,
         Country: Faker::Address.unique.country,
         Notes: Faker::Lorem.unique.paragraph 
     }])
     end
 
-1.times do
-    Customer.create([{
+20.times do
+    Customer.create!([{
+        # userId
         CustomerCreationDate: Faker::Time.between(from: DateTime.now - 1095, to: DateTime.now),
         CompanyName: Faker::Company.unique.name,
-        CompanyHeadquarterAddress: Faker::Address.unique.full_address,
+        # CompanyHeadquarterAddress:
         FullNameOfTheCompanyContact: Faker::Name.unique.name,
         CompanyContactPhone: Faker::PhoneNumber.unique.phone_number,
         CompanyContactEmail: Faker::Internet.unique.email,
@@ -51,55 +65,34 @@
     }])
     end
 
-1.times do
-    Building.create([{
-        CustomerId:
-        BuildingAddress:
-        AdministratorFullName: Faker::Name.unique.name,
-        AdministratorEMail:
-        AdministratorPhoneNumber:
-        TechnicalContactFullName: Faker::Name.unique.name,
-        TechnicalContactEMail:
-        TechnicalContactPhoneNumber:
-    }])
-    end
-
-1.times do 
-    building_details.create([{
-        BuildingId:
-        Key:
-        Value:
-    }])
-    end
-
-1.times do
-    Batteri.create([{
-      BuildingId:
+20.times do
+    Batteri.create!([{
+    #   BuildingId:
       Type: [:Residential, :Commercial, :Corporate, :Hybrid].sample,
       Status: [:Active, :intervation, :Inactive].sample,
-      EmployeeId:
+    #   EmployeeId:
       DateOfCommissioning: Faker::Time.between(from: DateTime.now - 1095, to: DateTime.now),
       DateOfLastInspection: Faker::Time.between(from: DateTime.now - 1095, to: DateTime.now),
-      CertificateOfOperations: Faker::File.unique.file_name,
-      Information: Faker::Lorem.unique.paragraph,
-      Notes: Faker::Lorem.unique.paragraph 
+      CertificateOfOperations: Faker::File.file_name,
+      Information: Faker::Lorem.paragraph,
+      Notes: Faker::Lorem.paragraph 
     }])
     end
 
-1.times do
-    Column.create([{
-        BatteryId:
+20.times do
+    Column.create!([{
+        # BatteryId:
         Type: [:Residential, :Commercial, :Corporate, :Hybrid].sample,
         NumberOfFloors: Faker::Number.number(digits: 2),
         Status: [:Active, :Intervention, :Inactive].sample,
-        Information: ProjecDescription: Faker::Lorem.sentence,
+        Information: Faker::Lorem.sentence,
         Notes: Faker::Lorem.unique.paragraph
     }])
     end
     
 
-1.times do
-    Elevator.create([{
+20.times do
+    Elevator.create!([{
         # ColumnId
         SerialNumber: Faker::Device.unique.serial,
         Model: [:Standard, :Premium, :Excelium].sample,
@@ -108,7 +101,9 @@
         DateOfcommisioning: Faker::Time.between(from: DateTime.now - 1095, to: DateTime.now),
         DateOfLastInspection: Faker::Time.between(from: DateTime.now - 1095, to: DateTime.now),
         CertificateOfOperations: Faker::File.unique.file_name,
-        Information: ProjecDescription: Faker::Lorem.sentence,
-        Notes: Faker::Lorem.unique.paragraph
+        Information: Faker::Lorem.sentence,
+        Notes: Faker::Lorem.paragraph
     }])
     end
+
+puts 'done seeding'
