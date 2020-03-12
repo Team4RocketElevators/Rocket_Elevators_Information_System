@@ -119,7 +119,7 @@
                       var appartmentsNbr = parseInt(document.getElementById("appartmentsNbrRES").value);
                     var floorsNbr = parseInt(document.getElementById("floorsNbrRES").value) || 1;
                      var basementsNbr = parseInt(document.getElementById("basementsNbrRES").value) || 0;
-                    var shafts = Math.ceil(Math.ceil(appartmentsNbr / floorsNbr) / 6);
+                    var shafts = Math.ceil(appartmentsNbr / (floorsNbr * 6));
                     if (floorsNbr > 20) {
                         shafts = shafts * 2;
                         var times = Math.ceil(floorsNbr / 20) - 1;
@@ -193,53 +193,49 @@
           </button>
 
           <!-- LOGO-->
-          <a class="logo float-left" href="./en">
+          <a class="logo float-left" href="../../en">
               <img src="../assets/R2.png" alt="Rocket Elevator Logo">
           </a>
           <div class="navbar-collapse collapse float-right nav-main-collapse submenu-dark">
               <nav class="nav-main">
                   <ul id="topMain" class="nav nav-pills nav-main nav-onepage">
                       <li class="active hovered"><!-- HOME -->
-                          <a style="color: rgb(255,255,255);" href="../en">
+                          <a style="color: rgb(255,255,255);" href="../../en">
                               HOME
                           </a>
                       </li>
-                      <li class="hovered"><!-- SERVICES -->
-                          <div class="dropdown dropbtn rotate">
-                              <a class="h-25" style="color: rgb(255,255,255);" href="./en#services">
-                                  SERVICES &nbsp; <i class="fa fa-angle-right"></i>
-                              </a>
-                              <div class="dropdown-content">
-                                  <a href="../en/residential-buildings">Residential Buildings</a>
-                                  <a href="../en/corporate-buildings">Corporate Buildings</a>
-                              </div>
-                          </div>
+                      <li class="hovered dropdown dropbtn rotate cc_cursor"><!-- SERVICES -->
+                        <a class="h-60" style="color: rgb(255,255,255);" href="../en#services">SERVICES &nbsp;<i class="fa fa-angle-right" aria-hidden="true"></i></a>
+                        <div class="dropdown-content w-200">
+                            <a href="../en/residential-buildings">Residential Buildings</a>
+                            <a href="../en/corporate-buildings">Corporate Buildings</a>
+                        </div>
                       </li>
                       <li class="hovered"><!-- AWARDS -->
-                          <a style="color: rgb(255,255,255);" href="../en#awards">
+                          <a style="color: rgb(255,255,255);" href="../../en#awards">
                               AWARDS
                           </a>
                       </li>
                       <li class="hovered"><!-- NEWS -->
-                          <a style="color: rgb(255,255,255);" href="../en#news">
+                          <a style="color: rgb(255,255,255);" href="../../en#news">
                               NEWS
                           </a>
                       </li>
                       <li class="hovered"><!-- CLIENTS -->
-                          <a style="color: rgb(255,255,255);" href="../en#clients">
+                          <a style="color: rgb(255,255,255);" href="../../en#clients">
                               CLIENTS
                           </a>
                       </li>
                       <li class="hovered"><!-- CONTACT -->
-                          <a style="color: rgb(255,255,255);" href="../en#contact">
+                          <a style="color: rgb(255,255,255);" href="../../en#contact">
                               CONTACT
                           </a>
                       </li>
                       <li class="hovered"><!-- LOGIN --> 
-                          <a style="color: rgb(255,255,255);" href="../employees/sign_in">LOGIN</a>
+                          <a style="color: rgb(255,255,255);" href="../../employees/sign_in">LOGIN</a>
                       </li>
                       <li class="hovered"><!-- ADMIN -->
-                          <a style="color: rgb(255,255,255);" href="../admin">
+                          <a style="color: rgb(255,255,255);" href="../../admin">
                               ADMIN
                           </a>
                       </li>

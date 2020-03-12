@@ -58,6 +58,8 @@ Rails.application.configure do
   
   config.exceptions_app = self.routes
 
+  config.secret_key_base = "52d84fbc5d6ab366751dd4ebdaac290f8c9f90b567ff6cf48ce8c22a8cef4beb61f5466562cfcc1b5d640b7fc187cfea5205446482ef511b57b1510f3f80fb13"
+
   # Prepend all log lines with the following tags.
   config.log_tags = [ :request_id ]
 

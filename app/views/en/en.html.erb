@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
 	<head>
 		<title>Rocket Elevators - Home</title>
@@ -45,6 +44,7 @@
 		</script>
 	</head>
 	<body class="enable-animation">
+
 		<!-- wrapper -->
 		<div id="wrapper"><div id="header" style="background-color: rgba(0,0,0,25);" class="navbar-toggleable-md sticky header-md clearfix">
 			<!-- TOP NAV -->
@@ -58,7 +58,7 @@
 		
 					<!-- Logo -->
 					<a class="logo float-left" href="./en">
-						<img src="assets/R2.png" alt="Rocket Elevator Logo">
+						<%= image_tag "R2.png" %>
 					</a>
 					<div class="navbar-collapse collapse float-right nav-main-collapse submenu-dark">
 						<nav class="nav-main">
@@ -68,15 +68,11 @@
 										HOME
 									</a>
 								</li>
-								<li class="hovered"><!-- SERVICES -->
-									<div class="dropdown dropbtn rotate">
-										<a class="h-25" style="color: rgb(255,255,255);" href="./en#services">
-											SERVICES &nbsp; <i class="fa fa-angle-right"></i>
-										</a>
-										<div class="dropdown-content">
-											<a href="./en/residential-buildings">Residential Buildings</a>
-											<a href="./en/corporate-buildings">Corporate Buildings</a>
-										</div>
+								<li class="hovered dropdown dropbtn rotate cc_cursor"><!-- SERVICES -->
+									<a class="h-60" style="color: rgb(255,255,255);" href="./en#services">SERVICES &nbsp;<i class="fa fa-angle-right" aria-hidden="true"></i></a>
+									<div class="dropdown-content w-200">
+										<a href="./en/residential-buildings">Residential Buildings</a>
+										<a href="./en/corporate-buildings">Corporate Buildings</a>
 									</div>
 								</li>
 								<li class="hovered"><!-- AWARDS -->
@@ -99,15 +95,24 @@
 										CONTACT
 									</a>
 								</li>
-								<li class="hovered"><!-- LOGIN --> 
-									<a style="color: rgb(255,255,255);" href="./employees/sign_in">LOGIN</a>
-								</li>
-								<li class="hovered"><!-- ADMIN -->
+
+
+								<li class="hovered"><!-- CONTACT -->
 									<a style="color: rgb(255,255,255);" href="./admin">
-										ADMIN
+										USERS
 									</a>
 								</li>
-								
+								<li class="hovered"><!-- CONTACT -->
+									<a style="color: rgb(255,255,255);" href="./admin">
+										EMPLOYEE
+									</a>
+								</li>																
+								<%# <li><!-- LANGUAGE SWITCHER -->
+									<select onchange="switchLanguage(this.value);" style="color: black;">
+										<option id="EN" selected>EN</option>
+										<option id="FR">FR</option>
+									</select>
+								</li> %>
 							</ul>
 		
 						</nav>
@@ -1125,9 +1130,9 @@
 		<!-- /PRELOADER -->
 		
 		<!-- JAVASCRIPT FILES -->
-		<script>var plugin_path = "assets/plugins/"</script>
-        <script src="assets/jquery-3.3.1.min.js"></script>
-		<script src="assets/scripts.js"></script>
+		<script>var plugin_path = "../assets/plugins/"</script>
+        <script src="../assets/jquery-3.3.1.min.js"></script>
+		<script src="../assets/scripts.js"></script>
 		
         <!-- REVOLUTION SLIDER -->
         <script src="../assets/jquery.themepunch.tools.min.js"></script>
