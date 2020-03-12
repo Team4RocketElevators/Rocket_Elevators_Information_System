@@ -143,7 +143,7 @@ ActiveRecord::Schema.define(version: 2020_03_11_143222) do
     t.text "priceUnit"
     t.text "costInstallations"
     t.text "costTotal"
-    t.string "name", default: "Form #"
+    t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
