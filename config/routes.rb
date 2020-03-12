@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   get '/422', to: 'errors#unacceptable'
   get '/500', to: 'errors#server_error'
 
+  mount Blazer::Engine, at: "blazer"
 
   resources :submissionforms
 end
