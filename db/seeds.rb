@@ -5,7 +5,8 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-User.create!(email: 'nicolas.genest@codeboxx.biz', password: 'password', password_confirmation: 'password') if Rails.env.development?
+#  User.create!(email: 'aaa@aaa', password: 'password', password_confirmation: 'password') if Rails.env.development?
+#  Employee.create!(first_name: 'Martin', last_name:'Chantal', title:'Director Assistant', email: 'bbb@bbb', password: 'password', password_confirmation: 'password', ) if Rails.env.development?
 
 10.times do 
     Lead.create!({
@@ -36,7 +37,7 @@ User.create!(email: 'nicolas.genest@codeboxx.biz', password: 'password', passwor
         Entity: [:Building, :Customer].sample,
         NumberAndStreet: Faker::Address.unique.secondary_address,
         SuiteOrAppartment: Faker::Number.unique.number(digits: 2),
-        City: Faker::Address.city_prefix,
+        City: Faker::Address.city,
         PostalCode: Faker::Address.unique.postcode,
         Country: Faker::Address.unique.country,
         Notes: 'Note'
@@ -127,4 +128,3 @@ current_column = Column.create!({
         Notes: Faker::Lorem.paragraph
     })
 end
-puts('seeed ended')
