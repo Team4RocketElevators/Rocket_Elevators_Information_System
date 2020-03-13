@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   
   devise_for :employees
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
- 
+
   root to: 'en#en'
   get 'en' => 'en#en'
   get 'en/residential-buildings' => 'en#residential-buildings'

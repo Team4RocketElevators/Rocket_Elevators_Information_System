@@ -4,6 +4,10 @@ data_sources:
   main:
     url: <%= ENV["BLAZER_DATABASE_URL"] %>
 
+# data_sources:
+#   main:
+#     url: postgres://user:password@hostname:5432/database
+
     # statement timeout, in seconds
     # none by default
     # timeout: 15
@@ -67,7 +71,7 @@ check_schedules:
 
 # enable forecasting
 # note: with trend, time series are sent to https://trendapi.org
-# forecasting: trend
+forecasting: trend
 
 # enable map
-# mapbox_access_token: <%= ENV["MAPBOX_ACCESS_TOKEN"] %>
+mapbox_access_token: <%= ENV["MAPBOX_ACCESS_TOKEN"] %>
