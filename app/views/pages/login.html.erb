@@ -1,9 +1,22 @@
-<h1>Pages#login</h1>
+<body>
+    <div id="wrapper" class="container" align="center">
+        <% if current_employee %>
+        <h1>Hello, <%= current_employee.email %>!</h1>
+        <%= link_to 'Sign out', destroy_employee_session_path,
+            method: :delete %>
 
-<% if current_user % >
-        <%= link_to 'Sign out', destroy_user_session_path,
-                method: :delete %>
-<% else %>
-        <%= link_to 'Sign up', new_user_registration_path %>
-        <%= link_to 'Sign in', new_user_session_path %>
-<% end %>
+
+        <% else 
+        %>
+        <h1>You are not logged in!</h1>
+        <strong><%= link_to 'Sign up', new_employee_registration_path, style: "font-size: 17px" %></strong> |
+
+        <strong><%= link_to 'Sign in', new_employee_session_path, style: "font-size: 17px;" %></strong>
+
+        <% end %>
+        <br><br>
+        <div>
+          <img class="footer-logo" src="../assets/R2.png" alt="Rocket Elevators logo" width="500px">
+        </div>
+    </div>
+</body>

@@ -56,7 +56,7 @@
 		_loadPopperBS4();
 
 		// Load Bootstrap JS
-		loadScript(plugin_path + 'bootstrap/js/bootstrap.min.js', function() {
+		loadScript('../../../assets/bootstrap.min.js', function() {
 
 			// Load Material Design Js
 			if(jQuery("body").hasClass('enable-materialdesign')) {
@@ -69,7 +69,7 @@
 		});
 
 
-		/* --- */
+		/* ---
 		if(jQuery("body").hasClass("smoothscroll") && navigator.platform.indexOf('Mac') < 0) {
 
 			loadScript(plugin_path + 'smoothscroll.js', function() {
@@ -77,7 +77,7 @@
 			});
 
 		}
-		/* --- */
+		--- */
 	});
 
 
@@ -138,10 +138,10 @@
 		_widget_media();
 
 		/** Bootstrap Tooltip **/ 
-		jQuery("[data-toggle=tooltip]").tooltip();
+		//jQuery("[data-toggle=tooltip]").tooltip();
 
 		/** Bootstrap Popover **/
-		jQuery("[data-toggle=popover]").popover();
+		//jQuery("[data-toggle=popover]").popover();
 
 	}
 
@@ -1179,16 +1179,16 @@
 
 		if(_container1.length > 0) {
 
-			loadScript(plugin_path + 'jquery.nav.min.js', function() {
+			loadScript('../../../assets/jquery.nav.min.js', function() {
 
-				jQuery(_container1).onePageNav({
+				/*jQuery(_container1).onePageNav({
 					currentClass: 		'active',
 					changeHash: 		false,
 					scrollSpeed: 		750,
 					scrollThreshold: 	0.5,
 					filter: 			':not(.external)',
 					easing: 			'easeInOutExpo'
-				});
+				});*/
 
 				// Close Nav on menu click
 				jQuery("#topMain.nav-onepage li>a").bind("click", function() {
@@ -1207,7 +1207,7 @@
 
 		if(_container2.length > 0) {
 
-			loadScript(plugin_path + 'jquery.nav.min.js', function() {
+			loadScript('../../../assets/jquery.nav.min.js', function() {
 
 				jQuery(_container2).onePageNav({
 					currentClass: 		'active',
@@ -1318,7 +1318,7 @@
 					}
 
 					var config = jQuery.extend({}, defaults, options, slider.data("plugin-options"));
-					slider.owlCarousel(config).addClass("owl-carousel-init");
+					//slider.owlCarousel(config).addClass("owl-carousel-init");
 					
 
 					// Progress Bar
@@ -1555,7 +1555,7 @@
 
 		if(_el.length > 0) {
 
-			loadScript(plugin_path + 'magnific-popup/jquery.magnific-popup.min.js', function() {
+			loadScript('../../../assets/jquery.magnific-popup.min.js', function() {
 
 				if(typeof(jQuery.magnificPopup) == "undefined") {
 					return false;
@@ -1795,7 +1795,7 @@
 		var _container = jQuery('.mix-grid');
 		
 		if(_container.length > 0) {
-			loadScript(plugin_path + 'mixitup/jquery.mixitup.min.js', function() {
+			loadScript('../../../assets/jquery.mixitup.min.js', function() {
 
 				if(jQuery().mixitup) {
 

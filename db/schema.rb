@@ -137,12 +137,13 @@ ActiveRecord::Schema.define(version: 2020_03_11_143222) do
     t.integer "nbrBasements"
     t.integer "availableParkingSpaces"
     t.integer "seperateBusinesses"
-    t.time "busyHours"
+    t.integer "busyHours"
     t.integer "recommendedShafts"
     t.string "quality"
     t.text "priceUnit"
     t.text "costInstallations"
     t.text "costTotal"
+    t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
