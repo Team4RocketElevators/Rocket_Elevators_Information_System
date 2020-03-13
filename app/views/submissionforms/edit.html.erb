@@ -249,9 +249,9 @@
                       <li class="hovered"><!-- LOGIN --> 
                           <a style="color: rgb(255,255,255);" href="../../employees/sign_in">LOGIN</a>
                       </li>
-                      <li class="hovered"><!-- ADMIN -->
+                      <li class="hovered"><!-- EMPLOYEES -->
                           <a style="color: rgb(255,255,255);" href="../../admin">
-                              ADMIN
+                          EMPLOYEES
                           </a>
                       </li>
                   </ul>
@@ -275,7 +275,9 @@
         <% end %>
         <p style="font-size: 35px; font-style: bold;">Price Estimation Form - #<%= @form.id.to_s %> (Edit)</p>
         <p id="nameParent" title="Adding a name to your form
-can help you identify it" style="font-size: 25px; font-style: bold;">Rename your form: <%= f.text_field(:name, {:value => @form.name, :id => "name", :onchange => "checkLength(this);"}) %></p>
+can help you identify it" style="font-size: 25px; font-style: bold;">Rename your form: <%= f.text_field(:name, {:value => @form.name, :id => "name", :onchange => "checkLength(this);"}) %></p><br>
+        <p style="font-size: 20px; font-style: bold;">Your company name: <%= f.text_field(:companyName, {:id => "companyName", :value => @form.companyName}) %></p>
+        <p style="font-size: 20px; font-style: bold;">Your e-mail address: <%= f.text_field(:email, {:id => "email", :value => @form.email}) %></p>
         <p style="font-size: 20px;">Please select your desired options</p>
         <br>Select a building type<br>
          <%= f.select(:building, options_for_select([[@form.building.capitalize(), @form.building, {:style => "display: none;"}], ["Residential", "residential", {id: "residentialOption"}], ["Commercial", "commercial", {id: "commercialOption"}], ["Corporate", "corporate", {id: "corporateOption"}], ["Hybrid", "hybrid", {id: "hybridOption"}]], selected: @form.building.capitalize()), {}, {class: "form-select", :id => "buildingSelect", :onchange => "inputs(this.value);"}) %><br><br>

@@ -27,10 +27,9 @@ ActiveRecord::Schema.define(version: 2020_03_12_122828) do
   end
 
   create_table "batteris", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.integer "BuildingId"
     t.string "Type"
     t.string "Status"
-    t.integer "EmployeeId"
+    t.bigint "employee_id"
     t.date "DateOfCommissioning"
     t.date "DateOfLastInspection"
     t.text "CertificateOfOperations"
@@ -40,6 +39,7 @@ ActiveRecord::Schema.define(version: 2020_03_12_122828) do
     t.datetime "updated_at", null: false
     t.bigint "building_id"
     t.index ["building_id"], name: "index_batteris_on_building_id"
+    t.index ["employee_id"], name: "index_batteris_on_employee_id"
   end
 
   create_table "blazer_audits", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -98,16 +98,17 @@ ActiveRecord::Schema.define(version: 2020_03_12_122828) do
   end
 
   create_table "building_details", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.integer "BuildingId"
+    t.bigint "building_id"
     t.string "Key"
     t.string "Value"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["building_id"], name: "index_building_details_on_building_id"
   end
 
   create_table "buildings", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.integer "CustomerId"
-    t.string "BuildingAddress"
+    t.bigint "customer_id"
+    t.bigint "address_id"
     t.string "AdministratorFullName"
     t.string "AdministratorEMail"
     t.integer "AdministratorPhoneNumber"
@@ -116,6 +117,8 @@ ActiveRecord::Schema.define(version: 2020_03_12_122828) do
     t.integer "TechnicalContactPhoneNumber"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["address_id"], name: "index_buildings_on_address_id"
+    t.index ["customer_id"], name: "index_buildings_on_customer_id"
   end
 
   create_table "columns", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -131,10 +134,9 @@ ActiveRecord::Schema.define(version: 2020_03_12_122828) do
   end
 
   create_table "customers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.integer "UserId"
     t.date "CustomerCreationDate"
     t.string "CompanyName"
-    t.string "CompanyHeadquarterAddress"
+    t.bigint "address_id"
     t.string "FullNameOfTheCompanyContact"
     t.integer "CompanyContactPhone"
     t.string "CompanyContactEmail"
@@ -145,11 +147,11 @@ ActiveRecord::Schema.define(version: 2020_03_12_122828) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "users_id"
+    t.index ["address_id"], name: "index_customers_on_address_id"
     t.index ["users_id"], name: "index_customers_on_users_id"
   end
 
   create_table "elevators", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.integer "ColumnId"
     t.string "SerialNumber"
     t.string "Model"
     t.string "Type"
@@ -204,7 +206,9 @@ ActiveRecord::Schema.define(version: 2020_03_12_122828) do
     t.text "priceUnit"
     t.text "costInstallations"
     t.text "costTotal"
-    t.string "name", default: "Form #"
+    t.string "name"
+    t.string "companyName"
+    t.string "email"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -237,7 +241,12 @@ ActiveRecord::Schema.define(version: 2020_03_12_122828) do
   end
 
   add_foreign_key "batteris", "buildings"
+  add_foreign_key "batteris", "employees"
+  add_foreign_key "building_details", "buildings"
+  add_foreign_key "buildings", "addresses"
+  add_foreign_key "buildings", "customers"
   add_foreign_key "columns", "batteris"
+  add_foreign_key "customers", "addresses"
   add_foreign_key "customers", "users", column: "users_id"
   add_foreign_key "elevators", "columns"
 end

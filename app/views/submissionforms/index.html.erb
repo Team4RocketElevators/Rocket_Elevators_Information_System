@@ -68,6 +68,11 @@
                 if (elem.checked) checkedList++;
                 else uncheckedList++;
             }
+
+            if (checkedList === 1) var itemItems = "item";
+            else itemItems = "items";
+
+            document.getElementById("deleteButton").innerHTML = "Delete " + checkedList + " " + itemItems;
         }
         function deleteForm() {
             var confirmation = confirm("Are you sure?");
@@ -164,9 +169,9 @@
                         <li class="hovered"><!-- LOGIN --> 
                             <a style="color: rgb(255,255,255);" href="../employees/sign_in">LOGIN</a>
                         </li>
-                        <li class="hovered"><!-- ADMIN -->
+                        <li class="hovered"><!-- EMPLOYEES -->
                             <a style="color: rgb(255,255,255);" href="../admin">
-                                ADMIN
+                             EMPLOYEES
                             </a>
                         </li>
                     </ul>
@@ -191,7 +196,7 @@
             </div>
         </div>
     </div>
-    <div style="padding: 75px; width: 1500px; display: inline-block;" align="center">
+    <div style="padding: 75px; width: 1475px; display: inline-block;" align="center">
         <div class="row">
             <% @forms.each_slice(5).to_a.each do |i|%>
                 <div id="formList" class="col-sm-1" style="padding: 10px;">
@@ -220,15 +225,13 @@
 <% end %><br>
 <div class="container">
     <div class="row">
-        <div class="col-sm w-1500" style="float: right;">
-            <button id="deleteButton" style="background-color: #fa3628; padding: 10px; border-color: black; border-radius: 5px; float: right; display: block; visibility: hidden;" onclick="deleteForm();">
+        <div class="col-sm w-1500">
+            <div style="text-align: center;">
+                <button onclick='window.location.href ="./submissionforms/new"' class="btn btn-primary">New form</button>
+            </div>
+            <button id="deleteButton" style="background-color: #fa3628; padding: 10px; border-color: black; border-radius: 5px; float: right; display: inline; visibility: hidden;" onclick="deleteForm();">
                 <img width="25px" src="https://cdn2.iconfinder.com/data/icons/finance-2-25/48/68-512.png"/> Delete
             </button>
-            <div align="center">
-                <a href="./submissionforms/new">
-                    <button class="btn btn-primary">New form</button>
-                </a>
-            </div>
         </div>
     </div>
 </div>
