@@ -262,8 +262,13 @@
             <% end %>
         <% end %>
         <p style="font-size: 35px; font-style: bold;">Price Estimation Form</p>
+        <% if (Form.all.length() > 0) %>
+            <% latestID = "Form #" + (Form.last.id + 1).to_s %>
+        <% else %>
+            <% latestID = "New form" %>
+        <% end %>
         <p title="Adding a name to your form
-can help you identify it" style="font-size: 25px; font-style: bold;">Name your form: <%= f.text_field(:name, {placeholder: "Form #" + (Form.all.length + 1).to_s, :id => "name", :value => ""}) %></p>
+can help you identify it" style="font-size: 25px; font-style: bold;">Name your form: <%= f.text_field(:name, {placeholder: latestID, :id => "name", :value => ""}) %></p>
         <p style="font-size: 20px;">Please select your desired options</p>
         <br>Select a building type<br>
          <%= f.select(:building, options_for_select([["-", "empty", {id: "emptyOption", class: 'hidden'}], ["Residential", "residential", {id: "residentialOption"}], ["Commercial", "commercial", {id: "commercialOption"}], ["Corporate", "corporate", {id: "corporateOption"}], ["Hybrid", "hybrid", {id: "hybridOption"}]], selected: "-", disabled: "-"), {}, {class: "form-select", :id => "buildingSelect", :onchange => "inputs(this.value);"}) %><br><br>

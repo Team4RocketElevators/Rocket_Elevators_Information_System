@@ -50,7 +50,7 @@ class SubmissionformsController < ApplicationController
         @form = Form.find(params[:id])
 
         @form.destroy
-        redirect_to "/submissionforms/"
+        redirect_to "/submissionforms#success"
     end
 
     private def form_params
