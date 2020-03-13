@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+
+  
+  
   devise_for :users
   get 'login', to: 'pages#login'
   
@@ -14,6 +17,7 @@ Rails.application.routes.draw do
     get code, :to => "errors#show", :code => code
   end
 
+  mount Blazer::Engine, at: "blazer"
 
   resources :submissionforms
 end
