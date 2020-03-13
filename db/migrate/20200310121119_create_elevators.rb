@@ -4,12 +4,12 @@ class CreateElevators < ActiveRecord::Migration[5.2]
 
       # t.references :column, foreign_key: true
 
-      t.integer :ColumnId
+      # t.integer :ColumnId
       t.string :SerialNumber
       t.string :Model
       t.string :Type
       t.string :Status
-      t.date :DateOfcommisioning
+      t.date :DateOfcommissioning
       t.date :DateOfLastInspection
       t.text :CertificateOfOperations
       t.text :Information
