@@ -5,5 +5,5 @@ require_relative 'application'
 Rails.application.initialize!
 
 ActionView::Base.field_error_proc = Proc.new{ |html_tag, instance| 
-<div class="field_with_errors">%{#{html_tag}</div>}.html_safe
+%{#{html_tag}}.html_safe
 }
