@@ -127,7 +127,7 @@ current_column = Column.create!({
 Elevator.create!({
         column_id: current_column.id,
         # ColumnId: Column.last.id,
-        SerialNumber: Faker::Device.unique.serial,
+        SerialNumber: Faker::Number.number(digits: 6),
         Model: [:Standard, :Premium, :Excelium].sample,
         Type: [:Residential, :Commercial, :Corporate].sample,
         Status: [:Active, :Intervention, :Inactive].sample,
