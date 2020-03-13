@@ -5,6 +5,7 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+User.create!(email: 'nicolas.genest@codeboxx.biz', password: 'password', password_confirmation: 'password') if Rails.env.development?
 
 10.times do 
     Lead.create!({
@@ -85,7 +86,7 @@
 
 # 1.times do
     current_battery = Batteri.create!({
-        building_id: current_building.id,
+        building_id: current_building.id, 
         # BuildingId: Building.last.id,
         Type: [:Residential, :Commercial, :Corporate, :Hybrid].sample,
         Status: [:Active, :intervation, :Inactive].sample,
