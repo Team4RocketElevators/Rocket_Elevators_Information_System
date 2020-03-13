@@ -70,15 +70,30 @@
             }
         }
         function deleteForm() {
+            var confirmation = confirm("Are you sure?");
+            if (!confirmation) return false;
+            var successList = [];
+            var failedList = [];
             for (var checkbox = 0; checkbox < deleteArray.length; checkbox++) {
-                console.log(deleteArray[checkbox]);
+                var id = deleteArray[checkbox].getAttribute("data-id");
                 $.ajax({
                     type: "DELETE",
-                    url: "./submissionforms/" + deleteArray[checkbox].getAttribute("data-id"),
-                    success: function(data) {console.log(data);}
-                    error: function(data) {console.log(data);}
+                    url: "submissionforms/" + id,
+                    headers: {
+                        "X-CSRF-Token": "<%= form_authenticity_token %>"
+                    },
+                    success: function(){
+                        successList.push(id);
+                        window.location.href = "../submissionforms#success";
+                    },
+                    error: function(xhr, status, error){
+                        failedList.push(id + ";" + xhr.responseText);
+                        window.location.href = "../submissionforms#error";
+                    }
                 });
             }
+            if (successList.length > 0) alert("Successfully delete form(s) " + successList.join(", "));
+            if (failedList.length > 0) alert("Error deleting form(s) " + failedList.join(", "));
         }
     </script>
 
@@ -163,6 +178,7 @@
     </header>
   <!-- /Top Nav -->
 </div>
+<div class="h-50"></div>
 <h1 align="center"><%= @title %></h1>
 <title><%= @page_title %></title>
 <h3 align="center">Your saved forms:<br></h3>
@@ -218,6 +234,11 @@
 </div>
 </a>
 
+<div class="h-50"></div>
+
+<div class="h-100" id="requestCallback" style="visibility: hidden;" align="center" >
+    <strong><p style="padding: 25px; font-size: 25px; color: black;" id="requestCallbackMessage"></p></strong>
+</div>
 
 <div class="h-100"></div>
 
@@ -269,3 +290,28 @@
     </div>
     </div>
 </section>
+
+<script>
+    getUrlVars();
+    function getUrlVars() {
+        var hash = window.location.href.split("#")[1];
+        if (!hash) return;
+        if (hash != "success" && hash != "error") return window.location.href = "../submissionforms";
+        var div = document.getElementById("requestCallback");
+        var p = document.getElementById("requestCallbackMessage");
+        switch(hash){
+            case "success":
+                div.setAttribute("style", "visibility: visible; background-color: lightgreen;");
+                p.innerHTML = "Successfully deleted form(s)";
+                break;
+            case "error":
+                div.setAttribute("style", "visibility: visible; background-color: red;");
+                p.innerHTML = "Error: Couldn\'t delete form(s)";
+                break;
+            default:
+                div.setAttribute("style", "visibility: hidden;");
+                window.location.href = "../submissionforms";
+                break;
+        }
+    }
+</script>
