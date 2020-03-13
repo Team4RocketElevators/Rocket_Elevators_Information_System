@@ -236,8 +236,8 @@
 
 <div class="h-50"></div>
 
-<div class="h-100" id="requestCallback" style="visibility: hidden;" align="center" >
-    <strong><p style="padding: 25px; font-size: 25px; color: black;" id="requestCallbackMessage"></p></strong>
+<div class="h-100 alert" id="requestCallback" style="visibility: hidden;" align="center" >
+    <strong><p style="padding: 25px; font-size: 20px; color: black;" id="requestCallbackMessage"></p></strong>
 </div>
 
 <div class="h-100"></div>
@@ -301,11 +301,13 @@
         var p = document.getElementById("requestCallbackMessage");
         switch(hash){
             case "success":
-                div.setAttribute("style", "visibility: visible; background-color: lightgreen;");
+                div.setAttribute("style", "visibility: visible;");
+                div.setAttribute("class", "alert-success");
                 p.innerHTML = "Successfully deleted form(s)";
                 break;
             case "error":
-                div.setAttribute("style", "visibility: visible; background-color: red;");
+                div.setAttribute("style", "visibility: visible;");
+                div.setAttribute("class", "alert-danger");
                 p.innerHTML = "Error: Couldn\'t delete form(s)";
                 break;
             default:
