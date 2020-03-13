@@ -1,7 +1,6 @@
 <head>
     
     <title><%= @page_title %></title>
-    <link rel="icon" type="image/png" href="../assets/favicon.png">
     <meta name="description" content="Rocket Elevators - Price Estimate Form" />
     <meta name="Author" content="Isaac Laquerre [www.codeboxx.biz]" />
 	
@@ -12,6 +11,22 @@
     </style>
 
     <script lang="javascript">
+        function insertAfter(element, referenceNode) {
+            referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
+        }
+        function checkLength(elem) {
+            if (elem.value.length < 1) elem.setAttribute("placeholder", "Form #<%= @form.id.to_s %>")
+            if (elem.value.length > 100) {
+                document.getElementById("name").value = "";
+                if (document.getElementById("charMaxExceeded")) return;
+                var newDiv = document.createElement("div");
+                newDiv.appendChild(document.createTextNode("Form name cannot exceed 100 characters"))
+                document.getElementById("nameParent").appendChild(newDiv);
+                newDiv.setAttribute("align", "center");
+                newDiv.setAttribute("id", "charMaxExceeded")
+                newDiv.setAttribute("style", "background-color:rgba(255,51,51,0.2); font-size: 15px; text-align: center;");
+            }
+        }
         function numberWithCommas(x) {
             return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
         }
@@ -50,51 +65,48 @@
             for (i in document.getElementsByName("form[quality]")) {
                 if (document.getElementsByName("form[quality]")[i].checked) values.push(document.getElementsByName("form[quality]")[i].value);
             }
-            if (!values.length > 0) return;
-            var elevatorsNbr = document.getElementById("elevatorsNbr" + buildingLetter);
-            if (elevatorsNbr === null) elevatorsNbr = document.getElementById("recommendedShafts");
-            elevatorsNbr = parseInt(elevatorsNbr.value);
             var value = values[0];
             if (value === "standard") {
                 var result = 7565;
-                var fee = (result * elevatorsNbr) * 0.1;
+                var fee = 7565 * 0.1;
             } else if (value === "premium") {
                 result = 12345;
-                fee = (result * elevatorsNbr) * 0.13;
+                fee = 12345 * 0.13;
             } else if (value === "excelium") {
                 result = 15400;
-                fee = (result * elevatorsNbr) * 0.16;
-            }
+                fee = 15400 * 0.16;
+            } else return;
             document.getElementById("priceUnit").value = "$" + numberWithCommas(result.toFixed(2));
-            document.getElementById("costInstallations").value = "$" + numberWithCommas(fee.toFixed(2).replace(/NaN/g, "0"));
+            document.getElementById("costInstallations").value = "$" + numberWithCommas(fee.toFixed(2));
             switch (buildingType) {
                 case "commercial":
                     if (parseInt(document.getElementById("elevatorsNbr" + buildingLetter).value) === 0) fee = 0;
-                    var priceTotal = numberWithCommas((((result * elevatorsNbr) + fee).toFixed(2)).replace(/NaN/g, "0"));
+                    var priceTotal = numberWithCommas((((result * parseInt(document.getElementById("elevatorsNbr" + buildingLetter).value))) + fee).toFixed(2)).replace(/NaN/g, "0");
                     document.getElementById("costTotal").value = "$" + priceTotal;
                     break;
                 case "residential":
-                    var priceTotal = numberWithCommas(((result * elevatorsNbr) + fee).toFixed(2));
+                    var recommendedShafts = parseInt(document.getElementById("recommendedShafts").value);
+                    var priceTotal = numberWithCommas((recommendedShafts * result) + fee);
                     if (recommendedShafts === 0) priceTotal = 0;
-                    document.getElementById("costTotal").value = "$" + priceTotal.replace(/NaN/g, "0");
+                    document.getElementById("costTotal").value = "$" + priceTotal;
                     break;
                 case "corporate":
                 case "hybrid":
                     var buildingLetter = buildingType.toUpperCase().slice(0, 3);
                     var maxOccupants = parseInt(document.getElementById("occupantsPerFloor" + buildingLetter).value);
                     var floorsNbr = parseInt(document.getElementById("floorsNbr" + buildingLetter).value);
+                    var totalOccupantsPerFloor = maxOccupants * floorsNbr;
+                    var totalShafts = Math.floor(totalOccupantsPerFloor / 1000);
                     var basementsNbr = parseInt(document.getElementById("basementsNbr" + buildingLetter).value);
                     var totalStories = floorsNbr + basementsNbr;
-                    var totalOccupantsPerFloor = maxOccupants * totalStories;
-                    var totalShafts = Math.ceil(totalOccupantsPerFloor / 1000);
-                    var elevatorCollumns = Math.ceil(totalStories / 20);
+                    var elevatorCollumns = Math.floor(totalStories / 20);
                     if (elevatorCollumns < 1) elevatorCollumns = 1;
-                    var total = Math.ceil(totalShafts / elevatorCollumns);
-                    var totalElevators = total * elevatorCollumns;
+                    var totalElevators = Math.round(totalShafts / elevatorCollumns);
                     
                     var priceTotal = numberWithCommas(((result * totalElevators) + fee).toFixed(2))
                     if (totalElevators === 0) priceTotal = 0;
                     document.getElementById("costTotal").value = "$" + priceTotal.toString().replace(/NaN/g, "0");
+                    break;
                     break;
                 default:
                     if (window.location.href.includes("prefill=")) {
@@ -119,13 +131,13 @@
                     document.getElementById("recommendedShafts").value = elevatorNbr;
                     break;
                 case "residential":
-                    var appartmentsNbr = parseInt(document.getElementById("appartmentsNbrRES").value);
-                    var floorsNbr = parseInt(document.getElementById("floorsNbrRES").value);
-                    var basementsNbr = parseInt(document.getElementById("basementsNbrRES").value);
-                    var shafts = Math.ceil(appartmentsNbr / (floorsNbr * 6));
+                      var appartmentsNbr = parseInt(document.getElementById("appartmentsNbrRES").value);
+                    var floorsNbr = parseInt(document.getElementById("floorsNbrRES").value) || 1;
+                     var basementsNbr = parseInt(document.getElementById("basementsNbrRES").value) || 0;
+                    var shafts = Math.ceil(Math.ceil(appartmentsNbr / floorsNbr) / 6);
                     if (floorsNbr > 20) {
                         shafts = shafts * 2;
-                        var times = Math.ceil(floorsNbr / 20);
+                        var times = Math.ceil(floorsNbr / 20) - 1;
                         if (times > 0) {
                             for (var i = 0; i != times; i++) {
                                 shafts++;
@@ -140,17 +152,17 @@
                     var buildingLetter = buildingType.toUpperCase().slice(0, 3);
                     var maxOccupants = parseInt(document.getElementById("occupantsPerFloor" + buildingLetter).value);
                     var floorsNbr = parseInt(document.getElementById("floorsNbr" + buildingLetter).value);
+                    var totalOccupantsPerFloor = maxOccupants * floorsNbr;
+                    var totalShafts = Math.floor(totalOccupantsPerFloor / 1000);
                     var basementsNbr = parseInt(document.getElementById("basementsNbr" + buildingLetter).value);
                     var totalStories = floorsNbr + basementsNbr;
-                    var totalOccupantsPerFloor = maxOccupants * totalStories;
-                    var totalShafts = Math.ceil(totalOccupantsPerFloor / 1000);
-                    var elevatorCollumns = Math.ceil(totalStories / 20);
+                    var elevatorCollumns = Math.floor(totalStories / 20);
                     if (elevatorCollumns < 1) elevatorCollumns = 1;
-                    var total = Math.ceil(totalShafts / elevatorCollumns);
-                    var totalElevators = total * elevatorCollumns;
+                    var totalElevators = Math.round(totalShafts / elevatorCollumns);
 
                     if (isNaN(totalElevators) || isNaN(totalShafts)) return;
                     else {
+                        document.getElementById("recommendedShafts").value = Math.ceil(totalShafts);
                         document.getElementById("recommendedShafts").value = Math.ceil(totalElevators);
                     }
                     if (floorsNbr < 2 && basementsNbr < 1) document.getElementById("recommendedShafts").value = 0;
@@ -197,7 +209,7 @@
 
           <!-- LOGO-->
           <a class="logo float-left" href="../../en">
-              <img src="../assets/R2.png" alt="Rocket Elevator Logo">
+              <img src="../../assets/R2.png" alt="Rocket Elevator Logo">
           </a>
           <div class="navbar-collapse collapse float-right nav-main-collapse submenu-dark">
               <nav class="nav-main">
@@ -207,13 +219,13 @@
                               HOME
                           </a>
                       </li>
-                      <li class="hovered dropdown dropbtn rotate cc_cursor"><!-- SERVICES -->
-                        <a class="h-60" style="color: rgb(255,255,255);" href="../en#services">SERVICES &nbsp;<i class="fa fa-angle-right" aria-hidden="true"></i></a>
-                        <div class="dropdown-content w-200">
-                            <a href="../en/residential-buildings">Residential Buildings</a>
-                            <a href="../en/corporate-buildings">Corporate Buildings</a>
-                        </div>
-                      </li>
+                        <li class="hovered dropdown dropbtn rotate cc_cursor"><!-- SERVICES -->
+                            <a class="h-60" style="color: rgb(255,255,255);" href="../../en#services">SERVICES &nbsp;<i class="fa fa-angle-right" aria-hidden="true"></i></a>
+                            <div class="dropdown-content w-200">
+                                <a href="../../en/residential-buildings">Residential Buildings</a>
+                                <a href="../../en/corporate-buildings">Corporate Buildings</a>
+                            </div>
+                        </li>
                       <li class="hovered"><!-- AWARDS -->
                           <a style="color: rgb(255,255,255);" href="../../en#awards">
                               AWARDS
@@ -255,25 +267,25 @@
     <!-- wrapper -->
     <div id="wrapper">
 
-    <%= form_for :form, url: submissionforms_path, :html => {:id => "form"} do |f| %>
+    <%= form_for :form, url: "/submissionforms/" + @form.id.to_s, method: :patch, :html => {:id => "form"} do |f| %>
         <% if @form.errors.any? %>
             <% @form.errors.full_messages.each do |msg| %>
                 <div class="alert alert-danger"><%= msg %></div>
             <% end %>
         <% end %>
-        <p style="font-size: 35px; font-style: bold;">Price Estimation Form</p>
-        <p title="Adding a name to your form
-can help you identify it" style="font-size: 25px; font-style: bold;">Name your form: <%= f.text_field(:name, {placeholder: "Form #" + (Form.all.length + 1).to_s, :id => "name", :value => ""}) %></p>
+        <p style="font-size: 35px; font-style: bold;">Price Estimation Form - #<%= @form.id.to_s %> (Edit)</p>
+        <p id="nameParent" title="Adding a name to your form
+can help you identify it" style="font-size: 25px; font-style: bold;">Rename your form: <%= f.text_field(:name, {:value => @form.name, :id => "name", :onchange => "checkLength(this);"}) %></p>
         <p style="font-size: 20px;">Please select your desired options</p>
         <br>Select a building type<br>
-         <%= f.select(:building, options_for_select([["-", "empty", {id: "emptyOption", class: 'hidden'}], ["Residential", "residential", {id: "residentialOption"}], ["Commercial", "commercial", {id: "commercialOption"}], ["Corporate", "corporate", {id: "corporateOption"}], ["Hybrid", "hybrid", {id: "hybridOption"}]], selected: "-", disabled: "-"), {}, {class: "form-select", :id => "buildingSelect", :onchange => "inputs(this.value);"}) %><br><br>
-        <img class="center" id="residential" src="../assets/residentialBuilding.jpeg"
+         <%= f.select(:building, options_for_select([[@form.building.capitalize(), @form.building, {:style => "display: none;"}], ["Residential", "residential", {id: "residentialOption"}], ["Commercial", "commercial", {id: "commercialOption"}], ["Corporate", "corporate", {id: "corporateOption"}], ["Hybrid", "hybrid", {id: "hybridOption"}]], selected: @form.building.capitalize()), {}, {class: "form-select", :id => "buildingSelect", :onchange => "inputs(this.value);"}) %><br><br>
+        <img class="center" id="residential" src="../../assets/residentialBuilding.jpeg"
             alt="Residential Building" width="400">
-        <img class="center" id="commercial" src="../assets/commercialBuilding.jpeg"
+        <img class="center" id="commercial" src="../../assets/commercialBuilding.jpeg"
             alt="Commercial Building" width="400">
-        <img class="center" id="corporate" src="../assets/corporateBuilding.jpeg"
+        <img class="center" id="corporate" src="../../assets/corporateBuilding.jpeg"
             alt="Corporate Building" width="400">
-        <img class="center" id="hybrid" src="../assets/hybridBuilding.jpeg" alt="Hybrid Building"
+        <img class="center" id="hybrid" src="../../assets/hybridBuilding.jpeg" alt="Hybrid Building"
             width="400">
         <div id="residentialDiv">
             Number of appartments: <%= f.number_field(:appartmentsNbrRES, {min: 0, step: 1, placeholder: "0", :id => "appartmentsNbrRES", :oninput => "this.value = Math.abs(this.value)", :onchange => 'setRecommendedShafts(), setPrices()'}) %><br>
@@ -316,9 +328,9 @@ can help you identify it" style="font-size: 25px; font-style: bold;">Name your f
     </div>
 
     <br>
-    <input type="button" onclick="window.location.href = '../submissionforms'" class="btn btn-danger h-40" align="center" value="Cancel">
+    <input type="button" onclick="window.history.back();" class="btn btn-danger h-40" align="center" value="Cancel">
     
-    <%= f.submit "Save Form", class: "btn btn-primary" %>
+    <%= f.submit "Save", class: "btn btn-primary" %>
 
     <% end %>
 
@@ -329,7 +341,7 @@ can help you identify it" style="font-size: 25px; font-style: bold;">Name your f
             <div class="row">
                 <div class="col-md-3">
                     <!-- Footer Logo -->
-                    <img class="footer-logo" src="../assets/R2.png" alt="Rocket Elevators logo"
+                    <img class="footer-logo" src="../../assets/R2.png" alt="Rocket Elevators logo"
                         width="250" />
 
                     <!-- Contact Address -->
@@ -355,10 +367,10 @@ can help you identify it" style="font-size: 25px; font-style: bold;">Name your f
                     <!-- Links -->
                     <h4 class="letter-spacing-1">EXPLORE ROCKET ELEVATORS</h4>
                     <ul class="footer-links list-unstyled">
-                        <li><a href="../en">Home</a></li>
-                        <li><a href="../en#services">Our Services</a></li>
-                        <li><a href="../en#clients">Our Clients</a></li>
-                        <li><a href="../en#contact">Contact Us</a></li>
+                        <li><a href="../../en">Home</a></li>
+                        <li><a href="../../en#services">Our Services</a></li>
+                        <li><a href="../../en#clients">Our Clients</a></li>
+                        <li><a href="../../en#contact">Contact Us</a></li>
                     </ul>
                     <!-- /Links -->
 
@@ -393,6 +405,12 @@ can help you identify it" style="font-size: 25px; font-style: bold;">Name your f
                 getUrlVars();
             }
         }
+        var radio = "form_quality_<%= @form.quality %>";
+        document.getElementById(radio).setAttribute("checked", "");
+        var building = <%= @form.building.to_s %>;
+        inputs(building.id);
+        setRecommendedShafts();
+        setPrices();
     </script>
 
 </body>

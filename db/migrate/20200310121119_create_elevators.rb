@@ -4,7 +4,7 @@ class CreateElevators < ActiveRecord::Migration[5.2]
 
       # t.references :column, foreign_key: true
 
-      t.integer :ColumnId
+      # t.integer :ColumnId
       t.string :SerialNumber
       t.string :Model
       t.string :Type

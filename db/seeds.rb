@@ -5,9 +5,10 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+User.create!(email: 'nicolas.genest@codeboxx.biz', password: 'password', password_confirmation: 'password') if Rails.env.development?
 
-20.times do 
-    Lead.create!([{
+10.times do 
+    Lead.create!({
         FullNameOfTheContact: Faker::Name.unique.name,
         CompanyName: Faker::Company.unique.name,
         EMail: Faker::Internet.unique.email,
@@ -18,25 +19,18 @@
         Message: Faker::Lorem.unique.paragraph,
         AttachedFile: Faker::File.unique.file_name,
         DateOfTheContactRequest: Faker::Time.between(from: DateTime.now - 1095, to: DateTime.now)
-    }])
+    })
 
-    end
+    # end
 
-    20.times do
-        Building.create!([{
-            # CustomerId:
-            # BuildingAddress:
-            AdministratorFullName: Faker::Name.unique.name,
-            AdministratorEMail: Faker::Internet.unique.email,
-            AdministratorPhoneNumber: Faker::PhoneNumber.unique.phone_number,
-            TechnicalContactFullName: Faker::Name.unique.name,
-            TechnicalContactEMail: Faker::Internet.unique.email,
-            TechnicalContactPhoneNumber: Faker::PhoneNumber.unique.phone_number,
-        }])
-    end
+    # 1.times do
+    #     User.create([{
+    #         email: Faker::Internet.unique.email,
+    #     }])
+    #     end
 
-20.times do
-    Address.create!([{
+    # 1.times do
+    current_address = Address.create!({
         TypeOfAddress: [:Billing, :Shipping, :Home, :Business].sample,
         Status: [:Active, :Inactive].sample,
         Entity: [:Building, :Customer].sample,
@@ -45,16 +39,17 @@
         City: Faker::Address.city_prefix,
         PostalCode: Faker::Address.unique.postcode,
         Country: Faker::Address.unique.country,
-        Notes: Faker::Lorem.unique.paragraph 
-    }])
-    end
+        Notes: 'Note'
+    })
+#     end
 
-20.times do
-    Customer.create!([{
-        # userId
+# 1.times do
+    current_customer = Customer.create!({
+        users_id: User.order('rand()').limit(1).first.id,
+        address_id: current_address.id,
         CustomerCreationDate: Faker::Time.between(from: DateTime.now - 1095, to: DateTime.now),
         CompanyName: Faker::Company.unique.name,
-        # CompanyHeadquarterAddress:
+        # CompanyHeadquarterAddress: Address.last.id,
         FullNameOfTheCompanyContact: Faker::Name.unique.name,
         CompanyContactPhone: Faker::PhoneNumber.unique.phone_number,
         CompanyContactEmail: Faker::Internet.unique.email,
@@ -62,38 +57,65 @@
         TechnicalAuthorityFullName: Faker::Name.unique.name,
         TechnicalAuthorityPhoneNumber: Faker::PhoneNumber.unique.phone_number,
         TechnicalAuthorityEmail: Faker::Internet.unique.email
-    }])
-    end
+    })
+#     end
 
-20.times do
-    Batteri.create!([{
-    #   BuildingId:
+# 1.times do
+    current_building = Building.create!({
+        customer_id: current_customer.id,
+        address_id: current_address.id,
+        # CustomerId: Customer.last.id,
+        # BuildingAddress: Address.last.id,
+        AdministratorFullName: Faker::Name.unique.name,
+        AdministratorEMail: Faker::Internet.unique.email,
+        AdministratorPhoneNumber: Faker::PhoneNumber.unique.phone_number,
+        TechnicalContactFullName: Faker::Name.unique.name,
+        TechnicalContactEMail: Faker::Internet.unique.email,
+        TechnicalContactPhoneNumber: Faker::PhoneNumber.unique.phone_number,
+    })
+# end
+
+
+    # 1.times do
+    BuildingDetail.create({
+        building_id: current_building.id,
+        Key: ::Faker::Lorem.unique.word, 
+        Value: :: Faker::Lorem.unique.word
+    })
+    #     end
+
+# 1.times do
+    current_battery = Batteri.create!({
+        building_id: current_building.id, 
+        # BuildingId: Building.last.id,
         Type: [:Residential, :Commercial, :Corporate, :Hybrid].sample,
         Status: [:Active, :intervation, :Inactive].sample,
-    #   EmployeeId:
+        employee_id: Employee.order('rand()').limit(1).first.id,
         DateOfCommissioning: Faker::Time.between(from: DateTime.now - 1095, to: DateTime.now),
         DateOfLastInspection: Faker::Time.between(from: DateTime.now - 1095, to: DateTime.now),
         CertificateOfOperations: Faker::File.file_name,
-        Information: Faker::Lorem.paragraph,
-        Notes: Faker::Lorem.paragraph 
-    }])
-    end
+        Information: 'Information',
+        Notes: 'Note'
+    })
+#     end
 
-20.times do
-    Column.create!([{
-        # BatteryId:
+# 1.times do
+current_column = Column.create!({
+        batteri_id: current_battery.id,
+        # BatteryId: Batteri.last.id,
         Type: [:Residential, :Commercial, :Corporate, :Hybrid].sample,
         NumberOfFloors: Faker::Number.number(digits: 2),
         Status: [:Active, :Intervention, :Inactive].sample,
         Information: Faker::Lorem.sentence,
         Notes: Faker::Lorem.unique.paragraph
-    }])
-    end
+    })
+#     end
     
 
-20.times do
-    Elevator.create!([{
-        # ColumnId
+# 1.times do
+    Elevator.create!({
+        column_id: current_column.id,
+        # ColumnId: Column.last.id,
         SerialNumber: Faker::Device.unique.serial,
         Model: [:Standard, :Premium, :Excelium].sample,
         Type: [:Residential, :Commercial, :Corporate].sample,
@@ -103,7 +125,6 @@
         CertificateOfOperations: Faker::File.unique.file_name,
         Information: Faker::Lorem.sentence,
         Notes: Faker::Lorem.paragraph
-    }])
-    end
-
-puts 'done seeding'
+    })
+end
+puts('seeed ended')
