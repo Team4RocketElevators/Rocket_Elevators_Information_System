@@ -5,7 +5,18 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-User.create!(email: 'nicolas.genest@codeboxx.biz', password: 'password', password_confirmation: 'password') if Rails.env.development?
+Employee.create!(first_name: 'Nicolas', last_name:'Genest', title:'Comm Rep', email: 'nicolas.genest@codeboxx.biz', password: 'password', password_confirmation: 'password', ) if Rails.env.development?
+Employee.create!(first_name: 'Nadya', last_name:'Fortier', title:'Director', email: 'nadya.fortier@codeboxx.biz', password: 'password', password_confirmation: 'password', ) if Rails.env.development?
+Employee.create!(first_name: 'Martin', last_name:'Chantal', title:'Director Assistant', email: 'martin.chantal@codeboxx.biz', password: 'password', password_confirmation: 'password', ) if Rails.env.development?
+Employee.create!(first_name: 'Mathieu', last_name:'Houde', title:'Captain', email: 'mathieu.houde@codeboxx.biz', password: 'password', password_confirmation: 'password', ) if Rails.env.development?
+Employee.create!(first_name: 'Remi', last_name:'Gagnon', title:'Engineer', email: 'remi.gagnon@codeboxx.biz', password: 'password', password_confirmation: 'password', ) if Rails.env.development?
+Employee.create!(first_name: 'Mathieu', last_name:'Lefrançois', title:'Engineer', email: 'mathieu.lefrancois@codeboxx.biz', password: 'password', password_confirmation: 'password', ) if Rails.env.development?
+Employee.create!(first_name: 'Serge', last_name:'Savoie', title:'Engineer', email: 'serge.savoie@codeboxx.biz', password: 'password', password_confirmation: 'password', ) if Rails.env.development?
+Employee.create!(first_name: 'David', last_name:'Boutin', title:'Engineer', email: 'david.boutin@codeboxx.biz', password: 'password', password_confirmation: 'password', ) if Rails.env.development?
+Employee.create!(first_name: 'Mathieu', last_name:'Lortie', title:'Engineer', email: 'mathieu.lortie@codeboxx.biz', password: 'password', password_confirmation: 'password', ) if Rails.env.development?
+Employee.create!(first_name: 'Thomas', last_name:'Carrier', title:'Engineer', email: 'thomas.carrier@codeboxx.biz', password: 'password', password_confirmation: 'password', ) if Rails.env.development?
+User.create!(email: 'xxx@zzz.yyy', password: 'password', password_confirmation: 'password', ) if Rails.env.development?
+User.create!(email: 'aaa@bbb.ccc', password: 'password', password_confirmation: 'password', ) if Rails.env.development?
 
 10.times do 
     Lead.create!({
@@ -36,7 +47,7 @@ User.create!(email: 'nicolas.genest@codeboxx.biz', password: 'password', passwor
         Entity: [:Building, :Customer].sample,
         NumberAndStreet: Faker::Address.unique.secondary_address,
         SuiteOrAppartment: Faker::Number.unique.number(digits: 2),
-        City: Faker::Address.city_prefix,
+        City: Faker::Address.city,
         PostalCode: Faker::Address.unique.postcode,
         Country: Faker::Address.unique.country,
         Notes: 'Note'
@@ -113,14 +124,14 @@ current_column = Column.create!({
     
 
 # 1.times do
-    Elevator.create!({
+Elevator.create!({
         column_id: current_column.id,
         # ColumnId: Column.last.id,
         SerialNumber: Faker::Device.unique.serial,
         Model: [:Standard, :Premium, :Excelium].sample,
         Type: [:Residential, :Commercial, :Corporate].sample,
         Status: [:Active, :Intervention, :Inactive].sample,
-        DateOfcommisioning: Faker::Time.between(from: DateTime.now - 1095, to: DateTime.now),
+        DateOfcommissioning: Faker::Time.between(from: DateTime.now - 1095, to: DateTime.now),
         DateOfLastInspection: Faker::Time.between(from: DateTime.now - 1095, to: DateTime.now),
         CertificateOfOperations: Faker::File.unique.file_name,
         Information: Faker::Lorem.sentence,
