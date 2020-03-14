@@ -228,7 +228,6 @@ ActiveRecord::Schema.define(version: 2020_03_12_122828) do
     t.string "DepartmentInChargeOfTheElevators"
     t.text "Message"
     t.text "AttachedFile"
-    t.date "DateOfTheContactRequest"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
