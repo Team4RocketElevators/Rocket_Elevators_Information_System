@@ -18,7 +18,104 @@
             if (value === "FR") document.location.href = link;
             else return;
         }
+        var deleteArray = [];
+        function switchDisplay(elemList) {
+            for (var element = 0; element < elemList.length; element++) {
+                let elem = elemList[element];
+                if (elem.style.visibility === "visible") {
+                    elem.style.visibility = "hidden";
+                    document.getElementById("select").setAttribute("style", "background-color: rgb(209, 209, 209);");
+                    document.getElementById("selectAll").style.visibility = "hidden";
+                    elem.checked = false;
+                    deleteArray = [];
+                }
+                else {
+                    elem.style.visibility = "visible";
+                    document.getElementById("select").setAttribute("style", "background-color: rgb(171, 171, 171);");
+                    document.getElementById("selectAll").style.visibility = "visible";
+                }
+                deleteCheck(elem);
+            }
+        }
+        function selectAll() {
+            var elemList = document.getElementsByClassName("deleteCheck");
+            
+            for (var element = 0; element < elemList.length; element++) {
+                let elem = elemList[element];
+                if (document.getElementById("selectAll").textContent === "Deselect all") {
+                    elem.checked = false;
+                }
+                else {
+                    elem.checked = true;
+                }
+                deleteCheck(elem);
+            }
+            if (document.getElementById("selectAll").textContent === "Deselect all") document.getElementById("selectAll").textContent = "Select all";
+            else document.getElementById("selectAll").textContent = "Deselect all";
+        }
+        function deleteCheck(checkbox) {
+            if (checkbox.checked) deleteArray.push(checkbox);
+            else deleteArray.splice(deleteArray.indexOf(checkbox), 1);
+            if (deleteArray.length > 0) document.getElementById("deleteButton").style.visibility = "visible";
+            else document.getElementById("deleteButton").style.visibility = "hidden";
+
+            var elemList = document.getElementsByClassName("deleteCheck");
+            var checkedList = 0;
+            var uncheckedList = 0;
+            
+            for (var element = 0; element < elemList.length; element++) {
+                let elem = elemList[element];
+                if (elem.checked) checkedList++;
+                else uncheckedList++;
+            }
+
+            if (checkedList === 1) var itemItems = "item";
+            else itemItems = "items";
+
+            document.getElementById("deleteButton").innerHTML = "Delete " + checkedList + " " + itemItems;
+        }
+        function deleteForm() {
+            var confirmation = confirm("Are you sure?");
+            if (!confirmation) return false;
+            var successList = [];
+            var failedList = [];
+            for (var checkbox = 0; checkbox < deleteArray.length; checkbox++) {
+                var id = deleteArray[checkbox].getAttribute("data-id");
+                $.ajax({
+                    type: "DELETE",
+                    url: "submissionforms/" + id,
+                    headers: {
+                        "X-CSRF-Token": "<%= form_authenticity_token %>"
+                    },
+                    success: function(){
+                        successList.push(id);
+                        window.location.href = "../submissionforms#success";
+                    },
+                    error: function(xhr, status, error){
+                        failedList.push(id + ";" + xhr.responseText);
+                        window.location.href = "../submissionforms#error";
+                    }
+                });
+            }
+            if (successList.length > 0) alert("Successfully delete form(s) " + successList.join(", "));
+            if (failedList.length > 0) alert("Error deleting form(s) " + failedList.join(", "));
+        }
     </script>
+
+    <style>
+        .deleteCheck {
+            visibility: none;
+        }
+        .selectButton {
+            background-color: rgb(209, 209, 209);
+            padding: 10px;
+            border-radius: 5px;
+            float: right;
+        }
+        .selectButton:hover {
+            background-color: rgb(171, 171, 171);
+        }
+    </style>
 </head>
 <div id="header" style="background-color: rgba(0,0,0,25);" class="navbar-toggleable-md sticky header-md clearfix">
     <!-- TOP NAV -->
@@ -42,17 +139,13 @@
                                 HOME
                             </a>
                         </li>
-                        <li class="hovered"><!-- SERVICES -->
-                            <div class="dropdown dropbtn rotate">
-                                <a class="h-25" style="color: rgb(255,255,255);" href="../en#services">
-                                    SERVICES &nbsp; <i class="fa fa-angle-right"></i>
-                                </a>
-                                <div class="dropdown-content">
-                                    <a href="../en/residential-buildings.html">Residential Buildings</a>
-                                    <a href="../en/corporate-buildings.html">Corporate Buildings</a>
-                                </div>
-                            </div>
-                        </li>
+                        <li class="hovered dropdown dropbtn rotate cc_cursor"><!-- SERVICES -->
+                        <a class="h-60" style="color: rgb(255,255,255);" href="../en#services">SERVICES &nbsp;<i class="fa fa-angle-right" aria-hidden="true"></i></a>
+                        <div class="dropdown-content w-200">
+                            <a href="../en/residential-buildings">Residential Buildings</a>
+                            <a href="../en/corporate-buildings">Corporate Buildings</a>
+                        </div>
+                    </li>
                         <li class="hovered"><!-- AWARDS -->
                             <a style="color: rgb(255,255,255);" href="../en#awards">
                                 AWARDS
@@ -73,6 +166,14 @@
                                 CONTACT
                             </a>
                         </li>
+                        <li class="hovered"><!-- LOGIN --> 
+                            <a style="color: rgb(255,255,255);" href="../employees/sign_in">LOGIN</a>
+                        </li>
+                        <li class="hovered"><!-- EMPLOYEES -->
+                            <a style="color: rgb(255,255,255);" href="../admin">
+                             EMPLOYEES
+                            </a>
+                        </li>
                     </ul>
 
                 </nav>
@@ -82,10 +183,140 @@
     </header>
   <!-- /Top Nav -->
 </div>
+<div class="h-50"></div>
 <h1 align="center"><%= @title %></h1>
 <title><%= @page_title %></title>
-
-<div class="h-150"></div>
-
-        <button align="center" class="btn btn-default center">New Form</button>
+<h3 align="center">Your saved forms:<br></h3>
+<% if Form.all.length > 0 %>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm" style="float: right;">
+                <button id="selectAll" class="selectButton" style="visibility: hidden;" onclick="selectAll();">Select all</button>
+                <button id="select" class="selectButton" onclick="switchDisplay(document.getElementsByClassName('deleteCheck'));">Select </button>
+            </div>
+        </div>
+    </div>
+    <div style="padding: 75px; width: 1475px; display: inline-block;" align="center">
+        <div class="row">
+            <% @forms.each_slice(5).to_a.each do |i|%>
+                <div id="formList" class="col-sm-1" style="padding: 10px;">
+                    <% i.each do |form| %>
+                        <% @form = Form.find(form.id) %>
+                        <% if @form.name === "" %>
+                            <% @form.name = "Form #" + @form.id.to_s %>
+                        <% end %>
+                        <% if @form.name.length() > 25 %>
+                            <% @form.name = @form.name.slice(0,25) + "..." %>
+                        <% end %>
+                        <% title = @form.name + " (ID: " + @form.id.to_s + ")
+" %>
+                        <% if @form.name.length() > 8 %>
+                            <% @form.name = @form.name.slice(0, 6) + "..." %>
+                        <% end %>
+                        <% title += form.updated_at.in_time_zone("America/New_York").to_s.gsub(/ -0400/, "").gsub(/-/, "/") %>
+                        <input type="checkbox" data-id="<%= @form.id.to_s %>" onchange="deleteCheck(this);" style="display: inline; visibility: hidden;" class="deleteCheck"></input> <%= button_to @form.name, "/submissionforms/" + form.id.to_s, :class => "btn btn-flat form-link-button", :title => title, :method => "get", :style => "display: inline-block; white-space: pre; padding: 10px; width: 75px; font-size: 13px;", form: {:style => "display: inline;"} %><br>
+                    <% end %>
+                </div>
+            <% end %>
+        </div>
+    </div>
+<% else %>
+    <p align="center" style="font-size: 20px; color: rgb(178,178,178);">You don't have any saved forms!<br>Click the "New form" button below to get started</p>
+<% end %><br>
+<div class="container">
+    <div class="row">
+        <div class="col-sm w-1500">
+            <div style="text-align: center;">
+                <button onclick='window.location.href ="./submissionforms/new"' class="btn btn-primary">New form</button>
+            </div>
+            <button id="deleteButton" style="background-color: #fa3628; padding: 10px; border-color: black; border-radius: 5px; float: right; display: inline; visibility: hidden;" onclick="deleteForm();">
+                <img width="25px" src="https://cdn2.iconfinder.com/data/icons/finance-2-25/48/68-512.png"/> Delete
+            </button>
+        </div>
+    </div>
+</div>
 </a>
+
+<div class="h-50"></div>
+
+<div class="h-100 alert" id="requestCallback" style="visibility: hidden;" align="center" >
+    <strong><p style="padding: 25px; font-size: 20px; color: black;" id="requestCallbackMessage"></p></strong>
+</div>
+
+<div class="h-100"></div>
+
+<section id="footer">
+    <div class="container h-350">
+        <div class="row">
+            <div class="col-md-3">
+                <!-- Footer Logo -->
+                <img class="footer-logo" src="../assets/R2.png" alt="Rocket Elevators logo"
+                    width="250" />
+
+                <!-- Contact Address -->
+                <address>
+                    <ul class="list-unstyled">
+                        <li class="footer-sprite address">
+                            <a target="_blank" href="https://www.google.com/maps/place/725+Boulevard+Lebourgneuf,+Qu%C3%A9bec,+QC+G2J+1S1/@46.8428399,-71.2818835,17z/data=!3m1!4b1!4m5!3m4!1s0x4cb897ddc2cec043:0xd450d4d0da014cc8!8m2!3d46.8428399!4d-71.2796948">725 Boulevard Lebourgneuf, Québec, QC G2J 0C4</a><br>
+                        </li>
+                        <li class="footer-sprite phone">
+                            Phone: <a href="tel:581-701-0303">(581) 701-0303</a>
+                        </li>
+                        <li class="footer-sprite email">
+                            <a href="mailto:info@codeboxx.biz">info@codeboxx.biz</a>
+                        </li>
+                    </ul>
+                </address>
+                <!-- /Contact Address -->
+
+            </div>
+
+            <div class="col-md-2">
+
+                <!-- Links -->
+                <h4 class="letter-spacing-1">EXPLORE ROCKET ELEVATORS</h4>
+                <ul class="footer-links list-unstyled">
+                    <li><a href="../en">Home</a></li>
+                    <li><a href="../en#services">Our Services</a></li>
+                    <li><a href="../en#clients">Our Clients</a></li>
+                    <li><a href="../en#contact">Contact Us</a></li>
+                </ul>
+                <!-- /Links -->
+
+            </div>
+        </div>
+    </div>
+    <div class="copyright">
+        <div class="container">
+            &copy; All Rights Reserved, Rocket Elevators LTD
+        </div>
+    </div>
+    </div>
+</section>
+
+<script>
+    getUrlVars();
+    function getUrlVars() {
+        var hash = window.location.href.split("#")[1];
+        if (!hash) return;
+        if (hash != "success" && hash != "error") return window.location.href = "../submissionforms";
+        var div = document.getElementById("requestCallback");
+        var p = document.getElementById("requestCallbackMessage");
+        switch(hash){
+            case "success":
+                div.setAttribute("style", "visibility: visible;");
+                div.setAttribute("class", "alert-success");
+                p.innerHTML = "Successfully deleted form(s)";
+                break;
+            case "error":
+                div.setAttribute("style", "visibility: visible;");
+                div.setAttribute("class", "alert-danger");
+                p.innerHTML = "Error: Couldn\'t delete form(s)";
+                break;
+            default:
+                div.setAttribute("style", "visibility: hidden;");
+                window.location.href = "../submissionforms";
+                break;
+        }
+    }
+</script>

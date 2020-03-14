@@ -1,0 +1,418 @@
+<head>
+    
+    <title><%= @page_title %></title>
+    <meta name="description" content="Rocket Elevators - Price Estimate Form" />
+    <meta name="Author" content="Isaac Laquerre [www.codeboxx.biz]" />
+	
+    <style>
+        .field_with_errors {
+            background-color: #F8D7DA;
+        }
+    </style>
+
+    <script lang="javascript">
+        function insertAfter(element, referenceNode) {
+            referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
+        }
+        function checkLength(elem) {
+            if (elem.value.length < 1) elem.setAttribute("placeholder", "Form #<%= @form.id.to_s %>")
+            if (elem.value.length > 100) {
+                document.getElementById("name").value = "";
+                if (document.getElementById("charMaxExceeded")) return;
+                var newDiv = document.createElement("div");
+                newDiv.appendChild(document.createTextNode("Form name cannot exceed 100 characters"))
+                document.getElementById("nameParent").appendChild(newDiv);
+                newDiv.setAttribute("align", "center");
+                newDiv.setAttribute("id", "charMaxExceeded")
+                newDiv.setAttribute("style", "background-color:rgba(255,51,51,0.2); font-size: 15px; text-align: center;");
+            }
+        }
+        function numberWithCommas(x) {
+            return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+        }
+        function inputs(value) {
+            var values = [
+                "residential",
+                "commercial",
+                "corporate",
+                "hybrid"
+            ];
+            if (value === "empty") {
+                for (i in values) {
+                    document.getElementById(values[i]).style.display = "none";
+                    document.getElementById(values[i] + "Div").style.display = "none";
+                }
+            } else {
+                for (i in values) {
+                    if (values[i] === value) continue;
+                    document.getElementById(values[i]).style.display = "none";
+                    document.getElementById(values[i] + "Div").style.display = "none";
+                }
+                document.getElementById(value).style.display = "block";
+                document.getElementById(value + "Div").style.display = "inline";
+                document.getElementById(value + "Div").setAttribute("required", "");
+            }
+            document.getElementById("recommendedShafts").value = "";
+            document.getElementById("priceUnit").value = "$0";
+            document.getElementById("costInstallations").value = "$0";
+            document.getElementById("costTotal").value = "$0";
+        }
+        function setPrices() {
+            var values = [];
+            var formselect = document.getElementById("buildingSelect");
+            var buildingType = formselect.options[formselect.selectedIndex].value;
+            var buildingLetter = buildingType.toUpperCase().slice(0, 3);
+            for (i in document.getElementsByName("form[quality]")) {
+                if (document.getElementsByName("form[quality]")[i].checked) values.push(document.getElementsByName("form[quality]")[i].value);
+            }
+            var value = values[0];
+            if (value === "standard") {
+                var result = 7565;
+                var fee = 7565 * 0.1;
+            } else if (value === "premium") {
+                result = 12345;
+                fee = 12345 * 0.13;
+            } else if (value === "excelium") {
+                result = 15400;
+                fee = 15400 * 0.16;
+            } else return;
+            document.getElementById("priceUnit").value = "$" + numberWithCommas(result.toFixed(2));
+            document.getElementById("costInstallations").value = "$" + numberWithCommas(fee.toFixed(2));
+            switch (buildingType) {
+                case "commercial":
+                    if (parseInt(document.getElementById("elevatorsNbr" + buildingLetter).value) === 0) fee = 0;
+                    var priceTotal = numberWithCommas((((result * parseInt(document.getElementById("elevatorsNbr" + buildingLetter).value))) + fee).toFixed(2)).replace(/NaN/g, "0");
+                    document.getElementById("costTotal").value = "$" + priceTotal;
+                    break;
+                case "residential":
+                    var recommendedShafts = parseInt(document.getElementById("recommendedShafts").value);
+                    var priceTotal = numberWithCommas((recommendedShafts * result) + fee);
+                    if (recommendedShafts === 0) priceTotal = 0;
+                    document.getElementById("costTotal").value = "$" + priceTotal;
+                    break;
+                case "corporate":
+                case "hybrid":
+                    var buildingLetter = buildingType.toUpperCase().slice(0, 3);
+                    var maxOccupants = parseInt(document.getElementById("occupantsPerFloor" + buildingLetter).value);
+                    var floorsNbr = parseInt(document.getElementById("floorsNbr" + buildingLetter).value);
+                    var totalOccupantsPerFloor = maxOccupants * floorsNbr;
+                    var totalShafts = Math.floor(totalOccupantsPerFloor / 1000);
+                    var basementsNbr = parseInt(document.getElementById("basementsNbr" + buildingLetter).value);
+                    var totalStories = floorsNbr + basementsNbr;
+                    var elevatorCollumns = Math.floor(totalStories / 20);
+                    if (elevatorCollumns < 1) elevatorCollumns = 1;
+                    var totalElevators = Math.round(totalShafts / elevatorCollumns);
+                    
+                    var priceTotal = numberWithCommas(((result * totalElevators) + fee).toFixed(2))
+                    if (totalElevators === 0) priceTotal = 0;
+                    document.getElementById("costTotal").value = "$" + priceTotal.toString().replace(/NaN/g, "0");
+                    break;
+                    break;
+                default:
+                    if (window.location.href.includes("prefill=")) {
+                        var prefill = window.location.href.split("prefill=")[1];
+                        var formselect = document.getElementById("buildingSelect");
+                        formselect.options[formselect.selectedIndex].value = prefill.toLowerCase();
+                        setPrices();
+                    }
+                    break;
+            }
+        }
+        function setRecommendedShafts() {
+            var values = [];
+            var formselect = document.getElementById("buildingSelect");
+            var buildingType = formselect.options[formselect.selectedIndex].value;
+            switch (buildingType) {
+                case "commercial":
+                    var formselect = document.getElementById("buildingSelect");
+                    var buildingType = formselect.options[formselect.selectedIndex].value;
+                    var buildingLetter = buildingType.toUpperCase().slice(0, 3);
+                   var elevatorNbr = document.getElementById("elevatorsNbr" + buildingLetter).value;
+                    document.getElementById("recommendedShafts").value = elevatorNbr;
+                    break;
+                case "residential":
+                      var appartmentsNbr = parseInt(document.getElementById("appartmentsNbrRES").value);
+                    var floorsNbr = parseInt(document.getElementById("floorsNbrRES").value) || 1;
+                     var basementsNbr = parseInt(document.getElementById("basementsNbrRES").value) || 0;
+                    var shafts = Math.ceil(Math.ceil(appartmentsNbr / floorsNbr) / 6);
+                    if (floorsNbr > 20) {
+                        shafts = shafts * 2;
+                        var times = Math.ceil(floorsNbr / 20) - 1;
+                        if (times > 0) {
+                            for (var i = 0; i != times; i++) {
+                                shafts++;
+                            }
+                        }
+                    }
+                    if (floorsNbr < 2 && basementsNbr < 1) document.getElementById("recommendedShafts").value = 0;
+                    else document.getElementById("recommendedShafts").value = Math.ceil(shafts);
+                    break;
+                case "corporate":
+                case "hybrid":
+                    var buildingLetter = buildingType.toUpperCase().slice(0, 3);
+                    var maxOccupants = parseInt(document.getElementById("occupantsPerFloor" + buildingLetter).value);
+                    var floorsNbr = parseInt(document.getElementById("floorsNbr" + buildingLetter).value);
+                    var totalOccupantsPerFloor = maxOccupants * floorsNbr;
+                    var totalShafts = Math.floor(totalOccupantsPerFloor / 1000);
+                    var basementsNbr = parseInt(document.getElementById("basementsNbr" + buildingLetter).value);
+                    var totalStories = floorsNbr + basementsNbr;
+                    var elevatorCollumns = Math.floor(totalStories / 20);
+                    if (elevatorCollumns < 1) elevatorCollumns = 1;
+                    var totalElevators = Math.round(totalShafts / elevatorCollumns);
+
+                    if (isNaN(totalElevators) || isNaN(totalShafts)) return;
+                    else {
+                        document.getElementById("recommendedShafts").value = Math.ceil(totalShafts);
+                        document.getElementById("recommendedShafts").value = Math.ceil(totalElevators);
+                    }
+                    if (floorsNbr < 2 && basementsNbr < 1) document.getElementById("recommendedShafts").value = 0;
+                    break;
+                default:
+                    if (window.location.href.includes("prefill=")) {
+                        var prefill = window.location.href.split("prefill=")[1];
+                        var formselect = document.getElementById("buildingSelect")
+                        formselect.options[formselect.selectedIndex].value = prefill.toLowerCase();
+                        setRecommendedShafts();
+                    }
+                    break;
+            }
+        }
+        function to24H(formField) {
+            if (formField.value > 24) document.getElementById("busyHoursNbrHYB").value = 24
+        }
+    </script>
+        <script>
+			function switchLanguage(value) {
+                document.cookie = value;
+                var link = '../formulairesdesoumission/new';
+                if (window.location.href.indexOf("prefill") > -1) {
+                    var prefill = window.location.href.split("prefill=")[1];
+                    if (prefill === "Residential") link += "?prefill=Residentiel";
+                    else if (prefill === "Commercial") link += "?prefill=Commercial";
+                    else if (prefill === "Corporate") link += "?prefill=Corporatif";
+                    else if (prefill === "Hybrid") link += "?prefill=Hybride";
+                }
+				if (value === "FR") document.location.href = link;
+				else return;
+			}
+        </script>
+</head>
+<div id="header" style="background-color: rgba(0,0,0,25);" class="navbar-toggleable-md sticky header-md clearfix">
+  <!-- TOP NAV -->
+  <header id="topNav">
+      <div class="container">
+
+          <!-- Mobile Menu Button -->
+          <button class="btn btn-mobile" data-toggle="collapse" data-target=".nav-main-collapse">
+              <i class="fa fa-bars"></i>
+          </button>
+
+          <!-- LOGO-->
+          <a class="logo float-left" href="../../en">
+              <img src="../../assets/R2.png" alt="Rocket Elevator Logo">
+          </a>
+          <div class="navbar-collapse collapse float-right nav-main-collapse submenu-dark">
+              <nav class="nav-main">
+                  <ul id="topMain" class="nav nav-pills nav-main nav-onepage">
+                      <li class="active hovered"><!-- HOME -->
+                          <a style="color: rgb(255,255,255);" href="../../en">
+                              HOME
+                          </a>
+                      </li>
+                        <li class="hovered dropdown dropbtn rotate cc_cursor"><!-- SERVICES -->
+                            <a class="h-60" style="color: rgb(255,255,255);" href="../../en#services">SERVICES &nbsp;<i class="fa fa-angle-right" aria-hidden="true"></i></a>
+                            <div class="dropdown-content w-200">
+                                <a href="../../en/residential-buildings">Residential Buildings</a>
+                                <a href="../../en/corporate-buildings">Corporate Buildings</a>
+                            </div>
+                        </li>
+                      <li class="hovered"><!-- AWARDS -->
+                          <a style="color: rgb(255,255,255);" href="../../en#awards">
+                              AWARDS
+                          </a>
+                      </li>
+                      <li class="hovered"><!-- NEWS -->
+                          <a style="color: rgb(255,255,255);" href="../../en#news">
+                              NEWS
+                          </a>
+                      </li>
+                      <li class="hovered"><!-- CLIENTS -->
+                          <a style="color: rgb(255,255,255);" href="../../en#clients">
+                              CLIENTS
+                          </a>
+                      </li>
+                      <li class="hovered"><!-- CONTACT -->
+                          <a style="color: rgb(255,255,255);" href="../../en#contact">
+                              CONTACT
+                          </a>
+                      </li>
+                      <li class="hovered"><!-- LOGIN --> 
+                          <a style="color: rgb(255,255,255);" href="../../employees/sign_in">LOGIN</a>
+                      </li>
+                      <li class="hovered"><!-- EMPLOYEES -->
+                          <a style="color: rgb(255,255,255);" href="../../admin">
+                          EMPLOYEES
+                          </a>
+                      </li>
+                  </ul>
+
+              </nav>
+          </div>
+
+      </div>
+  </header>
+<!-- /Top Nav -->
+</div>
+<div class="enable-animation">
+    <!-- wrapper -->
+    <div id="wrapper">
+
+    <%= form_for :form, url: "/submissionforms/" + @form.id.to_s, method: :patch, :html => {:id => "form"} do |f| %>
+        <% if @form.errors.any? %>
+            <% @form.errors.full_messages.each do |msg| %>
+                <div class="alert alert-danger"><%= msg %></div>
+            <% end %>
+        <% end %>
+        <p style="font-size: 35px; font-style: bold;">Price Estimation Form - #<%= @form.id.to_s %> (Edit)</p>
+        <p id="nameParent" title="Adding a name to your form
+can help you identify it" style="font-size: 25px; font-style: bold;">Rename your form: <%= f.text_field(:name, {:value => @form.name, :id => "name", :onchange => "checkLength(this);"}) %></p><br>
+        <p style="font-size: 20px; font-style: bold;">Your company name: <%= f.text_field(:companyName, {:id => "companyName", :value => @form.companyName}) %></p>
+        <p style="font-size: 20px; font-style: bold;">Your e-mail address: <%= f.text_field(:email, {:id => "email", :value => @form.email}) %></p>
+        <p style="font-size: 20px;">Please select your desired options</p>
+        <br>Select a building type<br>
+         <%= f.select(:building, options_for_select([[@form.building.capitalize(), @form.building, {:style => "display: none;"}], ["Residential", "residential", {id: "residentialOption"}], ["Commercial", "commercial", {id: "commercialOption"}], ["Corporate", "corporate", {id: "corporateOption"}], ["Hybrid", "hybrid", {id: "hybridOption"}]], selected: @form.building.capitalize()), {}, {class: "form-select", :id => "buildingSelect", :onchange => "inputs(this.value);"}) %><br><br>
+        <img class="center" id="residential" src="../../assets/residentialBuilding.jpeg"
+            alt="Residential Building" width="400">
+        <img class="center" id="commercial" src="../../assets/commercialBuilding.jpeg"
+            alt="Commercial Building" width="400">
+        <img class="center" id="corporate" src="../../assets/corporateBuilding.jpeg"
+            alt="Corporate Building" width="400">
+        <img class="center" id="hybrid" src="../../assets/hybridBuilding.jpeg" alt="Hybrid Building"
+            width="400">
+        <div id="residentialDiv">
+            Number of appartments: <%= f.number_field(:appartmentsNbrRES, {min: 0, step: 1, placeholder: "0", :id => "appartmentsNbrRES", :oninput => "this.value = Math.abs(this.value)", :onchange => 'setRecommendedShafts(), setPrices()'}) %><br>
+            Number of floors: <%= f.number_field(:floorsNbrRES, {min: 0, step: 1, placeholder: "0", :id => "floorsNbrRES", :oninput => "this.value = Math.abs(this.value)", :onchange => 'setRecommendedShafts(), setPrices()'}) %><br>
+            Number of basements: <%= f.number_field(:basementsNbrRES, {min: 0, step: 1, placeholder: "0", :id => "basementsNbrRES", :oninput => "this.value = Math.abs(this.value)", :onchange => 'setRecommendedShafts(), setPrices()'}) %><br>
+        </div>
+        <div id="commercialDiv">
+            Number of floors: <%= f.number_field(:floorsNbrCOM, {min: 0, step: 1, placeholder: "0", :id => "floorsNbrCOM", :oninput => "this.value = Math.abs(this.value)", :onchange => 'setRecommendedShafts(), setPrices()'}) %><br>
+            Number of basements: <%= f.number_field(:basementsNbrCOM, {min: 0, step: 1, placeholder: "0", :id => "basementsNbrCOM", :oninput => "this.value = Math.abs(this.value)", :onchange => 'setRecommendedShafts(), setPrices()'}) %><br>
+            Number of separate businesses: <%= f.number_field(:seperateBusinessesNbrCOM, {min: 0, step: 1, placeholder: "0", :id => "seperateBusinessesNbrCOM", :oninput => "this.value = Math.abs(this.value)", :onchange => 'setRecommendedShafts(), setPrices()'}) %><br>
+             Number of available parking spaces: <%= f.number_field(:parkingsNbrCOM, {min: 0, step: 1, placeholder: "0", :id => "parkingsNbrCOM", :oninput => "this.value = Math.abs(this.value)", :onchange => 'setRecommendedShafts(), setPrices()'}) %><br>
+            Number of elevator shafts: <%= f.number_field(:elevatorsNbrCOM, {min: 0, step: 1, placeholder: "0", :id => "elevatorsNbrCOM", :oninput => "this.value = Math.abs(this.value)", :onchange => 'setRecommendedShafts(), setPrices()'}) %><br>
+        </div>
+        <div id="corporateDiv">
+            Number of floors: <%= f.number_field(:floorsNbrCOR, {min: 0, step: 1, placeholder: "0", :id => "floorsNbrCOR", :oninput => "this.value = Math.abs(this.value)", :onchange => 'setRecommendedShafts(), setPrices()'}) %><br>
+            Number of basements: <%= f.number_field(:basementsNbrCOR, {min: 0, step: 1, placeholder: "0", :id => "basementsNbrCOR", :oninput => "this.value = Math.abs(this.value)", :onchange => 'setRecommendedShafts(), setPrices()'}) %><br>
+            Number of available parking spaces: <%= f.number_field(:parkingsNbrCOR, {min: 0, step: 1, placeholder: "0", :id => "parkingsNbrCOR", :oninput => "this.value = Math.abs(this.value)", :onchange => 'setRecommendedShafts(), setPrices()'}) %><br>
+            Number of separate rental companies: <%= f.number_field(:seperateRentalCompaniesNbrCOR, {min: 0, step: 1, placeholder: "0", :id => "seperateRentalCompaniesNbrCOR", :oninput => "this.value = Math.abs(this.value)", :onchange => 'setRecommendedShafts(), setPrices()'}) %><br>
+            Maximum amount of occupants per floor: <%= f.number_field(:occupantsPerFloorCOR, {min: 0, step: 1, placeholder: "0", :id => "occupantsPerFloorCOR", :oninput => "this.value = Math.abs(this.value)", :onchange => 'setRecommendedShafts(), setPrices()'}) %><br>
+        </div>
+        <div id="hybridDiv">
+            Number of floors: <%= f.number_field(:nbrFloors, {min: 0, step: 1, placeholder: "0", :id => "floorsNbrHYB", :oninput => "this.value = Math.abs(this.value)", :onchange => 'setRecommendedShafts(), setPrices()'}) %><br>
+            Number of basements:<%= f.number_field(:nbrBasements, {min: 0, step: 1, placeholder: "0", :id => "basementsNbrHYB", :oninput => "this.value = Math.abs(this.value)", :onchange => 'setRecommendedShafts(), setPrices()'}) %><br>
+            Number of available parking spaces: <%= f.number_field(:availableParkingSpaces, {min: 0, step: 1, placeholder: "0", :id => "parkingsNbrHYB", :oninput => "this.value = Math.abs(this.value)", :onchange => 'setRecommendedShafts(), setPrices()'}) %><br>
+            Number of separate businesses: <%= f.number_field(:seperateBusinesses, {min: 0, step: 1, placeholder: "0", :id => "seperateBusinessesNbrHYB", :oninput => "this.value = Math.abs(this.value)", :onchange => 'setRecommendedShafts(), setPrices()'}) %><br>
+            Maximum amount of occupants per floor: <%= f.number_field(:occupantsPerFloor, {min: 0, step: 1, placeholder: "0", :id => "occupantsPerFloorHYB", :oninput => "this.value = Math.abs(this.value)", :onchange => 'setRecommendedShafts(), setPrices()'}) %><br>
+            Active/busy hours: <%= f.number_field(:busyHours, {min: 0, max: 24, step: 1, placeholder: "0", :id => "busyHoursNbrHYB", :oninput => "this.value = Math.abs(this.value)", :onchange => 'to24H(this);'}) %><br>
+        </div>
+        <br>
+        Recommended amount of elevators: <%= f.number_field(:recommendedShafts, {min: 0, step: 1, placeholder: "0", disabled: true, :id => "recommendedShafts", :oninput => "this.value = Math.abs(this.value)", :onchange => 'setRecommendedShafts(), setPrices()'}) %><br>
+        Select an elevator quality<br>
+        <%= f.radio_button("quality", "standard", {:onchange => 'setRecommendedShafts(), setPrices()'}) %>Standard<br>
+        <%= f.radio_button("quality", "premium", {:onchange => 'setRecommendedShafts(), setPrices()'}) %>Premium<br>
+        <%= f.radio_button("quality", "excelium", {:onchange => 'setRecommendedShafts(), setPrices()'}) %>Excelium<br><br>
+
+    <div style="text-align: center;">
+        Price for 1 elevator unit: <%= f.text_field(:priceUnit, {placeholder: "0", disabled: true, :id => "priceUnit"}) %><br>
+        Installation costs: <%= f.text_field(:costInstallations, {placeholder: "0", disabled: true, :id => "costInstallations"}) %><br>
+        Total cost: <%= f.text_field(:costTotal, {placeholder: "0", disabled: true, :id => "costTotal"}) %><br>
+    </div>
+
+    <br>
+    <input type="button" onclick="window.history.back();" class="btn btn-danger h-40" align="center" value="Cancel">
+    
+    <%= f.submit "Save", class: "btn btn-primary" %>
+
+    <% end %>
+
+    <div class="h-100"></div>
+
+    <section id="footer">
+        <div class="container h-350">
+            <div class="row">
+                <div class="col-md-3">
+                    <!-- Footer Logo -->
+                    <img class="footer-logo" src="../../assets/R2.png" alt="Rocket Elevators logo"
+                        width="250" />
+
+                    <!-- Contact Address -->
+                    <address>
+                        <ul class="list-unstyled">
+                            <li class="footer-sprite address">
+                                <a target="_blank" href="https://www.google.com/maps/place/725+Boulevard+Lebourgneuf,+Qu%C3%A9bec,+QC+G2J+1S1/@46.8428399,-71.2818835,17z/data=!3m1!4b1!4m5!3m4!1s0x4cb897ddc2cec043:0xd450d4d0da014cc8!8m2!3d46.8428399!4d-71.2796948">725 Boulevard Lebourgneuf, Québec, QC G2J 0C4</a><br>
+                            </li>
+                            <li class="footer-sprite phone">
+                                Phone: <a href="tel:581-701-0303">(581) 701-0303</a>
+                            </li>
+                            <li class="footer-sprite email">
+                                <a href="mailto:info@codeboxx.biz">info@codeboxx.biz</a>
+                            </li>
+                        </ul>
+                    </address>
+                    <!-- /Contact Address -->
+
+                </div>
+
+                <div class="col-md-2">
+
+                    <!-- Links -->
+                    <h4 class="letter-spacing-1">EXPLORE ROCKET ELEVATORS</h4>
+                    <ul class="footer-links list-unstyled">
+                        <li><a href="../../en">Home</a></li>
+                        <li><a href="../../en#services">Our Services</a></li>
+                        <li><a href="../../en#clients">Our Clients</a></li>
+                        <li><a href="../../en#contact">Contact Us</a></li>
+                    </ul>
+                    <!-- /Links -->
+
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+            <div class="container">
+                &copy; All Rights Reserved, Rocket Elevators LTD
+            </div>
+        </div>
+        </div>
+    </section>
+</div>
+
+    <script lang="javascript">
+        getUrlParam("prefill", null);
+        function getUrlVars() {
+            var prefill = window.location.href.split("prefill=")[1];
+            if (!prefill) return;
+            if (prefill != "Residential" && prefill != "Commercial" && prefill != "Corporate" && prefill != "Hybrid") return;
+            document.getElementById("emptyOption").textContent = prefill;
+            document.getElementById("buildingSelect").setAttribute("style", "display: inline;");
+            document.getElementById("buildingSelect").setAttribute("value", prefill.toLowerCase());
+            document.getElementById(prefill.toLowerCase() + "Option").setAttribute("selected", "true");
+            document.getElementById(prefill.toLowerCase()).style.display = "block";
+            document.getElementById(prefill.toLowerCase() + "Div").style.display = "inline";
+        }
+        function getUrlParam(parameter, defaultvalue) {
+            var urlparameter = defaultvalue;
+            if (window.location.href.indexOf(parameter) > -1) {
+                getUrlVars();
+            }
+        }
+        var radio = "form_quality_<%= @form.quality %>";
+        document.getElementById(radio).setAttribute("checked", "");
+        var building = <%= @form.building.to_s %>;
+        inputs(building.id);
+        setRecommendedShafts();
+        setPrices();
+    </script>
+
+</body>

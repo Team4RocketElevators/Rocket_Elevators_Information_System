@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
 	<head>
 		<title>Rocket Elevators - Home</title>
@@ -45,6 +44,7 @@
 		</script>
 	</head>
 	<body class="enable-animation">
+
 		<!-- wrapper -->
 		<div id="wrapper"><div id="header" style="background-color: rgba(0,0,0,25);" class="navbar-toggleable-md sticky header-md clearfix">
 			<!-- TOP NAV -->
@@ -58,7 +58,7 @@
 		
 					<!-- Logo -->
 					<a class="logo float-left" href="./en">
-						<img src="assets/R2.png" alt="Rocket Elevator Logo">
+						<%= image_tag "R2.png" %>
 					</a>
 					<div class="navbar-collapse collapse float-right nav-main-collapse submenu-dark">
 						<nav class="nav-main">
@@ -68,15 +68,11 @@
 										HOME
 									</a>
 								</li>
-								<li class="hovered"><!-- SERVICES -->
-									<div class="dropdown dropbtn rotate">
-										<a class="h-25" style="color: rgb(255,255,255);" href="./en#services">
-											SERVICES &nbsp; <i class="fa fa-angle-right"></i>
-										</a>
-										<div class="dropdown-content">
-											<a href="./en/residential-buildings">Residential Buildings</a>
-											<a href="./en/corporate-buildings">Corporate Buildings</a>
-										</div>
+								<li class="hovered dropdown dropbtn rotate cc_cursor"><!-- SERVICES -->
+									<a class="h-60" style="color: rgb(255,255,255);" href="./en#services">SERVICES &nbsp;<i class="fa fa-angle-right" aria-hidden="true"></i></a>
+									<div class="dropdown-content w-200">
+										<a href="./en/residential-buildings">Residential Buildings</a>
+										<a href="./en/corporate-buildings">Corporate Buildings</a>
 									</div>
 								</li>
 								<li class="hovered"><!-- AWARDS -->
@@ -99,15 +95,24 @@
 										CONTACT
 									</a>
 								</li>
-								<li class="hovered"><!-- LOGIN --> 
-									<a style="color: rgb(255,255,255);" href="./employees/sign_in">LOGIN</a>
-								</li>
-								<li class="hovered"><!-- ADMIN -->
-									<a style="color: rgb(255,255,255);" href="./admin">
-										ADMIN
+
+
+								<li class="hovered"><!-- LOGIN -->
+									<a style="color: rgb(255,255,255);" href="./employees/sign_in">
+										LOGIN
 									</a>
 								</li>
-								
+								<li class="hovered"><!-- EMPLOYEES -->
+									<a style="color: rgb(255,255,255);" href="./admin">
+										EMPLOYEE
+									</a>
+								</li>																
+								<%# <li><!-- LANGUAGE SWITCHER -->
+									<select onchange="switchLanguage(this.value);" style="color: black;">
+										<option id="EN" selected>EN</option>
+										<option id="FR">FR</option>
+									</select>
+								</li> %>
 							</ul>
 		
 						</nav>
@@ -309,7 +314,7 @@
 
 					<div class="text-center">
 						<h2 class="fs-40 fw-300">Designing &amp; Building Elevators Since 1976</h2>
-						<a class="btn btn-default btn-lg" style="border-color: #0b64a0;"  target="_blank" href="./submissionforms/new">FILL A SUBMISSION FORM <i class="fa fa-angle-right"></i></a>
+						<a class="btn btn-default btn-lg" style="border-color: rgb(11,100,160); background-color: rgb(11,100,160); background-repeat: no-repeat; background-image: url("assets/firstSlide.jpeg"); background-size: cover; background-position: center center; width: 100%; height: 100%; opacity: 1; visibility: inherit;"  target="_blank" href="./submissionforms/new">FILL A SUBMISSION FORM <i class="fa fa-angle-right"></i></a>
 					</div>
 
 				</div>
@@ -976,30 +981,31 @@
 							</div><!-- /Alert Mandatory -->
 
 
-							<form action="#alert_failed" method="post" enctype="multipart/form-data">
+							<form id="form" action="/en" accept-charset="UTF-8" method="post">
+								<input name="utf8" type="hidden" value="✓">
+								<input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
 								<fieldset>
-									<input type="hidden" name="action" value="contact_send" />
 
 									<div class="row w-750">
 											<div class="col-md-4">
-												<label for="contact:name">Full Name *</label>
-												<input required type="text" placeholder="John Doe" value="" class="form-control" name="contact[name][required]" id="contact:name">
+												<label for="lead:name">Full Name *</label>
+												<input required type="text" placeholder="John Doe" value="" class="form-control" name="lead[FullNameOfTheContact]" id="lead:name">
 											</div>
 											<div class="col-md-4">
-												<label for="contact:company-name">Company Name *</label>
-												<input required type="text" placeholder="My Company" value="" class="form-control" name="contact[company-name][required]" id="contact:company-name">
+												<label for="lead:company-name">Company Name *</label>
+												<input required type="text" placeholder="My Company" value="" class="form-control" name="lead[CompanyName]" id="lead:company-name">
 											</div>
 											<div class="col-md-4">
-												<label for="contact:email">E-Mail Address *</label>
-												<input required type="email" placeholder="johndoe@example.com" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" value="" class="form-control" name="contact[email][required]" id="contact:email">
+												<label for="lead:email">E-Mail Address *</label>
+												<input required type="email" placeholder="johndoe@example.com" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" value="" class="form-control" name="lead[EMail]" id="lead:email">
 											</div>
 											<div class="col-md-4">
-												<label for="contact:phone">Phone Number</label>
-												<input type="text" placeholder="123-456-7890" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}|[0-9]{3} [0-9]{3} [0-9]{4}|[0-9]{3}[0-9]{3}[0-9]{4}" oninput="triggeredKey(this.value);" class="form-control" name="contact[phone]" id="contact:phone">
+												<label for="lead:phone">Phone Number</label>
+												<input type="text" placeholder="123-456-7890" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}|[0-9]{3} [0-9]{3} [0-9]{4}|[0-9]{3}[0-9]{3}[0-9]{4}" oninput="triggeredKey(this.value);" class="form-control" name="lead[Phone]" id="lead:phone">
 											</div>
 											<div class="col-md-4">
 												<label for="contact_department">Department</label>
-												<select class="form-control pointer" name="contact[department]">
+												<select class="form-control pointer" name="lead[DepartmentInChargeOfTheElevators]">
 													<option selected disabled hidden value="">--- Select ---</option>
 													<option value="Marketing">Marketing</option>
 													<option value="Webdesign">Webdesign</option>
@@ -1009,26 +1015,26 @@
 									</div>
 									<div class="row">
 											<div class="col-md-4">
-												<label for="contact:phone">Your Project's Name *</label>
-												<input require type="text" placeholder="My Project" class="form-control" name="contact[project-name][require]" id="contact:project-name">
+												<label for="lead:phone">Your Project's Name *</label>
+												<input require type="text" placeholder="My Project" class="form-control" name="lead[ProjectName]" id="lead:project-name">
 											</div>
 											<div class="col-md-8">
-												<label for="contact:project-description">Project Description *</label>
-												<textarea required maxlength="2500" placeholder="Max length 2 500 characters" rows="4" type="text" value="" class="form-control" name="contact[project-description][required]" id="contact:project-description"></textarea>
+												<label for="lead:project-description">Project Description *</label>
+												<textarea required maxlength="2500" placeholder="Max length 2 500 characters" rows="4" type="text" value="" class="form-control" name="lead[ProjecDescription]" id="lead:project-description"></textarea>
 											</div>
 									</div>
 									<div class="row">
 											<div class="col-md-12">
-												<label for="contact:message">Message *</label>
-												<textarea required placeholder="Max length 10 000 characters" maxlength="10000" rows="8" class="form-control" name="contact[message]" id="contact:message"></textarea>
+												<label for="lead:message">Message *</label>
+												<textarea required placeholder="Max length 10 000 characters" maxlength="10000" rows="8" class="form-control" name="lead[Message]" id="lead:message"></textarea>
 											</div>
 									</div>
 									<div class="row">
 											<div class="col-md-12">
-												<label for="contact:attachment">File Attachment</label>
+												<label for="lead:attachment">File Attachment</label>
 
 												<!-- custom file upload -->
-												<input class="custom-file-upload" type="file" id="file" name="contact[attachment]" id="contact:attachment" data-btn-text="Select a File" />
+												<input class="custom-file-upload" type="file" id="file" name="lead[AttachedFile]" id="lead:attachment" data-btn-text="Select a File" />
 												<small class="text-muted block">Max file size: 10Mb (zip/pdf/jpg/png)</small>
 
 											</div>
@@ -1116,29 +1122,26 @@
 		<!-- SCROLL TO TOP -->
 		<a title="Scroll to top" href="#top" id="toTop"></a>
 
-
 		<!-- PRELOADER -->
-		<%# <div id="preloader">
+		<div class="h-0" id="preloader">
 			<div class="inner">
 				<span class="loader"></span>
 			</div>
-		</div %>
-		><!-- /PRELOADER -->
-
-
+		</div>
+		<!-- /PRELOADER -->
+		
 		<!-- JAVASCRIPT FILES -->
-		<script>var plugin_path = 'assets/';</script>
-		<%# <script src="assets/plugins/jquery/jquery-3.3.1.min.js"></script> %>
-
-		<%# <script src="assets/js/scripts.js"></script> %>
-
-		<!-- REVOLUTION SLIDER -->
-		<%# <script src="assets/plugins/slider.revolution/js/jquery.themepunch.tools.min.js"></script>
-		<script src="assets/plugins/slider.revolution/js/jquery.themepunch.revolution.min.js"></script>
-		<script src="assets/js/view/demo.revolution_slider.js"></script> %>
-
-		<!-- PAGELEVEL SCRIPTS -->
-		<%# <script src="assets/js/contact.js"></script> %>
+		<script>var plugin_path = "../assets/plugins/"</script>
+        <script src="../assets/jquery-3.3.1.min.js"></script>
+		<script src="../assets/scripts.js"></script>
+		
+        <!-- REVOLUTION SLIDER -->
+        <script src="../assets/jquery.themepunch.tools.min.js"></script>
+        <script src="../assets/jquery.themepunch.revolution.min.js"></script>
+		<script src="/assets/demo.revolution_slider.js"></script>
+		
+        <!-- PAGELEVEL SCRIPTS -->
+		<!-- <%# <script src="assets/js/contact.js"></script> %> -->
 		
 	</body>
 </html>

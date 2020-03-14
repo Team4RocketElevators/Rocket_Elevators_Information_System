@@ -92,7 +92,6 @@
 	.open>.dropdown-toggle.btn-primary,
 	.show>.btn-primary.dropdown-toggle,
 	.btn-primary,
-	.btn-primary:hover,
 	.btn-primary:active,
 	.btn-primary:focus,
 	.pagination>.active>a,
@@ -122,6 +121,10 @@
 		background-color:#1980B6;
 	}
 	
+.btn-primary:hover {
+	background-color:rgb(24, 113, 161);
+}
+
 	/* !important required */
 	#music-player .mejs-controls .mejs-time-rail .mejs-time-current,
 	#music-player .mejs-controls .mejs-horizontal-volume-slider .mejs-horizontal-volume-current,
