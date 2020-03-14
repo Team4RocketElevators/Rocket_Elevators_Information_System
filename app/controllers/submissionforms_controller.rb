@@ -50,10 +50,10 @@ class SubmissionformsController < ApplicationController
         @form = Form.find(params[:id])
 
         @form.destroy
-        redirect_to "/submissionforms/"
+        redirect_to "/submissionforms#success"
     end
 
     private def form_params
-        params.require(:form).permit(:name, :building, :appartmentsNbrRES, :floorsNbrRES, :floorsNbrCOM, :floorsNbrCOR, :basementsNbrRES, :basementsNbrCOM, :basementsNbrCOR, :seperateBusinessesNbrCOM, :parkingsNbrCOM, :parkingsNbrCOR, :elevatorsNbrCOM, :seperateRentalCompaniesNbrCOR, :occupantsPerFloorCOR, :occupantsPerFloor, :nbrFloors, :nbrBasements, :availableParkingSpaces, :seperateBusinesses, :busyHours, :recommendedShafts, :quality, :priceUnit, :costInstallations, :costTotal, :timestamps)
+        params.require(:form).permit(:name, :companyName, :email, :building, :appartmentsNbrRES, :floorsNbrRES, :floorsNbrCOM, :floorsNbrCOR, :basementsNbrRES, :basementsNbrCOM, :basementsNbrCOR, :seperateBusinessesNbrCOM, :parkingsNbrCOM, :parkingsNbrCOR, :elevatorsNbrCOM, :seperateRentalCompaniesNbrCOR, :occupantsPerFloorCOR, :occupantsPerFloor, :nbrFloors, :nbrBasements, :availableParkingSpaces, :seperateBusinesses, :busyHours, :recommendedShafts, :quality, :priceUnit, :costInstallations, :costTotal, :timestamps)
     end
 end

@@ -338,9 +338,9 @@
                         <li class="hovered"><!-- LOGIN --> 
                             <a style="color: rgb(255,255,255);" href="../employees/sign_in">LOGIN</a>
                         </li>
-                        <li class="hovered"><!-- ADMIN -->
+                        <li class="hovered"><!-- EMPLOYEES -->
                             <a style="color: rgb(255,255,255);" href="../admin">
-                                ADMIN
+                             EMPLOYEES
                             </a>
                         </li>
                     </ul>
@@ -360,7 +360,9 @@
             <% end %>
         Price Estimation Form - #<%= @form.id %> (<%= @form.name %>)</h1>
         <h2 style="font-size: 20px; background-color: #95F897;">Your form has been saved <i style="color: green;">✓</i> - <%= @form.updated_at.in_time_zone("America/New_York").to_s.gsub(/ -0400/, "").gsub(/-/, "/") %></h2>
-        <a href="../submissionforms"><button class="btn btn-default">View all your saved forms</button></a><br>
+        <a href="../submissionforms"><button class="btn btn-default">View all your saved forms</button></a><br><br>
+        <p style="font-size: 20px; font-style: bold;">Your company name: <%= text_field_tag(:companyName, @form.companyName, {:id => "companyName", disabled: true}) %></p>
+        <p style="font-size: 20px; font-style: bold;">Your e-mail address: <%= text_field_tag(:email, @form.email, {:id => "email", disabled: true}) %></p>
         <br><p>Selected building type:</p>
         <%= select_tag(:building, options_for_select([[@form.building.capitalize(), @form.building]]), {disabled: true, :class => "form-select"}) %><br><br>
         <img class="center" id="residential" src="../assets/residentialBuilding.jpeg"
