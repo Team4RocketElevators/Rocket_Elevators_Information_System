@@ -12,6 +12,7 @@
 
 ActiveRecord::Schema.define(version: 2020_03_12_122828) do
 
+
   create_table "addresses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "TypeOfAddress"
     t.string "Status"
@@ -156,7 +157,7 @@ ActiveRecord::Schema.define(version: 2020_03_12_122828) do
     t.string "Model"
     t.string "Type"
     t.string "Status"
-    t.date "DateOfcommisioning"
+    t.date "DateOfcommissioning"
     t.date "DateOfLastInspection"
     t.text "CertificateOfOperations"
     t.text "Information"
@@ -166,10 +167,13 @@ ActiveRecord::Schema.define(version: 2020_03_12_122828) do
     t.bigint "column_id"
     t.index ["column_id"], name: "index_elevators_on_column_id"
   end
-  
+
   create_table "employees", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
+    t.string "first_name", default: "", null: false
+    t.string "last_name", default: "", null: false
+    t.string "title", default: "", null: false
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
@@ -181,6 +185,8 @@ ActiveRecord::Schema.define(version: 2020_03_12_122828) do
   end
 
   create_table "forms", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "company_name"
+    t.string "email"
     t.string "building"
     t.integer "appartmentsNbrRES"
     t.integer "floorsNbrRES"
@@ -216,7 +222,7 @@ ActiveRecord::Schema.define(version: 2020_03_12_122828) do
   create_table "leads", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "FullNameOfTheContact"
     t.string "CompanyName"
-    t.string "EMail"
+    t.string "Email"
     t.integer "Phone"
     t.string "ProjectName"
     t.text "ProjecDescription"
@@ -249,4 +255,5 @@ ActiveRecord::Schema.define(version: 2020_03_12_122828) do
   add_foreign_key "customers", "addresses"
   add_foreign_key "customers", "users", column: "users_id"
   add_foreign_key "elevators", "columns"
+
 end
