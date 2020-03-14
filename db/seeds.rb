@@ -30,7 +30,7 @@ User.create!(email: 'aaa@bbb.ccc', password: 'password', password_confirmation: 
         DepartmentInChargeOfTheElevators: Faker::Commerce.unique.department,
         Message: Faker::Lorem.unique.paragraph,
         AttachedFile: Faker::File.unique.file_name,
-        #DateOfTheContactRequest: Faker::Time.between(from: DateTime.now - 1095, to: DateTime.now)
+        DateOfTheContactRequest: Faker::Time.between(from: DateTime.now - 1095, to: DateTime.now)
     })
 
 
