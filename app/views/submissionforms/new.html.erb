@@ -272,7 +272,7 @@
         <p title="Adding a name to your form
 can help you identify it" style="font-size: 25px; font-style: bold;">Name your form: <%= f.text_field(:name, {placeholder: latestID, :id => "name", :value => ""}) %></p><br>
         <p style="font-size: 20px; font-style: bold;">Your company name: <%= f.text_field(:companyName, {placeholder: "My Company", :id => "companyName", :value => ""}) %></p>
-        <p style="font-size: 20px; font-style: bold;">Your e-mail address: <%= f.text_field(:email, {placeholder: "johndoe@example.com", :id => "email", :value => ""}) %></p>
+        <p style="font-size: 20px; font-style: bold;">Your e-mail address: <%= f.text_field(:email, {placeholder: "johndoe@example.com", :id => "email", :value => "", :pattern => "[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"}) %></p>
         <p style="font-size: 20px;">Please select your desired options</p>
         <br>Select a building type<br>
          <%= f.select(:building, options_for_select([["-", "empty", {id: "emptyOption", class: 'hidden'}], ["Residential", "residential", {id: "residentialOption"}], ["Commercial", "commercial", {id: "commercialOption"}], ["Corporate", "corporate", {id: "corporateOption"}], ["Hybrid", "hybrid", {id: "hybridOption"}]], selected: "-", disabled: "-"), {}, {class: "form-select", :id => "buildingSelect", :onchange => "inputs(this.value);"}) %><br><br>
