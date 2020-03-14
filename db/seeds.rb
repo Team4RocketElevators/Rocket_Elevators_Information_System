@@ -127,4 +127,4 @@ current_column = Column.create!({
         Notes: Faker::Lorem.paragraph
     })
 end
-puts('seeed ended')
+puts('seed ended')
