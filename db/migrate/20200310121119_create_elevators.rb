@@ -9,7 +9,7 @@ class CreateElevators < ActiveRecord::Migration[5.2]
       t.string :Model
       t.string :Type
       t.string :Status
-      t.date :DateOfcommisioning
+      t.date :DateOfcommissioning
       t.date :DateOfLastInspection
       t.text :CertificateOfOperations
       t.text :Information
