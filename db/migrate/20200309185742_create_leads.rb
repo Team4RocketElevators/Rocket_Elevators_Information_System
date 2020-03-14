@@ -10,6 +10,7 @@ class CreateLeads < ActiveRecord::Migration[5.2]
       t.string :DepartmentInChargeOfTheElevators
       t.text :Message
       t.text :AttachedFile
+      t.date :DateOfTheContactRequest
 
       t.timestamps null: false
     end
