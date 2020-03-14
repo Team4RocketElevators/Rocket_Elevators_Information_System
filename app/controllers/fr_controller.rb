@@ -1,2 +1,0 @@
-class FrController < ApplicationController
-end

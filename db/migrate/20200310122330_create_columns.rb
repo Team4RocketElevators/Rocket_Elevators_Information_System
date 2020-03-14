@@ -1,7 +1,8 @@
 class CreateColumns < ActiveRecord::Migration[5.2]
   def change
     create_table :columns do |t|
-      t.integer :BatteryId
+      t.references :batteri, foreign_key: true
+
       t.string :Type
       t.integer :NumberOfFloors
       t.string :Status
