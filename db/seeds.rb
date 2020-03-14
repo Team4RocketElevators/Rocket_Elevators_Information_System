@@ -5,6 +5,7 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
 Employee.create!(first_name: 'Nicolas', last_name:'Genest', title:'Comm Rep', email: 'nicolas.genest@codeboxx.biz', password: 'password', password_confirmation: 'password', ) if Rails.env.development?
 Employee.create!(first_name: 'Nadya', last_name:'Fortier', title:'Director', email: 'nadya.fortier@codeboxx.biz', password: 'password', password_confirmation: 'password', ) if Rails.env.development?
 Employee.create!(first_name: 'Martin', last_name:'Chantal', title:'Director Assistant', email: 'martin.chantal@codeboxx.biz', password: 'password', password_confirmation: 'password', ) if Rails.env.development?
@@ -22,7 +23,7 @@ User.create!(email: 'aaa@bbb.ccc', password: 'password', password_confirmation: 
     Lead.create!({
         FullNameOfTheContact: Faker::Name.unique.name,
         CompanyName: Faker::Company.unique.name,
-        EMail: Faker::Internet.unique.email,
+        Email: Faker::Internet.unique.email,
         Phone: Faker::PhoneNumber.unique.phone_number,
         ProjectName: Faker::Lorem.unique.sentence(word_count: 2),
         ProjecDescription: Faker::Lorem.unique.sentence,
@@ -32,15 +33,36 @@ User.create!(email: 'aaa@bbb.ccc', password: 'password', password_confirmation: 
         DateOfTheContactRequest: Faker::Time.between(from: DateTime.now - 1095, to: DateTime.now)
     })
 
-    # end
 
-    # 1.times do
-    #     User.create([{
-    #         email: Faker::Internet.unique.email,
-    #     }])
-    #     end
+    Form.create!({
+        building: [:Residential, :Commercial, :Corporate, :Hybrid].sample,
+        appartmentsNbrRES: Faker::Number.between(from: 10, to: 150),
+        floorsNbrRES: Faker::Number.between(from: 5, to: 80),
+        floorsNbrCOM: Faker::Number.between(from: 10, to: 100),
+        floorsNbrCOR: Faker::Number.between(from: 10, to: 100),
+        basementsNbrRES: Faker::Number.between(from: 2, to: 5),
+        basementsNbrCOM: Faker::Number.between(from: 3, to: 10),
+        basementsNbrCOR: Faker::Number.between(from: 3, to: 10),
+        seperateBusinessesNbrCOM: Faker::Number.between(from: 10, to: 50),
+        parkingsNbrCOM: Faker::Number.between(from: 50, to: 250),
+        parkingsNbrCOR: Faker::Number.between(from: 50, to: 250),
+        elevatorsNbrCOM: Faker::Number.between(from: 4, to: 20),
+        seperateRentalCompaniesNbrCOR: Faker::Number.between(from: 5, to: 10),
+        occupantsPerFloorCOR: Faker::Number.between(from: 20, to: 150),
+        occupantsPerFloor: Faker::Number.between(from: 20, to: 150),
+        nbrFloors: Faker::Number.between(from: 5, to: 100),
+        nbrBasements: Faker::Number.between(from: 3, to: 10),
+        availableParkingSpaces: Faker::Number.between(from: 10, to: 150),
+        seperateBusinesses: Faker::Number.between(from: 10, to: 50),
+        busyHours: Faker::Number.between(from: 8, to: 24),
+        recommendedShafts: Faker::Number.between(from: 1, to: 10),
+        quality: [:Standard, :Premium, :Excelium].sample,
+        priceUnit: Faker::Number.between(from: 100000, to: 1000000),
+        costInstallations: Faker::Number.between(from: 5000, to: 50000),
+        costTotal: Faker::Number.between(from: 100000, to: 1500000),
+        name: Faker::Name.unique.name
+    })
 
-    # 1.times do
     current_address = Address.create!({
         TypeOfAddress: [:Billing, :Shipping, :Home, :Business].sample,
         Status: [:Active, :Inactive].sample,
@@ -52,9 +74,7 @@ User.create!(email: 'aaa@bbb.ccc', password: 'password', password_confirmation: 
         Country: Faker::Address.unique.country,
         Notes: 'Note'
     })
-#     end
 
-# 1.times do
     current_customer = Customer.create!({
         users_id: User.order('rand()').limit(1).first.id,
         address_id: current_address.id,
@@ -69,9 +89,7 @@ User.create!(email: 'aaa@bbb.ccc', password: 'password', password_confirmation: 
         TechnicalAuthorityPhoneNumber: Faker::PhoneNumber.unique.phone_number,
         TechnicalAuthorityEmail: Faker::Internet.unique.email
     })
-#     end
 
-# 1.times do
     current_building = Building.create!({
         customer_id: current_customer.id,
         address_id: current_address.id,
@@ -84,18 +102,13 @@ User.create!(email: 'aaa@bbb.ccc', password: 'password', password_confirmation: 
         TechnicalContactEMail: Faker::Internet.unique.email,
         TechnicalContactPhoneNumber: Faker::PhoneNumber.unique.phone_number,
     })
-# end
 
-
-    # 1.times do
     BuildingDetail.create({
         building_id: current_building.id,
         Key: ::Faker::Lorem.unique.word, 
         Value: :: Faker::Lorem.unique.word
     })
-    #     end
 
-# 1.times do
     current_battery = Batteri.create!({
         building_id: current_building.id, 
         # BuildingId: Building.last.id,
@@ -108,9 +121,7 @@ User.create!(email: 'aaa@bbb.ccc', password: 'password', password_confirmation: 
         Information: 'Information',
         Notes: 'Note'
     })
-#     end
 
-# 1.times do
 current_column = Column.create!({
         batteri_id: current_battery.id,
         # BatteryId: Batteri.last.id,
@@ -120,10 +131,7 @@ current_column = Column.create!({
         Information: Faker::Lorem.sentence,
         Notes: Faker::Lorem.unique.paragraph
     })
-#     end
-    
 
-# 1.times do
 Elevator.create!({
         column_id: current_column.id,
         # ColumnId: Column.last.id,
@@ -138,4 +146,4 @@ Elevator.create!({
         Notes: Faker::Lorem.paragraph
     })
 end
-puts('seeed ended')
+puts('seed ended')

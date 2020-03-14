@@ -184,6 +184,8 @@ ActiveRecord::Schema.define(version: 2020_03_12_122828) do
   end
 
   create_table "forms", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "company_name"
+    t.string "email"
     t.string "building"
     t.integer "appartmentsNbrRES"
     t.integer "floorsNbrRES"
@@ -217,7 +219,7 @@ ActiveRecord::Schema.define(version: 2020_03_12_122828) do
   create_table "leads", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "FullNameOfTheContact"
     t.string "CompanyName"
-    t.string "EMail"
+    t.string "Email"
     t.integer "Phone"
     t.string "ProjectName"
     t.text "ProjecDescription"

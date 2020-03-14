@@ -5,8 +5,20 @@
 #         f.company_name
 #         f.email
 #         f.recommendedShafts
-#         # conn.exec("INSERT INTO \"fact\" #{e.id}")
-#         puts 
+#         conn = PG.connect("host=localhost port=5432 user=postgres password=poiu");
+#         conn.exec("INSERT INTO \"fact_quotes\" (quote_id, creation, company_name, email, nb_elevators) VALUES ('#{f.id}', '#{f.updated_at}', '#{f.company_name}', '#{f.email}', '#{f.recommendedShafts}')")
+#     end
+# end
+
+# task :fact_contact => :environment do
+#     Lead.all.each do |l|
+#         l.id
+#         l.created_at
+#         l.CompanyName
+#         l.Email
+#         l.ProjectName
+#         conn = PG.connect("host=localhost port=5432 user=postgres password=poiu");
+#         conn.exec("INSERT INTO \"fact_contact\" (contact_id, creation, company_name, email, project_name) VALUES ('#{l.id}', '#{l.created_at}', '#{l.CompanyName}', '#{l.Email}', '#{l.ProjectName}')")
 #     end
 # end
 
@@ -19,30 +31,22 @@
 #         e.column.batteri.building.address.City
 #         conn = PG.connect("host=localhost port=5432 user=postgres password=poiu");
 #         conn.exec("INSERT INTO \"fact_elevator\" (serial_number, date_of_commissioning, building_id, customer_id, building_city) VALUES ('#{e.SerialNumber}', '#{e.DateOfcommissioning}', '#{e.column.batteri.building.id}', '#{e.column.batteri.building.customer_id}', '#{e.column.batteri.building.address.City}')")
-#         # puts e.SerialNumber, e.DateOfcommissioning, e.column.batteri.building.id, e.column.batteri.building.customer_id, e.column.batteri.building.address.City
 #     end
 # end
 
-# task :fact_dim => :environment do
+# task :dim_customers => :environment do
 #     Customer.all.each do |c|
 #         c.CustomerCreationDate
 #         c.CompanyName
 #         c.FullNameOfTheCompanyContact
 #         # c.nb_Elevator
-#         # c.customer_city
-
-#         # conn.exec("INSERT INTO \"fact\" #{e.id}")
-#         puts c.CustomerCreationDate, c.CompanyName, c.FullNameOfTheCompanyContact
+#         # c.customer.adrress.city
+#         conn = PG.connect("host=localhost port=5432 user=postgres password=poiu");
+#         conn.exec("INSERT INTO \"fact_dim_customers\" (quote_id, creation, company_name, email, nb_elevators) VALUES ('#{l.id}', '#{l.created_at}', '#{l.CompanyName}', '#{l.Email}')")
 #     end
 # end
 
-# task :fact_contact => :environment do
-#     Lead.all.each do |l|
-#         l.id
-#         # conn.exec("INSERT INTO \"fact\" #{e.id}")
-#         puts 
-#     end
-# end
+
 
 
 
@@ -68,7 +72,7 @@
 #         creation DATE UNIQUE NOT NULL,
 #         company_name VARCHAR(255) NOT NULL,
 #         email VARCHAR(255) UNIQUE NOT NULL,
-#         project_name VARCHAR(255) NOT NULL
+#         project_name VARCHAR(999999) NOT NULL
 #     );
 #     CREATE TABLE fact_elevator(
 #         serial_number VARCHAR(255) PRIMARY KEY,
@@ -86,9 +90,3 @@
 #     );
 #     ")
 # end
-
-    
-
-
-
-

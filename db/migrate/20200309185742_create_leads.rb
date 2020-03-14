@@ -3,7 +3,7 @@ class CreateLeads < ActiveRecord::Migration[5.2]
     create_table :leads do |t|
       t.string :FullNameOfTheContact
       t.string :CompanyName
-      t.string :EMail
+      t.string :Email
       t.integer :Phone
       t.string :ProjectName
       t.text :ProjecDescription
