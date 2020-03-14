@@ -12,7 +12,6 @@
 
 ActiveRecord::Schema.define(version: 2020_03_12_122828) do
 
-
   create_table "addresses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "TypeOfAddress"
     t.string "Status"
@@ -168,7 +167,6 @@ ActiveRecord::Schema.define(version: 2020_03_12_122828) do
     t.index ["column_id"], name: "index_elevators_on_column_id"
   end
 
-
   create_table "employees", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -215,7 +213,6 @@ ActiveRecord::Schema.define(version: 2020_03_12_122828) do
     t.text "costTotal"
     t.string "name"
     t.string "companyName"
-    t.string "email"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -230,6 +227,7 @@ ActiveRecord::Schema.define(version: 2020_03_12_122828) do
     t.string "DepartmentInChargeOfTheElevators"
     t.text "Message"
     t.text "AttachedFile"
+    t.date "DateOfTheContactRequest"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -255,5 +253,4 @@ ActiveRecord::Schema.define(version: 2020_03_12_122828) do
   add_foreign_key "customers", "addresses"
   add_foreign_key "customers", "users", column: "users_id"
   add_foreign_key "elevators", "columns"
-
 end
