@@ -50,6 +50,7 @@ test:
 #
 production:
   <<: *default
-  database: Rocket_Elevators_Information_System_production
-  username: Rocket_Elevators_Information_System
-  password: <%= ENV['ROCKET_ELEVATORS_INFORMATION_SYSTEM_DATABASE_PASSWORD'] %>
+  database: Farid
+  username: 
+  password: 
+  host: codeboxx.cq6zrczewpu2.us-east-1.rds.amazonaws.com
