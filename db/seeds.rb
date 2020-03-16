@@ -6,20 +6,24 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-Employee.create!(first_name: 'Nicolas', last_name:'Genest', title:'Comm Rep', email: 'nicolas.genest@codeboxx.biz', password: 'password', password_confirmation: 'password', ) if Rails.env.development?
-Employee.create!(first_name: 'Nadya', last_name:'Fortier', title:'Director', email: 'nadya.fortier@codeboxx.biz', password: 'password', password_confirmation: 'password', ) if Rails.env.development?
-Employee.create!(first_name: 'Martin', last_name:'Chantal', title:'Director Assistant', email: 'martin.chantal@codeboxx.biz', password: 'password', password_confirmation: 'password', ) if Rails.env.development?
-Employee.create!(first_name: 'Mathieu', last_name:'Houde', title:'Captain', email: 'mathieu.houde@codeboxx.biz', password: 'password', password_confirmation: 'password', ) if Rails.env.development?
-Employee.create!(first_name: 'Remi', last_name:'Gagnon', title:'Engineer', email: 'remi.gagnon@codeboxx.biz', password: 'password', password_confirmation: 'password', ) if Rails.env.development?
-Employee.create!(first_name: 'Mathieu', last_name:'Lefrançois', title:'Engineer', email: 'mathieu.lefrancois@codeboxx.biz', password: 'password', password_confirmation: 'password', ) if Rails.env.development?
-Employee.create!(first_name: 'Serge', last_name:'Savoie', title:'Engineer', email: 'serge.savoie@codeboxx.biz', password: 'password', password_confirmation: 'password', ) if Rails.env.development?
-Employee.create!(first_name: 'David', last_name:'Boutin', title:'Engineer', email: 'david.boutin@codeboxx.biz', password: 'password', password_confirmation: 'password', ) if Rails.env.development?
-Employee.create!(first_name: 'Mathieu', last_name:'Lortie', title:'Engineer', email: 'mathieu.lortie@codeboxx.biz', password: 'password', password_confirmation: 'password', ) if Rails.env.development?
-Employee.create!(first_name: 'Thomas', last_name:'Carrier', title:'Engineer', email: 'thomas.carrier@codeboxx.biz', password: 'password', password_confirmation: 'password', ) if Rails.env.development?
-User.create!(email: 'xxx@zzz.yyy', password: 'password', password_confirmation: 'password', ) if Rails.env.development?
-User.create!(email: 'aaa@bbb.ccc', password: 'password', password_confirmation: 'password', ) if Rails.env.development?
+Employee.create!(first_name: 'Nicolas', last_name:'Genest', title:'Comm Rep', email: 'nicolas.genest@codeboxx.biz', password: 'password', password_confirmation: 'password', ) 
+Employee.create!(first_name: 'Nadya', last_name:'Fortier', title:'Director', email: 'nadya.fortier@codeboxx.biz', password: 'password', password_confirmation: 'password', ) 
+Employee.create!(first_name: 'Martin', last_name:'Chantal', title:'Director Assistant', email: 'martin.chantal@codeboxx.biz', password: 'password', password_confirmation: 'password', ) 
+Employee.create!(first_name: 'Mathieu', last_name:'Houde', title:'Captain', email: 'mathieu.houde@codeboxx.biz', password: 'password', password_confirmation: 'password', ) 
+Employee.create!(first_name: 'Remi', last_name:'Gagnon', title:'Engineer', email: 'remi.gagnon@codeboxx.biz', password: 'password', password_confirmation: 'password', ) 
+Employee.create!(first_name: 'Mathieu', last_name:'Lefrançois', title:'Engineer', email: 'mathieu.lefrancois@codeboxx.biz', password: 'password', password_confirmation: 'password', ) 
+Employee.create!(first_name: 'Serge', last_name:'Savoie', title:'Engineer', email: 'serge.savoie@codeboxx.biz', password: 'password', password_confirmation: 'password', ) 
+Employee.create!(first_name: 'David', last_name:'Boutin', title:'Engineer', email: 'david.boutin@codeboxx.biz', password: 'password', password_confirmation: 'password', ) 
+Employee.create!(first_name: 'Mathieu', last_name:'Lortie', title:'Engineer', email: 'mathieu.lortie@codeboxx.biz', password: 'password', password_confirmation: 'password', ) 
+Employee.create!(first_name: 'Thomas', last_name:'Carrier', title:'Engineer', email: 'thomas.carrier@codeboxx.biz', password: 'password', password_confirmation: 'password', ) 
 
-10.times do 
+50.times do 
+    User.create!({
+        email: Faker::Internet.unique.email, 
+        password: 'password',
+        password_confirmation: 'password'
+    }) 
+
     Lead.create!({
         FullNameOfTheContact: Faker::Name.unique.name,
         CompanyName: Faker::Company.unique.name,
@@ -35,6 +39,8 @@ User.create!(email: 'aaa@bbb.ccc', password: 'password', password_confirmation: 
 
 
     Form.create!({
+        company_name: Faker::Company.name,
+        email: Faker::Internet.email,
         building: [:Residential, :Commercial, :Corporate, :Hybrid].sample,
         appartmentsNbrRES: Faker::Number.between(from: 10, to: 150),
         floorsNbrRES: Faker::Number.between(from: 5, to: 80),
@@ -71,7 +77,7 @@ User.create!(email: 'aaa@bbb.ccc', password: 'password', password_confirmation: 
         SuiteOrAppartment: Faker::Number.unique.number(digits: 2),
         City: Faker::Address.city,
         PostalCode: Faker::Address.unique.postcode,
-        Country: Faker::Address.unique.country,
+        Country: [:Canada, :United_States, :Mexico].sample,
         Notes: 'Note'
     })
 
@@ -121,29 +127,32 @@ User.create!(email: 'aaa@bbb.ccc', password: 'password', password_confirmation: 
         Information: 'Information',
         Notes: 'Note'
     })
+    2.times do
+        current_column = Column.create!({
+            batteri_id: current_battery.id,
+            # BatteryId: Batteri.last.id,
+            Type: [:Residential, :Commercial, :Corporate, :Hybrid].sample,
+            NumberOfFloors: Faker::Number.number(digits: 2),
+            Status: [:Active, :Intervention, :Inactive].sample,
+            Information: Faker::Lorem.sentence,
+            Notes: Faker::Lorem.unique.paragraph
+        })
 
-current_column = Column.create!({
-        batteri_id: current_battery.id,
-        # BatteryId: Batteri.last.id,
-        Type: [:Residential, :Commercial, :Corporate, :Hybrid].sample,
-        NumberOfFloors: Faker::Number.number(digits: 2),
-        Status: [:Active, :Intervention, :Inactive].sample,
-        Information: Faker::Lorem.sentence,
-        Notes: Faker::Lorem.unique.paragraph
-    })
-
-Elevator.create!({
-        column_id: current_column.id,
-        # ColumnId: Column.last.id,
-        SerialNumber: Faker::Number.number(digits: 6),
-        Model: [:Standard, :Premium, :Excelium].sample,
-        Type: [:Residential, :Commercial, :Corporate].sample,
-        Status: [:Active, :Intervention, :Inactive].sample,
-        DateOfcommissioning: Faker::Time.between(from: DateTime.now - 1095, to: DateTime.now),
-        DateOfLastInspection: Faker::Time.between(from: DateTime.now - 1095, to: DateTime.now),
-        CertificateOfOperations: Faker::File.unique.file_name,
-        Information: Faker::Lorem.sentence,
-        Notes: Faker::Lorem.paragraph
-    })
+        2.times do
+            Elevator.create!({
+                column_id: current_column.id,
+                # ColumnId: Column.last.id,
+                SerialNumber: Faker::Number.number(digits: 6),
+                Model: [:Standard, :Premium, :Excelium].sample,
+                Type: [:Residential, :Commercial, :Corporate].sample,
+                Status: [:Active, :Intervention, :Inactive].sample,
+                DateOfcommissioning: Faker::Time.between(from: DateTime.now - 1095, to: DateTime.now),
+                DateOfLastInspection: Faker::Time.between(from: DateTime.now - 1095, to: DateTime.now),
+                CertificateOfOperations: Faker::File.unique.file_name,
+                Information: Faker::Lorem.sentence,
+                Notes: Faker::Lorem.paragraph
+            })
+        end
+    end
 end
 puts('seed ended')
