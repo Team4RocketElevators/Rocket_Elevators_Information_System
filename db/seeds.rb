@@ -17,7 +17,7 @@ Employee.create!(first_name: 'David', last_name:'Boutin', title:'Engineer', emai
 Employee.create!(first_name: 'Mathieu', last_name:'Lortie', title:'Engineer', email: 'mathieu.lortie@codeboxx.biz', password: 'password', password_confirmation: 'password', ) 
 Employee.create!(first_name: 'Thomas', last_name:'Carrier', title:'Engineer', email: 'thomas.carrier@codeboxx.biz', password: 'password', password_confirmation: 'password', ) 
 
-100.times do 
+50.times do 
     User.create!({
         email: Faker::Internet.unique.email, 
         password: 'password',
@@ -39,6 +39,8 @@ Employee.create!(first_name: 'Thomas', last_name:'Carrier', title:'Engineer', em
 
 
     Form.create!({
+        company_name: Faker::Company.name,
+        email: Faker::Internet.email,
         building: [:Residential, :Commercial, :Corporate, :Hybrid].sample,
         appartmentsNbrRES: Faker::Number.between(from: 10, to: 150),
         floorsNbrRES: Faker::Number.between(from: 5, to: 80),
@@ -75,7 +77,7 @@ Employee.create!(first_name: 'Thomas', last_name:'Carrier', title:'Engineer', em
         SuiteOrAppartment: Faker::Number.unique.number(digits: 2),
         City: Faker::Address.city,
         PostalCode: Faker::Address.unique.postcode,
-        Country: [:Canada, :United_States, :Bahamas, :Barbados, :Belize, :Bermuda, :Costa_Rica, :Cuba, :Dominica, :Dominican_Republic, :El_Salvador, :Guadeloupe, :Haiti, :Honduras, :Jamaica, :Mexico, :Nicaragua, :Puerto_Rico, :Panama, ].sample,
+        Country: [:Canada, :United_States, :Mexico].sample,
         Notes: 'Note'
     })
 

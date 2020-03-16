@@ -51,6 +51,6 @@ test:
 production:
   <<: *default
   database: Farid
-  username: 
-  password: 
+  username: codeboxx
+  password: Codeboxx1!
   host: codeboxx.cq6zrczewpu2.us-east-1.rds.amazonaws.com
